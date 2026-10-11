@@ -172,19 +172,20 @@ footer{max-width:1080px;margin:0 auto;padding:0 16px 40px}
             <label>ราคาขายต่อชุด (บาท)<input id="c_price" type="number" min="0" value="990" inputmode="numeric"></label>
             <label>ค่าธรรมเนียมชำระเงิน (%)<input id="c_fee" type="number" min="0" step="0.1" value="3.5"></label>
             <label>ค่าพิมพ์ + ส่งต่อชุด (บาท)<input id="c_print" type="number" min="0" value="130"></label>
-            <label>ค่าโฆษณาต่อลูกค้า (บาท)<input id="c_ads" type="number" min="0" value="250"></label>
-            <label>จำนวนชุดที่ขาย<input id="c_n" type="number" min="0" value="100"></label>
-            <label>ส่วนของครู (%)<input id="c_split" type="number" min="0" max="100" value="60"></label>
+            <label>จำนวนชุดที่ขายได้<input id="c_n" type="number" min="0" value="100"></label>
+            <label>ติวเตอร์ลงเงินค่าโฆษณารวม (บาท)<input id="c_ads" type="number" min="0" value="15000"></label>
+            <label>ติวเตอร์ลงเงินค่าตัดต่อรวม (บาท)<input id="c_edit" type="number" min="0" value="6000"></label>
+            <label>ส่วนของครูจากกำไรที่เหลือ (%)<input id="c_split" type="number" min="0" max="100" value="50"></label>
           </div>
           <div class="res num" aria-live="polite">
             <div><span>รายรับรวม</span><span id="r_rev"></span></div>
-            <div><span>ค่าธรรมเนียม</span><span id="r_fee"></span></div>
-            <div><span>พิมพ์ + ส่ง</span><span id="r_print"></span></div>
-            <div><span>โฆษณา</span><span id="r_ads"></span></div>
-            <div class="tot"><span>กำไรสุทธิ</span><span id="r_net"></span></div>
-            <div><span>ครู</span><span id="r_t"></span></div>
-            <div><span>ติวเตอร์ (ก่อนหักค่าตัดต่อ)</span><span id="r_p"></span></div>
-            <p class="note">ตัวเลขเริ่มต้นเป็นสมมติฐานเพื่อวางแผน ไม่ใช่ต้นทุนจริง ปรับตามราคาจริงของคุณได้</p>
+            <div><span>หัก ค่าธรรมเนียม + พิมพ์ + ส่ง</span><span id="r_direct"></span></div>
+            <div><span><b>เหลือหลังหักต้นทุนสินค้า</b></span><span id="r_margin"></span></div>
+            <div><span>คืนเงินที่ติวเตอร์ลงไป (ไม่เกินที่ขายได้)</span><span id="r_back"></span></div>
+            <div><span>กำไรที่เหลือไว้แบ่ง</span><span id="r_profit"></span></div>
+            <div class="tot"><span>ครูได้</span><span id="r_t"></span></div>
+            <div class="tot"><span>ติวเตอร์ได้กำไรสุทธิ</span><span id="r_p"></span></div>
+            <p class="note">ลำดับ: หักต้นทุนสินค้า → คืนเงินที่ติวเตอร์ลงจริง → แบ่งส่วนที่เหลือ ถ้าขายไม่พอคืน ติวเตอร์เป็นฝ่ายขาดทุน ครูไม่ต้องจ่ายเงิน ตัวเลขเริ่มต้นเป็นสมมติฐาน</p>
           </div>
         </div>
       </div>
@@ -273,17 +274,18 @@ drawRoad();
 function v(id){return Math.max(0,parseFloat(document.getElementById(id).value)||0)}
 function f(x){return Math.round(x).toLocaleString("th-TH")+" บาท"}
 function calc(){
-  var rev=v("c_price")*v("c_n"),fee=rev*v("c_fee")/100,pr=v("c_print")*v("c_n"),ad=v("c_ads")*v("c_n");
-  var net=rev-fee-pr-ad,sp=Math.min(100,v("c_split"));
+  var n=v("c_n"),rev=v("c_price")*n,direct=rev*v("c_fee")/100+v("c_print")*n;
+  var margin=rev-direct,cost=v("c_ads")+v("c_edit"),back=Math.min(Math.max(margin,0),cost);
+  var profit=Math.max(margin-back,0),sp=Math.min(100,v("c_split"));
+  var t=profit*sp/100,pg=profit*(100-sp)/100-(cost-back);
   document.getElementById("r_rev").textContent=f(rev);
-  document.getElementById("r_fee").textContent="−"+f(fee);
-  document.getElementById("r_print").textContent="−"+f(pr);
-  document.getElementById("r_ads").textContent="−"+f(ad);
-  document.getElementById("r_net").textContent=f(net);
-  document.getElementById("r_t").textContent=f(net*sp/100);
-  document.getElementById("r_p").textContent=f(net*(100-sp)/100);
+  document.getElementById("r_direct").textContent="−"+f(direct);
+  document.getElementById("r_margin").textContent=f(margin);
+  document.getElementById("r_back").textContent=f(back)+" จาก "+f(cost);
+  document.getElementById("r_profit").textContent=f(profit);
+  document.getElementById("r_t").textContent=f(t);
+  document.getElementById("r_p").textContent=(pg<0?"ขาดทุน ":"")+f(Math.abs(pg));
 }
-["c_price","c_fee","c_print","c_ads","c_n","c_split"].forEach(function(id){document.getElementById(id).addEventListener("input",calc)});
 calc();
 
 /* theme */

@@ -1,9 +1,297 @@
 <!doctype html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
 <title>Math-Online คณิตตรงจุด</title>
-<style>body{font:18px/1.7 "Sarabun","TH Sarabun New",system-ui,sans-serif;max-width:640px;margin:0 auto;padding:32px 16px;color:#18202e;background:#f7f8fa}a{color:#1f4fa3}@media(prefers-color-scheme:dark){body{background:#12161f;color:#e8ecf4}a{color:#8fb2f2}}</style></head>
-<body><h1>Math-Online คณิตตรงจุด</h1>
-<p>เอกสารวางแผนคอร์สออนไลน์ (ฉบับร่าง)</p>
-<ul><li><a href="plan/start.html">แผนเริ่มต้น: ข้อตกลง แผนถ่ายวิดีโอ แผน 30 วัน</a></li>
-<li><a href="plan/roadmap.html">แผนคอร์สและแผน 1-3-6-12 เดือน</a></li></ul>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@500&family=Sarabun:wght@400;500;700&display=swap">
+<style>
+/* Layout: sticky top bar, then a dashboard grid: progress + tools on top, work board, roadmap, calculator. */
+:root{
+  --bg:#f3f5f9;--surface:#fff;--fg:#18202e;--mut:#5a6479;--line:#dfe4ec;
+  --ink:#1f4fa3;--ink-soft:#e8eefa;--mark:#f2c230;--mark-soft:#fff6d6;--ok:#1b7a4b;--ok-soft:#e2f4ea;
+  --display:"Mitr","Sarabun",system-ui,sans-serif;--body:"Sarabun","TH Sarabun New",system-ui,sans-serif;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 14px rgba(20,30,50,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f131b;--surface:#181e2c;--fg:#e8ecf4;--mut:#9aa5ba;--line:#2a3246;
+  --ink:#8fb2f2;--ink-soft:#1d2a47;--mark:#f2c230;--mark-soft:#2d2812;--ok:#6fd0a0;--ok-soft:#14301f;
+  --shadow:0 1px 2px rgba(0,0,0,.3);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f131b;--surface:#181e2c;--fg:#e8ecf4;--mut:#9aa5ba;--line:#2a3246;
+  --ink:#8fb2f2;--ink-soft:#1d2a47;--mark:#f2c230;--mark-soft:#2d2812;--ok:#6fd0a0;--ok-soft:#14301f;
+  --shadow:0 1px 2px rgba(0,0,0,.3);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+a{color:inherit}
+svg.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+header{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--ink);color:#fff;display:grid;place-items:center;font:500 18px var(--display)}
+.bar h1{font:500 18px/1.2 var(--display);margin:0}.bar small{display:block;color:var(--mut);font:400 13px var(--body)}
+.sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:8px 12px;border-radius:10px;font:500 15px var(--body);cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--ink-soft)}
+nav.tabs{max-width:1080px;margin:0 auto;padding:0 16px;display:flex;gap:4px;overflow-x:auto}
+nav.tabs a{display:flex;align-items:center;gap:6px;padding:8px 12px;text-decoration:none;color:var(--mut);border-bottom:3px solid transparent;white-space:nowrap;font-weight:500}
+nav.tabs a:hover{color:var(--ink)}
+main{max-width:1080px;margin:0 auto;padding:20px 16px 72px;display:grid;gap:20px}
+section{scroll-margin-top:110px}
+h2{font:500 20px/1.3 var(--display);margin:0 0 12px;display:flex;align-items:center;gap:8px}
+h2 svg{color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);min-width:0}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:860px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}}
+.hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center}
+@media(max-width:520px){.hero{grid-template-columns:1fr;justify-items:start}}
+.ring{position:relative;width:120px;height:120px}
+.ring svg{transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font:500 26px var(--display)}
+.mut{color:var(--mut)}
+.next{display:flex;gap:10px;align-items:flex-start;background:var(--mark-soft);border-left:4px solid var(--mark);padding:10px 12px;border-radius:6px;margin-top:10px}
+.link{display:flex;gap:12px;text-decoration:none;align-items:flex-start;transition:transform .12s,border-color .12s}
+.link:hover{transform:translateY(-2px);border-color:var(--ink)}
+.ico{width:42px;height:42px;border-radius:12px;background:var(--ink-soft);color:var(--ink);display:grid;place-items:center;flex:none}
+.ico.y{background:var(--mark-soft);color:#8a6a00}.ico.g{background:var(--ok-soft);color:var(--ok)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .ico.y{color:var(--mark)}}
+:root[data-theme="dark"] .ico.y{color:var(--mark)}
+.link b{display:block;font-weight:700}.link span{font-size:14px;color:var(--mut)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);cursor:pointer}
+.chk:first-of-type{border-top:0}
+.chk input{appearance:none;width:22px;height:22px;border:2px solid var(--ink);border-radius:6px;flex:none;margin:1px 0 0;display:grid;place-items:center;cursor:pointer;background:var(--surface)}
+.chk input:checked{background:var(--ok);border-color:var(--ok)}
+.chk input:checked::after{content:"";width:10px;height:5px;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:rotate(-45deg) translate(1px,-1px)}
+.chk input:checked+span{color:var(--mut);text-decoration:line-through}
+.wk h3{font-size:16px;margin:0 0 4px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.pill{font-size:12px;padding:1px 9px;border-radius:99px;background:var(--ink-soft);color:var(--ink);font-weight:700}
+.pill.done{background:var(--ok-soft);color:var(--ok)}
+.bars{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:6px 0 8px}.bars i{display:block;height:100%;background:var(--ok);width:0;transition:width .25s}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.seg button{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:7px 14px;border-radius:99px;font:500 15px var(--body);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-size:13px;font-weight:700}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+@media(max-width:700px){.calc{grid-template-columns:1fr}}
+label{display:grid;gap:3px;font-weight:500;font-size:14px;margin-bottom:10px}
+input[type=number]{font:16px var(--body);padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%}
+.res div{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+.res .tot{font-weight:700;font-size:18px;color:var(--ok);border:0}
+.num{font-variant-numeric:tabular-nums}
+.note{font-size:13px;color:var(--mut)}
+footer{max-width:1080px;margin:0 auto;padding:0 16px 40px}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+</defs></svg>
+
+<header>
+  <div class="bar">
+    <div class="logo" aria-hidden="true">ค</div>
+    <div><h1>Math-Online</h1><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></div>
+    <div class="sp"></div>
+    <button class="btn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span class="hide-sm">โหมดมืด</span></button>
+  </div>
+  <nav class="tabs" aria-label="เมนูหน้า">
+    <a href="#top"><svg class="i"><use href="#home"/></svg>ภาพรวม</a>
+    <a href="#tools"><svg class="i"><use href="#game"/></svg>เครื่องมือ</a>
+    <a href="#board"><svg class="i"><use href="#check"/></svg>แผน 30 วัน</a>
+    <a href="#roadmap"><svg class="i"><use href="#map"/></svg>แผนระยะยาว</a>
+    <a href="#price"><svg class="i"><use href="#coin"/></svg>ราคาและรายได้</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="card hero" aria-labelledby="h-over">
+    <div class="ring"><svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="12"/><circle id="arc" cx="60" cy="60" r="52" fill="none" stroke="var(--ok)" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg><b id="pct" class="num">0%</b></div>
+    <div>
+      <h2 id="h-over" style="margin:0 0 4px">ความคืบหน้าคอร์สสูตรคูณ</h2>
+      <p class="mut" style="margin:0"><span id="doneN" class="num">0</span> จาก <span id="allN" class="num">0</span> งาน · เป้าเดือนแรก: คลิปครบ หน้าขายพร้อม พรีออเดอร์ 10–20 คน</p>
+      <div class="next"><svg class="i"><use href="#arrow"/></svg><div><b>งานถัดไป</b><br><span id="nextT"></span></div></div>
+    </div>
+  </section>
+
+  <section id="tools" aria-labelledby="h-tools">
+    <h2 id="h-tools"><svg class="i"><use href="#game"/></svg>เครื่องมือและเอกสาร</h2>
+    <div class="grid g4">
+      <a class="card link" href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><div class="ico"><svg class="i"><use href="#timer"/></svg></div><div><b>โปรแกรมออนไลน์ 2</b><span>วัดผลสูตรคูณ (krusamm-Test)</span></div></a>
+      <a class="card link" href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><div class="ico"><svg class="i"><use href="#game"/></svg></div><div><b>โปรแกรมออนไลน์ 1</b><span>ควิซสูตรคูณ (krusamm-quiz)</span></div></a>
+      <a class="card link" href="plan/start.html"><div class="ico y"><svg class="i"><use href="#plan"/></svg></div><div><b>แผนเริ่มต้นและข้อตกลง</b><span>ใช้ตอนคุยกับติวเตอร์ ถ่ายคลิป แผน 30 วัน</span></div></a>
+      <a class="card link" href="plan/roadmap.html"><div class="ico y"><svg class="i"><use href="#doc"/></svg></div><div><b>แผนเต็ม 1-3-6-12 เดือน</b><span>ราคา แบ่งรายได้ ความเสี่ยง</span></div></a>
+    </div>
+  </section>
+
+  <section id="board" aria-labelledby="h-board">
+    <h2 id="h-board"><svg class="i"><use href="#check"/></svg>แผน 30 วัน (ติ๊กแล้วบันทึกในเครื่องนี้)</h2>
+    <div class="grid g4" id="weeks"></div>
+    <p class="note">ที่เก็บสถานะอยู่ในเบราว์เซอร์ของเครื่องที่ใช้ ถ้าเปลี่ยนเครื่องหรือล้างข้อมูลเบราว์เซอร์ จะเริ่มนับใหม่</p>
+  </section>
+
+  <section class="card" aria-labelledby="h-have">
+    <h2 id="h-have"><svg class="i"><use href="#book"/></svg>สิ่งที่มีพร้อมแล้ว</h2>
+    <div class="grid g2" id="assets"></div>
+  </section>
+
+  <section id="roadmap" aria-labelledby="h-road">
+    <h2 id="h-road"><svg class="i"><use href="#map"/></svg>แผนระยะยาว</h2>
+    <div class="card">
+      <div class="seg" role="group" aria-label="เลือกช่วงเวลา" id="seg"></div>
+      <div id="roadBody"></div>
+    </div>
+  </section>
+
+  <section id="price" aria-labelledby="h-price">
+    <h2 id="h-price"><svg class="i"><use href="#coin"/></svg>ราคาและรายได้</h2>
+    <div class="grid" style="gap:16px">
+      <div class="card"><div class="wrap"><table>
+        <tr><th>ขั้น</th><th>สินค้า</th><th>ราคาเสนอ (ทดลอง)</th><th>หน้าที่</th></tr>
+        <tr><td>0</td><td>โปรแกรมวัดผล + ตรวจระดับ</td><td>ฟรี</td><td>ดึงลูกค้า</td></tr>
+        <tr><td>1</td><td>สูตรคูณ ปริ้นเอง</td><td class="num">490–590</td><td>สินค้าเปิดตัว</td></tr>
+        <tr><td>2</td><td>สูตรคูณ ส่งเล่มถึงบ้าน</td><td class="num">990–1,290</td><td>ตัวทำกำไรหลัก</td></tr>
+        <tr><td>3</td><td>คอร์สต่อยอด (หาร เศษส่วน ฯลฯ)</td><td class="num">590–990</td><td>ขายซ้ำลูกค้าเดิม</td></tr>
+        <tr><td>4</td><td>แพ็กเหมา + โค้ช</td><td class="num">2,500+</td><td>รายได้ต่อหัวสูง</td></tr>
+      </table></div></div>
+      <div class="card">
+        <h2 style="font-size:18px"><svg class="i"><use href="#calc"/></svg>เครื่องคิดเลขแบ่งรายได้</h2>
+        <div class="calc">
+          <div>
+            <label>ราคาขายต่อชุด (บาท)<input id="c_price" type="number" min="0" value="990" inputmode="numeric"></label>
+            <label>ค่าธรรมเนียมชำระเงิน (%)<input id="c_fee" type="number" min="0" step="0.1" value="3.5"></label>
+            <label>ค่าพิมพ์ + ส่งต่อชุด (บาท)<input id="c_print" type="number" min="0" value="130"></label>
+            <label>ค่าโฆษณาต่อลูกค้า (บาท)<input id="c_ads" type="number" min="0" value="250"></label>
+            <label>จำนวนชุดที่ขาย<input id="c_n" type="number" min="0" value="100"></label>
+            <label>ส่วนของครู (%)<input id="c_split" type="number" min="0" max="100" value="60"></label>
+          </div>
+          <div class="res num" aria-live="polite">
+            <div><span>รายรับรวม</span><span id="r_rev"></span></div>
+            <div><span>ค่าธรรมเนียม</span><span id="r_fee"></span></div>
+            <div><span>พิมพ์ + ส่ง</span><span id="r_print"></span></div>
+            <div><span>โฆษณา</span><span id="r_ads"></span></div>
+            <div class="tot"><span>กำไรสุทธิ</span><span id="r_net"></span></div>
+            <div><span>ครู</span><span id="r_t"></span></div>
+            <div><span>ติวเตอร์ (ก่อนหักค่าตัดต่อ)</span><span id="r_p"></span></div>
+            <p class="note">ตัวเลขเริ่มต้นเป็นสมมติฐานเพื่อวางแผน ไม่ใช่ต้นทุนจริง ปรับตามราคาจริงของคุณได้</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="note">ฉบับร่างสำหรับวางแผน · ราคา ต้นทุน และเป้าหมายเป็นประมาณการ ปรับตามข้อมูลจริง</footer>
+
+<script>
+(function(){
+var K="mo-state-v1";
+function load(){try{return JSON.parse(localStorage.getItem(K))||{}}catch(e){return{}}}
+function save(s){try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}}
+var S=load();
+
+var weeks=[
+ {t:"สัปดาห์ 1 · ตกลง",i:[["w1a","นัดคุยติวเตอร์ ตกลง 5 เรื่อง และเซ็นบันทึกข้อตกลง"],["w1b","กำหนดวันถ่ายคลิป 1–2 วัน และงบอุปกรณ์"],["w1c","ขอใบเสนอราคาทีมตัดต่อและโรงพิมพ์ 2–3 เจ้า"]]},
+ {t:"สัปดาห์ 2 · ผลิต",i:[["w2a","ถ่ายคลิปทั้งหมดแบบ batch (ราว 15 คลิป)"],["w2b","ส่งไฟล์และใบสั่งงานให้ทีมตัดต่อ"],["w2c","ปิดไฟล์เล่มฝึกและเล่มวัดผล ตรวจคำผิดและเฉลย"]]},
+ {t:"สัปดาห์ 3 · ทดลอง",i:[["w3a","ให้เด็กกลุ่มทดลอง 10–15 คนฝึกและวัดผล"],["w3b","แก้คลิปและเล่มตามผลทดลอง"],["w3c","ทำหน้าขาย ตั้ง LINE Official และ PromptPay"],["w3d","เริ่มโพสต์ตามตารางคอนเทนต์ 30 วัน"]]},
+ {t:"สัปดาห์ 4 · เปิดขาย",i:[["w4a","เปิดพรีออเดอร์ ยิงโฆษณางบเล็ก"],["w4b","ติวเตอร์รายงานตัวเลข เข้าใช้ → ทิ้งช่องทางติดต่อ → ซื้อ"],["w4c","ประชุมสรุป ตัดสินใจเพิ่มงบหรือแก้ข้อเสนอ"]]}
+];
+var assets=[
+ ["a1","แผนออกแบบคอร์สสูตรคูณ",1],["a2","เล่มฝึก (ราว 100 หน้า) ต้นแบบ",1],["a3","เล่มวัดผล (ราว 20 หน้า)",1],["a4","โปรแกรมวัดผล HTML 2 ตัว",1],
+ ["a5","สคริปต์การตลาด 20 คลิป",1],["a6","ตารางโพสต์ 30 วัน",1],["a7","คลิปสอนที่ถ่ายจริง",0],["a8","หน้าขายและช่องทางรับเงิน",0],["a9","บันทึกข้อตกลงกับติวเตอร์",0]
+];
+var road={
+ "1 เดือน":["ทำให้ขายได้จริง","เซ็นข้อตกลง · ถ่ายคลิปให้ครบ · ปิดเล่มพิมพ์ · ทำหน้าขาย · ทดลองกับเด็ก 10–15 คน","ตัวชี้วัด: พรีออเดอร์ 10–20 คน"],
+ "3 เดือน":["พิสูจน์ตลาด","เปิดขายเต็ม ทดลองสองราคา · โฆษณางบ 3,000–5,000 บาท/เดือน · วัดทุกขั้นของ funnel · เริ่มวางคอร์สที่ 2","ตัวชี้วัด: ขายสะสม 50–100 ชุด · ค่าโฆษณาต่อลูกค้าไม่เกิน 25–30% ของราคา"],
+ "6 เดือน":["ขยายและทำซ้ำได้","ปล่อยคอร์สที่ 2 (เช่น หารยาว) · จ้างตัดต่อรายคลิป · กลุ่ม LINE ผู้ปกครอง · ทดลองขายแพ็กกลุ่มให้โรงเรียน · ทบทวนสัญญา","ตัวชี้วัด: รายได้ต่อเนื่อง · ซื้อซ้ำ 15–20% · ทีมทำงานได้โดยไม่รอครูทุกขั้น"],
+ "1 ปี":["หลักสูตรเต็มเส้นทาง","สูตรคูณ → หาร → เศษส่วน → คูณหลายหลัก → ห.ร.ม./ค.ร.น. · แพ็กเกจรายเทอมและโค้ชตรวจงาน · เวอร์ชันโรงเรียน · พิจารณาแพลตฟอร์มคอร์ส","ตัวชี้วัด: 4–5 คอร์ส · ประเมินผลทั้งปีก่อนต่อสัญญา"]
+};
+
+/* checklist state */
+var allTasks=[];weeks.forEach(function(w){w.i.forEach(function(t){allTasks.push(t)})});
+function renderWeeks(){
+  var el=document.getElementById("weeks");el.innerHTML="";
+  weeks.forEach(function(w){
+    var d=w.i.filter(function(t){return S[t[0]]}).length,n=w.i.length;
+    var c=document.createElement("div");c.className="card wk";
+    c.innerHTML='<h3>'+w.t+'<span class="pill'+(d===n?' done':'')+' num">'+d+'/'+n+'</span></h3><div class="bars"><i style="width:'+(100*d/n)+'%"></i></div>';
+    w.i.forEach(function(t){
+      var l=document.createElement("label");l.className="chk";l.style.margin=0;
+      var cb=document.createElement("input");cb.type="checkbox";cb.id=t[0];cb.checked=!!S[t[0]];
+      cb.addEventListener("change",function(){S[t[0]]=cb.checked;save(S);refresh()});
+      var s=document.createElement("span");s.textContent=t[1];l.appendChild(cb);l.appendChild(s);c.appendChild(l)});
+    el.appendChild(c)});
+}
+function renderAssets(){
+  var el=document.getElementById("assets");el.innerHTML="";
+  assets.forEach(function(a){
+    var l=document.createElement("label");l.className="chk";l.style.margin=0;
+    var cb=document.createElement("input");cb.type="checkbox";cb.id=a[0];
+    cb.checked=(a[0] in S)?!!S[a[0]]:!!a[2];
+    cb.addEventListener("change",function(){S[a[0]]=cb.checked;save(S);refresh()});
+    var s=document.createElement("span");s.textContent=a[1];l.appendChild(cb);l.appendChild(s);el.appendChild(l)});
+}
+function overall(){
+  var items=allTasks.map(function(t){return !!S[t[0]]});
+  assets.forEach(function(a){items.push((a[0] in S)?!!S[a[0]]:!!a[2])});
+  return items;
+}
+function refresh(){
+  var it=overall(),d=it.filter(Boolean).length,n=it.length,p=Math.round(100*d/n);
+  document.getElementById("pct").textContent=p+"%";
+  document.getElementById("doneN").textContent=d;document.getElementById("allN").textContent=n;
+  document.getElementById("arc").style.strokeDashoffset=326.7*(1-d/n);
+  var nx=allTasks.filter(function(t){return !S[t[0]]})[0];
+  document.getElementById("nextT").textContent=nx?nx[1]:"ครบทุกงานในแผน 30 วันแล้ว";
+  renderWeeks();
+}
+renderAssets();refresh();
+
+/* roadmap */
+var seg=document.getElementById("seg"),body=document.getElementById("roadBody"),cur="1 เดือน";
+function drawRoad(){
+  seg.innerHTML="";
+  Object.keys(road).forEach(function(k){
+    var b=document.createElement("button");b.type="button";b.textContent=k;b.setAttribute("aria-pressed",k===cur);
+    b.addEventListener("click",function(){cur=k;drawRoad()});seg.appendChild(b)});
+  var r=road[cur];
+  body.innerHTML='<h3 style="margin:0 0 6px;font:500 18px var(--display)">'+r[0]+'</h3><p style="margin:0 0 8px">'+r[1]+'</p><div class="next"><svg class="i"><use href="#check"/></svg><div>'+r[2]+'</div></div>';
+}
+drawRoad();
+
+/* calculator */
+function v(id){return Math.max(0,parseFloat(document.getElementById(id).value)||0)}
+function f(x){return Math.round(x).toLocaleString("th-TH")+" บาท"}
+function calc(){
+  var rev=v("c_price")*v("c_n"),fee=rev*v("c_fee")/100,pr=v("c_print")*v("c_n"),ad=v("c_ads")*v("c_n");
+  var net=rev-fee-pr-ad,sp=Math.min(100,v("c_split"));
+  document.getElementById("r_rev").textContent=f(rev);
+  document.getElementById("r_fee").textContent="−"+f(fee);
+  document.getElementById("r_print").textContent="−"+f(pr);
+  document.getElementById("r_ads").textContent="−"+f(ad);
+  document.getElementById("r_net").textContent=f(net);
+  document.getElementById("r_t").textContent=f(net*sp/100);
+  document.getElementById("r_p").textContent=f(net*(100-sp)/100);
+}
+["c_price","c_fee","c_print","c_ads","c_n","c_split"].forEach(function(id){document.getElementById(id).addEventListener("input",calc)});
+calc();
+
+/* theme */
+var root=document.documentElement,tb=document.getElementById("theme");
+tb.addEventListener("click",function(){
+  var dark=root.getAttribute("data-theme")==="dark"||(!root.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme:dark)").matches);
+  root.setAttribute("data-theme",dark?"light":"dark");
+});
+})();
+</script>
 </body></html>

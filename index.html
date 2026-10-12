@@ -80,6 +80,15 @@ input[type=number]{font:16px var(--body);padding:8px 10px;border:1px solid var(-
 .res .tot{font-weight:700;font-size:18px;color:var(--ok);border:0}
 .num{font-variant-numeric:tabular-nums}
 .note{font-size:13px;color:var(--mut)}
+.cat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media(max-width:860px){.cat{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.cat{grid-template-columns:minmax(0,1fr)}}
+.cc{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);min-width:0}
+.cc b{display:block;font-size:15px;line-height:1.3}.cc span{display:block;font-size:13px;color:var(--mut)}
+.code{display:inline-grid;place-items:center;min-width:44px;height:34px;padding:0 6px;border-radius:9px;background:var(--ink);color:#fff;font:500 17px var(--display);flex:none}
+.code.on{background:var(--ok)}
+.flowrow{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:4px 0 10px}
+.flowrow em{font-style:normal;color:var(--mut)}
 footer{max-width:1080px;margin:0 auto;padding:0 16px 40px}
 </style></head>
 <body>
@@ -110,6 +119,7 @@ footer{max-width:1080px;margin:0 auto;padding:0 16px 40px}
     <a href="#top"><svg class="i"><use href="#home"/></svg>ภาพรวม</a>
     <a href="#tools"><svg class="i"><use href="#game"/></svg>เครื่องมือ</a>
     <a href="#board"><svg class="i"><use href="#check"/></svg>แผน 30 วัน</a>
+    <a href="#catalog"><svg class="i"><use href="#book"/></svg>แคตตาล็อก</a>
     <a href="#roadmap"><svg class="i"><use href="#map"/></svg>แผนระยะยาว</a>
     <a href="#price"><svg class="i"><use href="#coin"/></svg>ราคาและรายได้</a>
   </nav>
@@ -127,9 +137,10 @@ footer{max-width:1080px;margin:0 auto;padding:0 16px 40px}
 
   <section id="tools" aria-labelledby="h-tools">
     <h2 id="h-tools"><svg class="i"><use href="#game"/></svg>เครื่องมือและเอกสาร</h2>
-    <div class="grid g4">
+    <div class="grid g3">
       <a class="card link" href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><div class="ico"><svg class="i"><use href="#timer"/></svg></div><div><b>โปรแกรมออนไลน์ 2</b><span>วัดผลสูตรคูณ (krusamm-Test)</span></div></a>
       <a class="card link" href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><div class="ico"><svg class="i"><use href="#game"/></svg></div><div><b>โปรแกรมออนไลน์ 1</b><span>ควิซสูตรคูณ (krusamm-quiz)</span></div></a>
+      <a class="card link" href="catalog.html"><div class="ico g"><svg class="i"><use href="#book"/></svg></div><div><b>โบรชัวร์แคตตาล็อก</b><span>รหัสคอร์สใหม่ เส้นทางการเรียน</span></div></a>
       <a class="card link" href="plan/start.html"><div class="ico y"><svg class="i"><use href="#plan"/></svg></div><div><b>แผนเริ่มต้นและข้อตกลง</b><span>ใช้ตอนคุยกับติวเตอร์ ถ่ายคลิป แผน 30 วัน</span></div></a>
       <a class="card link" href="plan/roadmap.html"><div class="ico y"><svg class="i"><use href="#doc"/></svg></div><div><b>แผนเต็ม 1-3-6-12 เดือน</b><span>ราคา แบ่งรายได้ ความเสี่ยง</span></div></a>
     </div>
@@ -144,6 +155,28 @@ footer{max-width:1080px;margin:0 auto;padding:0 16px 40px}
   <section class="card" aria-labelledby="h-have">
     <h2 id="h-have"><svg class="i"><use href="#book"/></svg>สิ่งที่มีพร้อมแล้ว</h2>
     <div class="grid g2" id="assets"></div>
+  </section>
+
+  <section id="catalog" aria-labelledby="h-cat">
+    <h2 id="h-cat"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส (รหัสใหม่)</h2>
+    <div class="card">
+      <p style="margin:0 0 10px"><b>ตัวอักษร = เรื่อง · ตัวเลข = ชั้นที่เริ่มเรียน</b> <span class="mut">เช่น F5 = เศษส่วน ป.5 · F5+ = ระดับเข้ม</span></p>
+      <div class="flowrow"><b>พื้นฐานไม่แน่น:</b> <em>วัดผลฟรี →</em> M2 <em>→</em> D3 <em>→</em> F3</div>
+      <div class="flowrow"><b>ป.5–ป.6 เพิ่มเกรด:</b> F5 <em>→</em> P4 <em>→</em> G5 <em>→</em> R6</div>
+      <div class="flowrow"><b>ป.6 สอบเข้า ม.1:</b> W6 <em>→</em> X6</div>
+      <div class="cat">
+<div class="cc"><span class="code on">M2</span><div><b>สูตรคูณแม่ 2–12</b><span>ป.2–ป.4 · พร้อมเรียน</span></div></div>
+<div class="cc"><span class="code">D3</span><div><b>การหารและหารยาว</b><span>ป.3–ป.4</span></div></div>
+<div class="cc"><span class="code">F3</span><div><b>เศษส่วน เข้าใจจากภาพ</b><span>ป.3–ป.4</span></div></div>
+<div class="cc"><span class="code">F5</span><div><b>บวก ลบ คูณ หาร เศษส่วน</b><span>ป.5–ป.6</span></div></div>
+<div class="cc"><span class="code">P4</span><div><b>ทศนิยม</b><span>ป.4–ป.5</span></div></div>
+<div class="cc"><span class="code">G5</span><div><b>ห.ร.ม. และ ค.ร.น.</b><span>ป.5–ป.6</span></div></div>
+<div class="cc"><span class="code">R6</span><div><b>ร้อยละ อัตราส่วน</b><span>ป.6</span></div></div>
+<div class="cc"><span class="code">W6</span><div><b>โจทย์ปัญหาและสมการ</b><span>ป.6</span></div></div>
+<div class="cc"><span class="code">X6</span><div><b>ตะลุยข้อสอบเข้า ม.1</b><span>ป.6 · ร่วมกับสถาบัน</span></div></div>
+      </div>
+      <p style="margin:12px 0 0"><a class="btn" href="catalog.html"><svg class="i"><use href="#doc"/></svg>เปิดโบรชัวร์แคตตาล็อกฉบับเต็ม</a></p>
+    </div>
   </section>
 
   <section id="roadmap" aria-labelledby="h-road">

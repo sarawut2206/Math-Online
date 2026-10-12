@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>แผนรายได้ครูกับติวเตอร์</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@500&family=Sarabun:wght@400;500;700&display=swap">
+<style>
+/* Layout: summary tiles → monthly chart → inputs (two columns) → monthly table. Teacher = blue, tutor = orange everywhere. */
+:root{
+  --bg:#f3f5f9;--surface:#fff;--fg:#18202e;--mut:#5a6479;--line:#dfe4ec;--grid:#e9edf3;
+  --ink:#1f4fa3;--ink-soft:#e8eefa;--mark:#f2c230;--mark-soft:#fff6d6;--ok:#1b7a4b;--neg:#b42318;
+  --s-teacher:#2a78d6;--s-tutor:#eb6834;
+  --display:"Mitr","Sarabun",system-ui,sans-serif;--body:"Sarabun","TH Sarabun New",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f131b;--surface:#181e2c;--fg:#e8ecf4;--mut:#9aa5ba;--line:#2a3246;--grid:#232a3b;
+  --ink:#8fb2f2;--ink-soft:#1d2a47;--mark-soft:#2d2812;--ok:#6fd0a0;--neg:#ff8a80;--s-teacher:#3987e5;--s-tutor:#d95926;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f131b;--surface:#181e2c;--fg:#e8ecf4;--mut:#9aa5ba;--line:#2a3246;--grid:#232a3b;
+  --ink:#8fb2f2;--ink-soft:#1d2a47;--mark-soft:#2d2812;--ok:#6fd0a0;--neg:#ff8a80;--s-teacher:#3987e5;--s-tutor:#d95926;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);padding:20px 16px 64px}
+main{max-width:1080px;margin:0 auto;display:grid;gap:18px}
+a{color:var(--ink)}
+.head{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:flex-end;justify-content:space-between}
+h1{font:500 26px/1.25 var(--display);margin:0;text-wrap:balance}
+h2{font:500 19px/1.3 var(--display);margin:0 0 10px}
+.mut{color:var(--mut)}.note{font-size:13px;color:var(--mut);margin:8px 0 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media(max-width:820px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;min-width:0}
+.tile span{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--mut)}
+.tile b{display:block;font:500 24px/1.3 var(--display);font-variant-numeric:tabular-nums;margin-top:2px}
+.sw{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.sw.t{background:var(--s-teacher)}.sw.u{background:var(--s-tutor)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:7px 14px;border-radius:99px;font:500 15px var(--body);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+:root[data-theme="dark"] .seg button[aria-pressed="true"]{color:#0f131b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .seg button[aria-pressed="true"]{color:#0f131b}}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--mut);margin-bottom:6px}
+.legend span{display:flex;align-items:center;gap:6px}
+.chartbox{position:relative}
+svg.chart{display:block;width:100%;height:auto}
+svg.chart text{fill:var(--mut);font:12px var(--body)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.12);min-width:170px;font-variant-numeric:tabular-nums}
+.tip div{display:flex;justify-content:space-between;gap:12px}
+.inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:900px){.inputs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.inputs{grid-template-columns:minmax(0,1fr)}}
+fieldset{border:1px solid var(--line);border-radius:12px;padding:10px 12px 4px;margin:0;min-width:0}
+legend{font-weight:700;padding:0 6px;color:var(--ink)}
+label{display:grid;gap:2px;font-size:14px;font-weight:500;margin-bottom:8px}
+input[type=number]{font:16px var(--body);padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--mut);font-size:12.5px;font-weight:700}
+tr.sum td{font-weight:700;border-top:2px solid var(--line)}
+.neg{color:var(--neg)}
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:760px){.how{grid-template-columns:1fr}}
+.how div{border:1px solid var(--line);border-radius:12px;padding:12px}
+.how b{display:block;margin-bottom:2px}
+</style></head>
+<body>
+<main>
+  <div class="head">
+    <div><a href="./">← แดชบอร์ด</a><h1>แผนรายได้ครูกับติวเตอร์ 12 เดือน</h1>
+    <span class="mut">ปรับตัวเลขด้านล่างแล้วกราฟและตารางคำนวณใหม่ทันที · ทุกค่าเริ่มต้นเป็นสมมติฐาน</span></div>
+    <div class="seg" role="group" aria-label="เลือกสถานการณ์">
+      <button type="button" data-sc="low">ขายช้า</button>
+      <button type="button" data-sc="mid" aria-pressed="true">ปานกลาง</button>
+      <button type="button" data-sc="high">ขายดี</button>
+    </div>
+  </div>
+
+  <div class="tiles" aria-live="polite">
+    <div class="tile"><span><i class="sw t"></i>ครูได้รวม 12 เดือน</span><b id="k_t">–</b></div>
+    <div class="tile"><span><i class="sw u"></i>ติวเตอร์ได้สุทธิรวม</span><b id="k_u">–</b></div>
+    <div class="tile"><span>ครูได้ในเดือนที่ 12</span><b id="k_t12">–</b></div>
+    <div class="tile"><span>ติวเตอร์คืนทุนเดือนที่</span><b id="k_be">–</b></div>
+  </div>
+
+  <section class="card" aria-labelledby="h-chart">
+    <h2 id="h-chart">รายได้แต่ละเดือน</h2>
+    <div class="legend"><span><i class="sw t"></i>ครู (คอร์สเทป + สอนสด)</span><span><i class="sw u"></i>ติวเตอร์ สุทธิหลังหักเงินที่ลง</span></div>
+    <div class="chartbox" id="cbox"><svg class="chart" id="chart" viewBox="0 0 960 320" role="img" aria-label="กราฟแท่งรายได้ครูและติวเตอร์รายเดือน"></svg><div class="tip" id="tip" hidden></div></div>
+    <p class="note">แท่งต่ำกว่าเส้นศูนย์ = เดือนที่ติวเตอร์ลงเงินโฆษณามากกว่าที่ได้คืน</p>
+  </section>
+
+  <section class="card" aria-labelledby="h-how">
+    <h2 id="h-how">เงินไหลอย่างไร</h2>
+    <div class="how">
+      <div><b>1. คอร์สเทป</b>หักค่าธรรมเนียมและค่าพิมพ์ส่ง → คืนเงินที่ติวเตอร์ลง (สะสมข้ามเดือนจนครบ) → กำไรที่เหลือแบ่งตามสัดส่วน</div>
+      <div><b>2. สอนสดที่สถาบัน</b>ค่าเรียนแบ่งตรงตามสัดส่วนสอนสด ครูได้ค่าสอน สถาบันได้ค่าสถานที่และหานักเรียน</div>
+      <div><b>3. คอร์สใหม่</b>อัดจากรอบสด แล้วเพิ่มเข้าแคตตาล็อกเดือนละคอร์ส ยอดขายรวมจึงโตตามจำนวนคอร์ส</div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-in">
+    <h2 id="h-in">ตัวเลขที่ปรับได้</h2>
+    <div class="inputs">
+      <fieldset><legend>คอร์สเทป</legend>
+        <label>ราคาเฉลี่ยต่อออเดอร์ (บาท)<input id="i_price" type="number" min="0" value="690"></label>
+        <label>ค่าธรรมเนียมชำระเงิน (%)<input id="i_fee" type="number" min="0" step="0.1" value="3.5"></label>
+        <label>ค่าพิมพ์ + ส่งเฉลี่ยต่อออเดอร์ (บาท)<input id="i_print" type="number" min="0" value="80"></label>
+        <label>ยอดขายเดือนแรกต่อคอร์ส (ออเดอร์)<input id="i_base" type="number" min="0" value="8"></label>
+        <label>ยอดขายโตต่อเดือน (%)<input id="i_grow" type="number" min="-50" value="5"></label>
+      </fieldset>
+      <fieldset><legend>ติวเตอร์ลงเงิน และสัดส่วน</legend>
+        <label>ค่าโฆษณาต่อเดือน (บาท)<input id="i_ads" type="number" min="0" value="5000"></label>
+        <label>ค่าตัดต่อต่อเดือน (บาท · ครูตัดเองใส่ 0)<input id="i_edit" type="number" min="0" value="0"></label>
+        <label>ส่วนครูจากกำไรคอร์สเทป (%)<input id="i_share" type="number" min="0" max="100" value="55"></label>
+        <label>เปิดคอร์สใหม่ทุกกี่เดือน (เริ่มเดือนที่ 4)<input id="i_every" type="number" min="1" value="1"></label>
+        <label>จำนวนคอร์สสูงสุดในแคตตาล็อก<input id="i_max" type="number" min="1" value="9"></label>
+      </fieldset>
+      <fieldset><legend>สอนสดที่สถาบัน</legend>
+        <label>เริ่มสอนสดเดือนที่<input id="i_lstart" type="number" min="1" max="12" value="2"></label>
+        <label>รุ่นต่อเดือน<input id="i_lclass" type="number" min="0" value="1"></label>
+        <label>นักเรียนต่อรุ่น (คน)<input id="i_lstu" type="number" min="0" value="8"></label>
+        <label>ค่าเรียนต่อคนต่อคอร์ส (บาท)<input id="i_lfee" type="number" min="0" value="1500"></label>
+        <label>ส่วนครูจากค่าเรียนสด (%)<input id="i_lshare" type="number" min="0" max="100" value="60"></label>
+      </fieldset>
+    </div>
+    <p class="note">ค่าเริ่มต้น: ครูตัดต่อเอง (แบ่ง 55:45 ตามแผนสำรอง) ติวเตอร์ลงค่าโฆษณาเดือนละ 5,000 บาท ทุกตัวเลขเป็นสมมติฐานเพื่อวางแผน ไม่ใช่ข้อตกลงหรือคำรับรองรายได้</p>
+  </section>
+
+  <section class="card" aria-labelledby="h-tbl">
+    <h2 id="h-tbl">ตารางรายเดือน</h2>
+    <div class="wrap"><table id="tbl"></table></div>
+  </section>
+</main>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var ids=["price","fee","print","base","grow","ads","edit","share","every","max","lstart","lclass","lstu","lfee","lshare"];
+function v(k){var x=parseFloat($("i_"+k).value);return isFinite(x)?x:0}
+function fmt(x){return Math.round(x).toLocaleString("th-TH")}
+var SC={low:{base:3,grow:0},mid:{base:8,grow:5},high:{base:15,grow:10}};
+
+function model(){
+  var p=v("price"),fee=v("fee")/100,pr=v("print"),base=v("base"),g=v("grow")/100,ads=v("ads"),ed=v("edit"),sh=Math.min(100,Math.max(0,v("share")))/100,
+      every=Math.max(1,Math.round(v("every"))),mx=Math.max(1,Math.round(v("max"))),ls=v("lstart"),lc=v("lclass"),lst=v("lstu"),lf=v("lfee"),lsh=Math.min(100,Math.max(0,v("lshare")))/100;
+  var launches=[1];for(var m=4;m<=12&&launches.length<mx;m+=every)launches.push(m);
+  var bal=0,rows=[],cT=0,cU=0,be=null,wasNeg=false;
+  for(var m=1;m<=12;m++){
+    var live=launches.filter(function(s){return s<=m});
+    var orders=0;live.forEach(function(s){orders+=base*Math.pow(1+g,m-s)});orders=Math.round(orders);
+    var rev=orders*p,direct=rev*fee+orders*pr,margin=rev-direct,cost=ads+ed;
+    bal+=cost;var repay=Math.min(Math.max(margin,0),bal);bal-=repay;
+    var profit=Math.max(margin-repay,0);
+    var tTape=profit*sh,uTape=repay+profit*(1-sh)-cost;
+    var lrev=m>=ls?lc*lst*lf:0,tLive=lrev*lsh,uLive=lrev-tLive;
+    var t=tTape+tLive,u=uTape+uLive;cT+=t;cU+=u;
+    if(cU<0)wasNeg=true;if(be===null&&wasNeg&&cU>=0)be=m;
+    rows.push({m:m,courses:live.length,orders:orders,rev:rev,cost:cost,repay:repay,tTape:tTape,tLive:tLive,t:t,u:u,cT:cT,cU:cU,lrev:lrev});
+  }
+  return {rows:rows,cT:cT,cU:cU,be:be,wasNeg:wasNeg,unpaid:bal};
+}
+
+function render(){
+  var r=model(),R=r.rows;
+  $("k_t").textContent=fmt(r.cT)+" บาท";
+  $("k_u").textContent=(r.cU<0?"ขาดทุน ":"")+fmt(Math.abs(r.cU))+" บาท";
+  $("k_u").className=r.cU<0?"neg":"";
+  $("k_t12").textContent=fmt(R[11].t)+" บาท";
+  $("k_be").textContent=r.wasNeg?(r.be?("เดือน "+r.be):"ยังไม่คืนทุนใน 12 เดือน"):"ไม่ขาดทุนเลย";
+  drawChart(R);drawTable(R,r);
+}
+
+function niceStep(span){var raw=span/5,p=Math.pow(10,Math.floor(Math.log10(raw||1))),n=raw/p;return (n<=1?1:n<=2?2:n<=5?5:10)*p}
+function drawChart(R){
+  var W=960,H=320,L=64,Rm=12,T=14,B=34,svg=$("chart");
+  var vals=[];R.forEach(function(d){vals.push(d.t,d.u)});
+  var lo=Math.min(0,Math.min.apply(null,vals)),hi=Math.max(0,Math.max.apply(null,vals));if(hi===lo)hi=lo+1;
+  var st=niceStep(hi-lo);lo=Math.floor(lo/st)*st;hi=Math.ceil(hi/st)*st;
+  var y=function(x){return T+(hi-x)/(hi-lo)*(H-T-B)};
+  var gw=(W-L-Rm)/12,bw=Math.min(26,(gw-14)/2),s="";
+  for(var k=lo;k<=hi+1e-9;k+=st){var yy=y(k);s+='<line x1="'+L+'" x2="'+(W-Rm)+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--grid)" stroke-width="1"/>';
+    s+='<text x="'+(L-8)+'" y="'+(yy+4)+'" text-anchor="end">'+(Math.abs(k)>=1000?(k/1000).toLocaleString("th-TH")+"k":k)+'</text>'}
+  s+='<line x1="'+L+'" x2="'+(W-Rm)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="var(--mut)" stroke-width="1"/>';
+  function bar(x,val,col){var y0=y(0),y1=y(val),h=Math.abs(y1-y0);if(h<0.5)return "";var top=Math.min(y0,y1),r=Math.min(4,h,bw/2);
+    var up=val>=0;var d=up?'M'+x+','+(top+h)+'V'+(top+r)+'Q'+x+','+top+' '+(x+r)+','+top+'H'+(x+bw-r)+'Q'+(x+bw)+','+top+' '+(x+bw)+','+(top+r)+'V'+(top+h)+'Z'
+      :'M'+x+','+top+'V'+(top+h-r)+'Q'+x+','+(top+h)+' '+(x+r)+','+(top+h)+'H'+(x+bw-r)+'Q'+(x+bw)+','+(top+h)+' '+(x+bw)+','+(top+h-r)+'V'+top+'Z';
+    return '<path d="'+d+'" fill="'+col+'"/>'}
+  R.forEach(function(d,i){var gx=L+i*gw,cx=gx+gw/2;
+    s+=bar(cx-bw-1,d.t,"var(--s-teacher)")+bar(cx+1,d.u,"var(--s-tutor)");
+    s+='<text x="'+cx+'" y="'+(H-12)+'" text-anchor="middle">ด.'+d.m+'</text>';
+    s+='<rect class="hit" data-i="'+i+'" x="'+gx+'" y="'+T+'" width="'+gw+'" height="'+(H-T-B)+'" fill="transparent"/>'});
+  svg.innerHTML=s;
+  var tip=$("tip"),box=$("cbox");
+  svg.querySelectorAll(".hit").forEach(function(h){
+    function show(){var d=R[+h.dataset.i];
+      tip.innerHTML='<b>เดือนที่ '+d.m+'</b> · '+d.courses+' คอร์ส · '+fmt(d.orders)+' ออเดอร์'+
+      '<div><span><i class="sw t"></i> ครู</span><span>'+fmt(d.t)+'</span></div>'+
+      '<div><span><i class="sw u"></i> ติวเตอร์</span><span class="'+(d.u<0?"neg":"")+'">'+fmt(d.u)+'</span></div>'+
+      '<div><span>รายรับคอร์สเทป</span><span>'+fmt(d.rev)+'</span></div>';
+      tip.hidden=false;var bb=box.getBoundingClientRect(),hb=h.getBoundingClientRect();
+      var x=hb.left-bb.left+hb.width/2-tip.offsetWidth/2;x=Math.max(0,Math.min(bb.width-tip.offsetWidth,x));
+      tip.style.left=x+"px";tip.style.top="0px";h.setAttribute("fill","var(--grid)");h.setAttribute("fill-opacity","0.45")}
+    function hide(){tip.hidden=true;h.setAttribute("fill","transparent")}
+    h.addEventListener("mouseenter",show);h.addEventListener("mouseleave",hide);
+    h.addEventListener("click",show);
+  });
+}
+
+function drawTable(R,r){
+  var c=function(x){return '<td class="'+(x<0?"neg":"")+'">'+fmt(x)+'</td>'};
+  var h='<tr><th>เดือน</th><th>คอร์สที่เปิด</th><th>ออเดอร์</th><th>รายรับคอร์สเทป</th><th>ติวเตอร์ลงเงิน</th><th>คืนติวเตอร์</th><th>รายรับสอนสด</th><th>ครู (เทป)</th><th>ครู (สด)</th><th>ครูรวม</th><th>ติวเตอร์สุทธิ</th><th>ครูสะสม</th><th>ติวเตอร์สะสม</th></tr>';
+  var S={orders:0,rev:0,cost:0,repay:0,lrev:0,tTape:0,tLive:0,t:0,u:0};
+  R.forEach(function(d){for(var k in S)S[k]+=d[k];
+    h+='<tr><td>'+d.m+'</td><td>'+d.courses+'</td><td>'+fmt(d.orders)+'</td>'+c(d.rev)+c(d.cost)+c(d.repay)+c(d.lrev)+c(d.tTape)+c(d.tLive)+c(d.t)+c(d.u)+c(d.cT)+c(d.cU)+'</tr>'});
+  h+='<tr class="sum"><td>รวม</td><td></td><td>'+fmt(S.orders)+'</td>'+c(S.rev)+c(S.cost)+c(S.repay)+c(S.lrev)+c(S.tTape)+c(S.tLive)+c(S.t)+c(S.u)+'<td></td><td></td></tr>';
+  $("tbl").innerHTML=h;
+}
+
+ids.forEach(function(k){$("i_"+k).addEventListener("input",render)});
+document.querySelectorAll("[data-sc]").forEach(function(b){b.addEventListener("click",function(){
+  var s=SC[b.dataset.sc];$("i_base").value=s.base;$("i_grow").value=s.grow;
+  document.querySelectorAll("[data-sc]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});render()})});
+render();
+})();
+</script>
+</body></html>

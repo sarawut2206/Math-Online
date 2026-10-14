@@ -1,0 +1,222 @@
+<title>แผนคอร์สคณิตศาสตร์ออนไลน์ ป.4–ม.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: single reading column on graph-paper header; tables scroll inside their own boxes */
+:root{
+  --bg:#f6f8f7; --surface:#ffffff; --fg:#17262e; --muted:#5b6b73; --line:#d8e0dd;
+  --accent:#0b6e66; --accent-soft:#dff0ed; --chalk:#f2b632; --head-bg:#17262e; --head-fg:#f6f8f7; --grid:#e3ebe8;
+  --font:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1a1f; --surface:#16252c; --fg:#e6eeeb; --muted:#9bb0b0; --line:#2a3e45;
+  --accent:#5cc7bb; --accent-soft:#17353a; --chalk:#f2c14e; --head-bg:#0a1216; --head-fg:#e6eeeb; --grid:#1b2d34; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1a1f; --surface:#16252c; --fg:#e6eeeb; --muted:#9bb0b0; --line:#2a3e45;
+  --accent:#5cc7bb; --accent-soft:#17353a; --chalk:#f2c14e; --head-bg:#0a1216; --head-fg:#e6eeeb; --grid:#1b2d34; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.7}
+header{background:var(--head-bg);color:var(--head-fg);padding-inline:16px;padding-block:44px 36px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;background-blend-mode:soft-light}
+.wrap{max-width:860px;margin-inline:auto}
+header h1{margin:0 0 8px;font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.25;text-wrap:balance}
+header p{margin:0;color:var(--head-fg);opacity:.85;max-width:60ch}
+.tag{display:inline-block;font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;color:var(--chalk);margin-bottom:12px}
+main{padding-inline:16px;padding-block:8px 64px}
+section{padding-block:28px 4px}
+h2{font-size:1.5rem;line-height:1.3;margin:0 0 12px;text-wrap:balance;display:flex;gap:10px;align-items:baseline}
+h2 span{font-family:var(--mono);font-size:.85rem;color:var(--accent)}
+h3{font-size:1.1rem;margin:22px 0 8px;color:var(--accent)}
+p{margin:0 0 12px;max-width:68ch}
+ul{margin:0 0 14px;padding-left:1.2rem;max-width:68ch}
+li{margin-bottom:6px}
+.tblbox{overflow-x:auto;border:1px solid var(--line);border-radius:6px;margin:10px 0 14px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:.9rem;color:var(--muted)}
+.callout{background:var(--accent-soft);border-radius:6px;padding:12px 14px;margin:12px 0 16px;max-width:68ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0 16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px}
+.stat b{display:block;font-size:1.5rem;font-variant-numeric:tabular-nums;color:var(--accent)}
+.stat small{color:var(--muted)}
+.tpl{font-family:var(--mono);font-size:.85rem}
+footer{padding-inline:16px;padding-block:20px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+</style>
+
+<header><div class="wrap">
+  <div class="tag">แผนธุรกิจ • ร่างสำหรับหารือ</div>
+  <h1>แผนโมเดลรายได้และการอัดวิดีโอ คณิตศาสตร์ออนไลน์ ป.4–ม.3</h1>
+  <p>เริ่มที่ ป.4–ป.6 แล้วต่อ ม.1–ม.3 อ้างอิงแผนผังหลักสูตร ตัวเลขทั้งหมดเป็นสมมติฐานที่ต้องทดสอบ ไม่ใช่ข้อมูลตลาดจริง</p>
+</div></header>
+
+<main><div class="wrap">
+
+<section>
+<h2><span>1</span>ข้อสังเกตก่อนวางแผน</h2>
+<ul>
+<li><b>ผู้ซื้อ ป.4–ป.6 คือผู้ปกครอง</b> ต้องขายด้วยความเชื่อมั่น ผลลัพธ์ที่เห็นได้ และการติดตามความก้าวหน้า</li>
+<li><b>เด็กวัยนี้สมาธิสั้น</b> คลิปควรสั้น 6–12 นาที มีโจทย์ให้ทำตามทันที และมีใบงานคู่กับทุกคลิป</li>
+<li><b>ป.6 ขายง่ายที่สุด</b> เพราะมีแรงจูงใจชัด (สอบเข้า ม.1 / ห้องเรียนพิเศษ) ส่วน ป.4–ป.5 ขายแนวเรียนล่วงหน้าและเสริมพื้นฐาน ได้ยาวกว่า</li>
+<li><b>จังหวะเวลา:</b> ให้คอร์สชุดแรกพร้อมเปิดขายก่อนเปิดปีการศึกษาใหม่ (ราวเดือนพฤษภาคม) เล็งช่วงมีนาคม–พฤษภาคม 2570 และตรวจปฏิทินสอบเข้าจริงอีกครั้ง</li>
+<li><b>ข้อควรเช็ก:</b> ถ้าเป็นครูโรงเรียนรัฐ ตรวจระเบียบเรื่องรายได้พิเศษ และไม่ใช้ชื่อ รูป หรือผลงานเด็กจริงโดยไม่มีความยินยอมจากผู้ปกครอง</li>
+</ul>
+</section>
+
+<section>
+<h2><span>2</span>ขอบเขตเนื้อหาจากหลักสูตร</h2>
+<p>หลักสูตร ป.4–ป.6 มี 3 สาระ คือ จำนวนและพีชคณิต, การวัดและเรขาคณิต, สถิติและความน่าจะเป็น จำนวนหัวข้อนับจากกล่องในแผนผัง แล้วประมาณ 5 บทเรียนต่อหัวข้อ</p>
+<div class="stats">
+  <div class="stat"><b>~34</b><small>หัวข้อ ป.4–6</small></div>
+  <div class="stat"><b>~170</b><small>คลิป ป.4–6</small></div>
+  <div class="stat"><b>~28–30</b><small>ชั่วโมงเนื้อหา</small></div>
+  <div class="stat"><b>~165</b><small>คลิป ม.1–3 (ปีที่ 2)</small></div>
+</div>
+<div class="tblbox"><table>
+<tr><th>ระดับ</th><th>หัวข้อหลัก</th><th class="n">หัวข้อ</th><th class="n">คลิป</th></tr>
+<tr><td>ป.4</td><td>จำนวนนับเกิน 100,000, บวก ลบ คูณ หาร, เศษส่วน, บวกลบเศษส่วน, ทศนิยม, บวกลบทศนิยม, แบบรูป, เวลา, รูปเรขาคณิตและมุม, รูปสองมิติ, ตารางข้อมูล</td><td class="n">~11</td><td class="n">~55</td></tr>
+<tr><td>ป.5</td><td>บวก ลบ คูณ หารและ 0, ทศนิยม, คูณหารทศนิยม, เศษส่วน, ร้อยละ, ความยาว, น้ำหนัก, ปริมาตรและความจุ, พื้นที่/เส้นขนาน/มุม, รูปสองมิติ, รูปสามมิติ, แผนภูมิ</td><td class="n">~12</td><td class="n">~60</td></tr>
+<tr><td>ป.6</td><td>ตัวประกอบ ห.ร.ม. ค.ร.น., เศษส่วนและจำนวนคละ, อัตราส่วนและร้อยละ, แบบรูป, ทศนิยม, ปริมาตรและความจุ, พื้นที่และวงกลม, รูปสามมิติ, แผนภูมิวงกลม</td><td class="n">~11</td><td class="n">~55</td></tr>
+<tr><td>ม.1–ม.3</td><td>ม.1: จำนวนตรรกยะ อัตราส่วน สมการเชิงเส้น เรขาคณิตพื้นฐาน สถิติ<br>ม.2: จำนวนจริง พหุนาม การแยกตัวประกอบ พีทาโกรัส การแปลงเรขาคณิต<br>ม.3: สมการกำลังสอง ระบบสมการ ฟังก์ชัน ความคล้าย ตรีโกณมิติ วงกลม ความน่าจะเป็น</td><td class="n">~7 / ~12 / ~12</td><td class="n">~165</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2><span>3</span>โมเดลรายได้</h2>
+<h3>บันไดผลิตภัณฑ์</h3>
+<div class="tblbox"><table>
+<tr><th>ขั้น</th><th>สิ่งที่ให้</th><th>หน้าที่</th></tr>
+<tr><td>ฟรี</td><td>คลิปตัวอย่าง 1–2 หัวข้อ ใบงานฟรี ข้อสอบวัดระดับสั้น ๆ</td><td>ดึงผู้ปกครองเข้าระบบ เก็บอีเมล/LINE</td></tr>
+<tr><td>Basic รายระดับ</td><td>คลิปทั้งปี ใบงาน แบบทดสอบท้ายหัวข้อ เฉลยละเอียด</td><td>สินค้าหลัก ขายง่าย</td></tr>
+<tr><td>Plus</td><td>Basic + ไลฟ์ถามตอบรายเดือน + ตรวจการบ้านบางส่วน + รายงานความก้าวหน้าถึงผู้ปกครอง</td><td>รายได้ต่อคนสูง สร้างความเชื่อมั่น</td></tr>
+<tr><td>แพ็กเกจ ป.4–6</td><td>เข้าถึงทั้ง 3 ระดับ (เช่น 3 ปี)</td><td>เพิ่มยอดต่อคน ล็อกลูกค้าระยะยาว</td></tr>
+<tr><td>เสริม</td><td>ชุดข้อสอบจำลอง หนังสือ/แบบฝึกพิมพ์ ติวสดก่อนสอบ</td><td>รายได้เพิ่ม ไม่ต้องอัดวิดีโอใหม่</td></tr>
+</table></div>
+
+<h3>ราคาเริ่มต้นเพื่อทดสอบ</h3>
+<div class="tblbox"><table>
+<tr><th>แพ็กเกจ</th><th class="n">ราคา (บาท)</th><th class="n">สัดส่วนผู้ซื้อที่สมมติ</th></tr>
+<tr><td>Basic รายระดับ</td><td class="n">2,490</td><td class="n">60%</td></tr>
+<tr><td>Plus รายระดับ</td><td class="n">3,990</td><td class="n">30%</td></tr>
+<tr><td>แพ็กเกจ ป.4–6</td><td class="n">5,990</td><td class="n">10%</td></tr>
+<tr><td><b>ราคาเฉลี่ยถ่วงน้ำหนัก</b></td><td class="n"><b>≈ 3,300</b></td><td class="n"></td></tr>
+</table></div>
+<p class="note">คอร์สสดระดับ ม.ปลายราว 8,000 บาทต่อวิชา ราคาออนไลน์ระดับประถมจึงต่ำกว่ามาก ให้ทดลองหลายราคาด้วยรอบพรีเซล (A/B) ก่อนล็อกราคา ทางเลือกอื่นคือสมาชิกรายเดือน 490–690 บาท ให้ทดลองหลังคอร์สรายระดับขายได้แล้ว</p>
+
+<h3>ประมาณการปีที่ 1 (แบรนด์ตัวเอง)</h3>
+<div class="tblbox"><table>
+<tr><th>สถานการณ์</th><th class="n">ผู้ซื้อ (คน)</th><th class="n">ยอดขาย (บาท)</th><th class="n">สุทธิ ~70% (บาท)</th><th>หมายเหตุ</th></tr>
+<tr><td>ต่ำ</td><td class="n">100</td><td class="n">330,000</td><td class="n">231,000</td><td>เริ่มจากศูนย์ ไม่มีฐานลูกค้า</td></tr>
+<tr><td>กลาง</td><td class="n">250</td><td class="n">825,000</td><td class="n">577,500</td><td>ทำตลาดต่อเนื่อง มีรีวิว</td></tr>
+<tr><td>สูง</td><td class="n">500</td><td class="n">1,650,000</td><td class="n">1,155,000</td><td>มีช่องทางแนะนำ / ร่วมติวเตอร์</td></tr>
+</table></div>
+<p class="note">สุทธิ 70% คือหลังหักค่าแพลตฟอร์ม ค่าชำระเงิน คืนเงิน และค่าโฆษณาโดยประมาณ ยังไม่หักภาษี ไม่รวมรายได้เสริมและสมาชิกรายเดือน ถ้าร่วมกับติวเตอร์ ให้ใช้ส่วนแบ่งตามโมเดลความร่วมมือแทน</p>
+
+<h3>จุดคุ้มทุนและเพดานค่าโฆษณา</h3>
+<ul>
+<li>ลงทุนเริ่มต้นสมมติ 80,000 บาท (อุปกรณ์ 25,000–40,000 + ทดลองโฆษณา 20,000–30,000 + อื่น ๆ) ÷ สุทธิเฉลี่ย ~2,310 บาทต่อคน = คุ้มทุนที่ประมาณ <b>35 ผู้ซื้อ</b> (ไม่นับค่าแรง)</li>
+<li>ค่าโฆษณาต่อผู้ซื้อหนึ่งคนไม่ควรเกิน ~700–900 บาท ใช้ช่องทางฟรีก่อน (คลิปสั้น TikTok/YouTube/กลุ่มผู้ปกครอง) แล้วค่อยเพิ่มโฆษณา</li>
+<li>ผลิต ~170 คลิปใช้ ~500 ชั่วโมง ถ้าไม่ถึง 100 ผู้ซื้อ ค่าตอบแทนต่อชั่วโมงจะต่ำมาก จึงตัดสินใจจากข้อมูลพรีเซลก่อนอัดครบ</li>
+</ul>
+</section>
+
+<section>
+<h2><span>4</span>แผนการอัดวิดีโอ</h2>
+<h3>รูปแบบคลิป</h3>
+<ul>
+<li><b>ความยาว:</b> ป.4 ราว 6–9 นาที, ป.5–ป.6 ราว 8–12 นาที, ม.1–ม.3 ราว 10–15 นาที หนึ่งคลิปต่อหนึ่งแนวคิด</li>
+<li><b>สไตล์:</b> เขียนด้วยปากกาบนแท็บเล็ตพร้อมเสียงพูด ใช้สีและภาพเรขาคณิต ใส่หน้าตัวเองสั้น ๆ ที่ต้นและท้ายคลิปเพื่อสร้างความไว้ใจ</li>
+<li><b>เป้าหมาย:</b> ต้นคลิปบอกว่าจบแล้วทำอะไรได้ ท้ายคลิปสรุป 3 ข้อ</li>
+</ul>
+
+<h3>โครงคลิปมาตรฐาน (ตัวอย่างคลิป ~9:30 นาที)</h3>
+<div class="tblbox"><table>
+<tr><th>ช่วง</th><th>เวลา</th><th>เนื้อหา</th></tr>
+<tr><td>เปิด</td><td class="tpl">0:00–0:30</td><td>โจทย์ในชีวิตจริงหรือคำถามชวนคิด</td></tr>
+<tr><td>แนวคิด</td><td class="tpl">0:30–4:00</td><td>อธิบายหลัก + ตัวอย่างที่ 1 (ทำให้ดู)</td></tr>
+<tr><td>ฝึกทำตาม</td><td class="tpl">4:00–7:00</td><td>ตัวอย่างที่ 2 ให้หยุดคลิปทำเอง แล้วเฉลย</td></tr>
+<tr><td>ข้อผิดพลาดที่พบบ่อย</td><td class="tpl">7:00–8:30</td><td>จุดที่เด็กมักผิด และวิธีเช็กคำตอบ</td></tr>
+<tr><td>สรุป</td><td class="tpl">8:30–9:30</td><td>สรุป 3 ข้อ + ชี้ใบงานที่ต้องทำ</td></tr>
+</table></div>
+
+<h3>โครงหนึ่งหัวข้อ (Unit)</h3>
+<p>แบบทดสอบก่อนเรียนสั้น ๆ → คลิปบทเรียน 4–6 คลิป → ใบงาน 2 ระดับ (พื้นฐาน / ท้าทาย) → แบบทดสอบท้ายหัวข้อ → คลิปเฉลยโจทย์ยากหรือข้อสอบแข่งขัน 1 คลิป</p>
+
+<h3>ชุดอุปกรณ์และเครื่องมือ</h3>
+<div class="tblbox"><table>
+<tr><th>ส่วน</th><th>ขั้นต่ำที่ใช้ได้</th><th>อัปเกรดภายหลัง</th></tr>
+<tr><td>การเขียน</td><td>แท็บเล็ตพร้อมปากกา + แอปจดโน้ต</td><td>จอปากกาต่อคอม</td></tr>
+<tr><td>เสียง</td><td>ไมโครโฟน USB/ไวเลสคุณภาพดี + ห้องเงียบ</td><td>แผ่นซับเสียง ไมค์ Condenser</td></tr>
+<tr><td>ภาพ/แสง</td><td>ไฟวงแหวนหรือซอฟต์บ็อกซ์ + เว็บแคม/มือถือ</td><td>กล้องมิเรอร์เลส</td></tr>
+<tr><td>บันทึก/ตัดต่อ</td><td>โปรแกรมอัดหน้าจอฟรี (เช่น OBS) + โปรแกรมตัดต่อพื้นฐาน</td><td>จ้างตัดต่อบางส่วน</td></tr>
+<tr><td>โฮสต์วิดีโอ</td><td>แพลตฟอร์มคอร์สที่กันดาวน์โหลดและมีรายงานผู้เรียน</td><td>เว็บ/แอปของแบรนด์เอง</td></tr>
+</table></div>
+
+<h3>ขั้นตอนผลิตแบบทำเป็นชุด (Batch)</h3>
+<div class="tblbox"><table>
+<tr><th>ขั้น</th><th>งาน</th><th>รายละเอียด</th></tr>
+<tr><td>วางแผน</td><td>กำหนดหัวข้อประจำสัปดาห์</td><td>เขียนเป้าหมายการเรียนและโจทย์ตัวอย่างทั้งหัวข้อพร้อมกัน</td></tr>
+<tr><td>เขียนสคริปต์</td><td>สคริปต์ + สไลด์/กระดาน</td><td>ใช้เทมเพลตเดียวกันทุกคลิป เขียนเฉพาะประโยคสำคัญ</td></tr>
+<tr><td>อัด</td><td>อัด 5–8 คลิปต่อรอบ</td><td>ตั้งค่าครั้งเดียว อัดต่อเนื่อง</td></tr>
+<tr><td>ตัดต่อ</td><td>ตัดช่วงว่าง ใส่ชื่อเรื่อง คำบรรยายไทย</td><td>อินโทร 5 วินาที ตั้งชื่อไฟล์เป็นระบบ เช่น <span class="tpl">P6-U03-L02</span></td></tr>
+<tr><td>ตรวจ (QC)</td><td>ตรวจเนื้อหาและเสียง</td><td>ให้เพื่อนครู/ติวเตอร์ตรวจ ทดลองกับเด็ก 2–3 คน</td></tr>
+<tr><td>เผยแพร่</td><td>อัปโหลด + แนบใบงาน</td><td>ดูจุดที่เด็กหยุดหรือย้อนดู แล้วนำไปปรับ</td></tr>
+</table></div>
+
+<h3>กำลังผลิตและตารางเวลา</h3>
+<ul>
+<li>เวลาต่อคลิปโดยประมาณ 3 ชั่วโมง (สคริปต์ อัด ตัดต่อ ตรวจ) ถ้าใช้เทมเพลตและทำเป็นชุดอาจเหลือ ~2.5 ชั่วโมง</li>
+<li>ป.4–6 ~170 คลิป ≈ 430–510 ชั่วโมง ทำสัปดาห์ละ 15–20 ชั่วโมงใช้เวลาราว 6–8 เดือน</li>
+<li>การจ้างตัดต่อช่วยลดได้ ~1 ชั่วโมงต่อคลิป (ตรวจราคาจริง) ควรจ้างเมื่อพรีเซลแรกยืนยันว่ามีผู้ซื้อ</li>
+<li>ผลิตทีละระดับ: ป.6 (~55 คลิป ราว 3 เดือน) → ป.5 → ป.4 เปิดขายเมื่อพร้อมอย่างน้อย 30–50% ของคลิป แล้วทยอยส่งที่เหลือ</li>
+</ul>
+
+<h3>ข้อควรระวัง</h3>
+<ul>
+<li><b>ลิขสิทธิ์:</b> ฟอนต์ ภาพ เพลง และโจทย์จากหนังสือ/ข้อสอบของสำนักพิมพ์ ใช้เฉพาะที่มีสิทธิ์ หรือเขียนโจทย์ใหม่เอง</li>
+<li><b>ความเป็นส่วนตัวเด็ก:</b> ไม่ใช้ชื่อ รูป หรือผลงานเด็กจริงในสื่อโปรโมตโดยไม่มีหนังสือยินยอม</li>
+<li><b>ความถูกต้อง:</b> ตรวจเฉลยทุกข้อสองรอบ</li>
+<li><b>ปรับตามหลักสูตรใหม่:</b> เก็บไฟล์ต้นฉบับทั้งหมดเพื่อแก้เฉพาะคลิปที่เปลี่ยน</li>
+</ul>
+</section>
+
+<section>
+<h2><span>5</span>แผนงาน 12 เดือน</h2>
+<div class="tblbox"><table>
+<tr><th>ช่วง</th><th>กิจกรรม</th><th>เป้าหมาย</th></tr>
+<tr><td>เดือน 0–1</td><td>สัมภาษณ์ผู้ปกครอง 10 คน ทดลองคลิปตัวอย่าง 2 หัวข้อ ตั้งชื่อแบรนด์ เลือกแพลตฟอร์ม ซื้ออุปกรณ์</td><td>ยืนยันว่าผู้ปกครองสนใจและราคาที่ยอมจ่าย</td></tr>
+<tr><td>เดือน 2–3</td><td>ผลิต ป.6 ชุดแรก (3–4 หัวข้อ) เปิดพรีเซล/รายชื่อรอ</td><td>ผู้จอง ≥ 30 คน (หรือเกณฑ์ที่ตั้งไว้) = ไปต่อ</td></tr>
+<tr><td>เดือน 4–5</td><td>ผลิต ป.6 ที่เหลือ เปิดขายเต็ม เริ่มทำ ป.5</td><td>ยอดขาย ป.6 + รีวิวแรก</td></tr>
+<tr><td>เดือน 6–7</td><td>ปรับจากข้อมูลจริง เปิดตัว Plus ผลิต ป.5</td><td>เรียนจบ ≥ 40% คืนเงิน ≤ 5%</td></tr>
+<tr><td>เดือน 8–9</td><td>ผลิต ป.4 ขายแพ็กเกจ ป.4–6 ก่อนเปิดปีการศึกษาใหม่</td><td>ยอดขายช่วงเปิดเทอม</td></tr>
+<tr><td>เดือน 10–12</td><td>เริ่ม ม.1 (ม.2–ม.3 ทยอยปีที่ 2) ทบทวนราคา เพิ่มข้อสอบจำลองและหนังสือ</td><td>ตัดสินใจขยายหรือจ้างทีม</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2><span>6</span>ความเสี่ยง</h2>
+<div class="tblbox"><table>
+<tr><th>ความเสี่ยง</th><th>ผลกระทบ</th><th>แนวทาง</th></tr>
+<tr><td>ผลิตเสร็จแต่ไม่มีคนซื้อ</td><td>เสียเวลาหลายเดือน</td><td>พรีเซลก่อนอัดครบ ผลิตทีละระดับ</td></tr>
+<tr><td>เด็กเรียนไม่จบ</td><td>รีวิวไม่ดี คืนเงิน</td><td>คลิปสั้น ใบงานคู่ รายงานให้ผู้ปกครอง แจ้งเตือนความก้าวหน้า</td></tr>
+<tr><td>คู่แข่งฟรี/ถูกกว่า</td><td>ถูกต่อราคา</td><td>เน้นลำดับการเรียนที่ชัด ใบงาน การติดตามผล ไม่แข่งที่ราคา</td></tr>
+<tr><td>คลิปรั่วไหล</td><td>สูญรายได้</td><td>แพลตฟอร์มที่ป้องกัน ลายน้ำบัญชีผู้เรียน</td></tr>
+<tr><td>เวลาไม่พอ (มีงานประจำ)</td><td>คอร์สล่าช้า</td><td>ตารางคงที่ต่อสัปดาห์ ตัดขอบเขตให้เล็ก จ้างตัดต่อ</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2><span>7</span>สิ่งที่ต้องทำต่อ</h2>
+<ul>
+<li>ตัดสินใจว่าทำภายใต้แบรนด์ตัวเอง หรือร่วมกับติวเตอร์ (มีผลต่อโมเดลรายได้)</li>
+<li>เลือกหัวข้อ ป.6 สำหรับคลิปตัวอย่าง 2 หัวข้อ และอัดหนึ่งคลิปตามเทมเพลตเพื่อจับเวลาจริง</li>
+<li>สัมภาษณ์ผู้ปกครอง 5–10 คน: ปัญหาที่เจอ ราคาที่ยอมจ่าย สิ่งที่อยากได้ในคอร์ส</li>
+</ul>
+</section>
+
+</div></main>
+<footer><div class="wrap">ร่างวางแผน ตัวเลขเป็นสมมติฐาน ปรับตามข้อมูลจริงก่อนตัดสินใจลงทุน</div></footer>

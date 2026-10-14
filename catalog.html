@@ -1,138 +1,92 @@
 <!doctype html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
-<title>แคตตาล็อกคณิตตรงจุด ป.2–ป.6</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500&family=Sarabun:wght@400;500;700&display=swap">
-<style>
-/* Layout: brochure column. Header → code legend → learning paths → course list → how to study. Each topic letter owns one color. */
-:root{
-  --bg:#eef2f8;--paper:#fff;--fg:#17202f;--mut:#5a6479;--line:#dde3ec;--ink:#1f4fa3;--ink-soft:#e8eefa;--mark:#f2c230;--mark-soft:#fff6d6;--ok:#1b7a4b;--ok-soft:#e2f4ea;
-  --cM:#1f4fa3;--cD:#0f7f86;--cF:#c2410c;--cP:#7c3aed;--cG:#b45309;--cR:#be185d;--cW:#15803d;--cX:#17202f;
-  --display:"Mitr","Sarabun",system-ui,sans-serif;--body:"Sarabun","TH Sarabun New",system-ui,sans-serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f131b;--paper:#181e2c;--fg:#e8ecf4;--mut:#9aa5ba;--line:#2a3246;--ink:#8fb2f2;--ink-soft:#1d2a47;--mark-soft:#2d2812;--ok:#6fd0a0;--ok-soft:#14301f;
-  --cM:#6f9cf0;--cD:#3fc1c9;--cF:#fb8a4c;--cP:#b18cff;--cG:#f0b44c;--cR:#f472b6;--cW:#4ade80;--cX:#e8ecf4;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f131b;--paper:#181e2c;--fg:#e8ecf4;--mut:#9aa5ba;--line:#2a3246;--ink:#8fb2f2;--ink-soft:#1d2a47;--mark-soft:#2d2812;--ok:#6fd0a0;--ok-soft:#14301f;
-  --cM:#6f9cf0;--cD:#3fc1c9;--cF:#fb8a4c;--cP:#b18cff;--cG:#f0b44c;--cR:#f472b6;--cW:#4ade80;--cX:#e8ecf4;color-scheme:dark}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 var(--body);padding:24px 16px 64px}
-.sheet{max-width:900px;margin:0 auto;background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-.top{background:var(--ink);color:#fff;padding:28px 24px 22px;position:relative}
-:root[data-theme="dark"] .top{background:#1d2a47}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .top{background:#1d2a47}}
-.top small{font:500 14px var(--display);letter-spacing:.08em;color:var(--mark)}
-.top h1{font:500 clamp(26px,5vw,40px)/1.2 var(--display);margin:4px 0 6px;text-wrap:balance}
-.top p{margin:0;opacity:.9;font-size:17px}
-.back{position:absolute;right:16px;top:16px;color:#fff;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:4px 10px;border-radius:99px}
-.back:hover{background:rgba(255,255,255,.12)}
-.sec{padding:22px 24px;border-top:1px solid var(--line)}
-@media(max-width:520px){.sec,.top{padding-left:16px;padding-right:16px}}
-h2{font:500 21px/1.3 var(--display);margin:0 0 12px;color:var(--ink);text-wrap:balance}
-.code{display:inline-grid;place-items:center;min-width:46px;height:34px;padding:0 8px;border-radius:9px;color:#fff;font:500 18px var(--display);letter-spacing:.02em}
-:root[data-theme="dark"] .code{color:#0f131b}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .code{color:#0f131b}}
-.M{background:var(--cM)}.D{background:var(--cD)}.F{background:var(--cF)}.P{background:var(--cP)}.G{background:var(--cG)}.R{background:var(--cR)}.W{background:var(--cW)}.X{background:var(--cX)}
-.rule{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;background:var(--mark-soft);border-radius:12px;padding:14px 16px}
-.rule .big{font:500 44px/1 var(--display);color:var(--cF)}
-.rule .big span{color:var(--ink)}
-.legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
-@media(max-width:700px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.lg{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-width:0}
-.lg b{display:block;font-size:15px}.lg span{display:block;font-size:13px;color:var(--mut)}
-.paths{display:grid;gap:12px}
-.path{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.path h3{margin:0 0 8px;font-size:16px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
-.path h3 small{color:var(--mut);font-weight:400}
-.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.arrow{color:var(--mut);font-size:20px;line-height:1}
-.free{display:inline-flex;align-items:center;height:34px;padding:0 10px;border-radius:9px;border:2px dashed var(--ok);color:var(--ok);font-weight:700;font-size:14px}
-.wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:560px}
-th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
-th{font-size:13px;color:var(--mut)}
-td .t{font-weight:700}td .s{display:block;font-size:14px;color:var(--mut)}
-.num{font-variant-numeric:tabular-nums;white-space:nowrap}
-.st{display:inline-block;font-size:13px;font-weight:700;padding:2px 10px;border-radius:99px;white-space:nowrap}
-.st.on{background:var(--ok-soft);color:var(--ok)}.st.soon{background:var(--ink-soft);color:var(--ink)}
-.ways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-@media(max-width:700px){.ways{grid-template-columns:1fr}}
-.way{border:1px solid var(--line);border-radius:12px;padding:14px}
-.way b{display:block;font:500 17px var(--display);margin-bottom:2px}
-.way span{color:var(--mut);font-size:15px}
-.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:10px;background:var(--ink);color:#fff;text-decoration:none;font-weight:700}
-:root[data-theme="dark"] .btn{color:#0f131b}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#0f131b}}
-.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
-.btn:focus-visible,.back:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
-.note{font-size:13px;color:var(--mut);margin:10px 0 0}
-</style></head>
-<body>
-<div class="sheet">
-  <header class="top">
-    <a class="back" href="./">← แดชบอร์ด</a>
-    <small>คณิตตรงจุด · ป.2–ป.6</small>
-    <h1>แคตตาล็อกคอร์สคณิตศาสตร์</h1>
-    <p>เข้าใจก่อน แล้วฝึกจนคล่อง มีแบบวัดผลก่อนและหลังเรียนทุกคอร์ส</p>
-  </header>
+<title>แคตตาล็อกคอร์สคณิตศาสตร์ ป.2–ป.6</title>
+<meta name="description" content="รหัสคอร์ส เส้นทางการเรียน และรายการคอร์สของคณิตตรงจุด">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Mitr:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><h3>สินค้าและตัวเลข</h3><a href="catalog.html" aria-current="page"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner">
+<nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> สินค้าและตัวเลข <span aria-hidden="true">›</span> แคตตาล็อก</nav>
+<header class="page-head"><h1>แคตตาล็อกคอร์สคณิตศาสตร์</h1><p>เข้าใจก่อน แล้วฝึกจนคล่อง มีแบบวัดผลก่อนและหลังเรียนทุกคอร์ส</p><div class="chips"><span class="chip ">คณิตตรงจุด · ป.2–ป.6</span><span class="chip warn">ราคาเป็นร่าง</span></div></header>
+<section class="card" aria-labelledby="h-code">
+  <h2 class="sec" id="h-code">อ่านรหัสคอร์สอย่างไร</h2>
+  <div class="rule"><div class="big" aria-hidden="true">F<span>5</span></div><div><b>ตัวอักษร = เรื่องที่เรียน · ตัวเลข = ชั้นที่เริ่มเรียน</b><br>F5 คือ "เศษส่วน ป.5" ส่วน F5+ คือระดับเข้มของเรื่องเดียวกัน</div></div>
+  <div class="grid g4" style="margin-top:14px">
+    <div class="lg"><span class="code M">M</span><div><b>สูตรคูณ</b><span class="s">Multiply</span></div></div><div class="lg"><span class="code D">D</span><div><b>การหาร</b><span class="s">Divide</span></div></div><div class="lg"><span class="code F">F</span><div><b>เศษส่วน</b><span class="s">Fraction</span></div></div><div class="lg"><span class="code P">P</span><div><b>ทศนิยม</b><span class="s">Point</span></div></div><div class="lg"><span class="code G">G</span><div><b>ห.ร.ม. ค.ร.น.</b><span class="s">GCD / LCM</span></div></div><div class="lg"><span class="code R">R</span><div><b>อัตราส่วน ร้อยละ</b><span class="s">Ratio</span></div></div><div class="lg"><span class="code W">W</span><div><b>โจทย์ปัญหา สมการ</b><span class="s">Word problems</span></div></div><div class="lg"><span class="code X">X</span><div><b>ตะลุยข้อสอบ</b><span class="s">eXam</span></div></div>
+  </div>
+</section>
 
-  <section class="sec" aria-labelledby="h-code">
-    <h2 id="h-code">อ่านรหัสคอร์สอย่างไร</h2>
-    <div class="rule">
-      <div class="big" aria-hidden="true">F<span>5</span></div>
-      <div><b>ตัวอักษร = เรื่องที่เรียน · ตัวเลข = ชั้นที่เริ่มเรียน</b><br>F5 คือ "เศษส่วน ป.5" ส่วน F5+ คือระดับเข้มของเรื่องเดียวกัน</div>
-    </div>
-    <div class="legend">
-      <div class="lg"><span class="code M">M</span><div><b>สูตรคูณ</b><span>Multiply</span></div></div>
-      <div class="lg"><span class="code D">D</span><div><b>การหาร</b><span>Divide</span></div></div>
-      <div class="lg"><span class="code F">F</span><div><b>เศษส่วน</b><span>Fraction</span></div></div>
-      <div class="lg"><span class="code P">P</span><div><b>ทศนิยม</b><span>Point</span></div></div>
-      <div class="lg"><span class="code G">G</span><div><b>ห.ร.ม. ค.ร.น.</b><span>GCD / LCM</span></div></div>
-      <div class="lg"><span class="code R">R</span><div><b>อัตราส่วน ร้อยละ</b><span>Ratio</span></div></div>
-      <div class="lg"><span class="code W">W</span><div><b>โจทย์ปัญหา สมการ</b><span>Word problems</span></div></div>
-      <div class="lg"><span class="code X">X</span><div><b>ตะลุยข้อสอบ</b><span>eXam</span></div></div>
-    </div>
-  </section>
+<section aria-labelledby="h-path">
+  <h2 class="sec" id="h-path">เลือกเส้นทางตามตัวลูก</h2>
+  <div class="grid g3">
+    <div class="card path"><h3>พื้นฐานยังไม่แน่น <small>คิดช้า นับนิ้ว ท่องถอยหลังไม่ได้</small></h3><div class="flow"><span class="free">วัดผลฟรี</span><span class="arrow" aria-hidden="true">→</span><span class="code M">M2</span><span class="arrow" aria-hidden="true">→</span><span class="code D">D3</span><span class="arrow" aria-hidden="true">→</span><span class="code F">F3</span></div></div>
+    <div class="card path"><h3>ป.5–ป.6 เรียนเพิ่มเกรด <small>ตามบทเรียนที่โรงเรียน</small></h3><div class="flow"><span class="code F">F5</span><span class="arrow" aria-hidden="true">→</span><span class="code P">P4</span><span class="arrow" aria-hidden="true">→</span><span class="code G">G5</span><span class="arrow" aria-hidden="true">→</span><span class="code R">R6</span></div></div>
+    <div class="card path"><h3>ป.6 เตรียมสอบเข้า ม.1 <small>เก็บเนื้อหาที่ขาดก่อนตะลุยโจทย์</small></h3><div class="flow"><span class="code W">W6</span><span class="arrow" aria-hidden="true">→</span><span class="code X">X6</span></div></div>
+  </div>
+  <p class="note">เลือกเรียนบทใดก่อนก็ได้ ให้ตรงกับบทเรียนที่โรงเรียน ถ้าไม่แน่ใจ ให้เริ่มจากแบบวัดผลฟรี</p>
+</section>
 
-  <section class="sec" aria-labelledby="h-path">
-    <h2 id="h-path">เลือกเส้นทางตามตัวลูก</h2>
-    <div class="paths">
-      <div class="path"><h3>พื้นฐานยังไม่แน่น <small>คิดช้า นับนิ้ว ท่องถอยหลังไม่ได้</small></h3>
-        <div class="flow"><span class="free">วัดผลฟรี</span><span class="arrow" aria-hidden="true">→</span><span class="code M">M2</span><span class="arrow" aria-hidden="true">→</span><span class="code D">D3</span><span class="arrow" aria-hidden="true">→</span><span class="code F">F3</span></div></div>
-      <div class="path"><h3>ป.5–ป.6 เรียนเพิ่มเกรด <small>ตามบทเรียนที่โรงเรียน</small></h3>
-        <div class="flow"><span class="code F">F5</span><span class="arrow" aria-hidden="true">→</span><span class="code P">P4</span><span class="arrow" aria-hidden="true">→</span><span class="code G">G5</span><span class="arrow" aria-hidden="true">→</span><span class="code R">R6</span></div></div>
-      <div class="path"><h3>ป.6 เตรียมสอบเข้า ม.1 <small>เก็บเนื้อหาที่ขาดก่อนตะลุยโจทย์</small></h3>
-        <div class="flow"><span class="code W">W6</span><span class="arrow" aria-hidden="true">→</span><span class="code X">X6</span></div></div>
-    </div>
-    <p class="note">เลือกเรียนบทใดก่อนก็ได้ ให้ตรงกับบทเรียนที่โรงเรียน ถ้าไม่แน่ใจ ให้เริ่มจากแบบวัดผลฟรี</p>
-  </section>
+<section aria-labelledby="h-list">
+  <h2 class="sec" id="h-list">รายการคอร์ส</h2>
+  <div class="seg" role="group" aria-label="กรองตามสถานะ" id="flt" style="margin-bottom:14px">
+    <button type="button" data-f="all" aria-pressed="true">ทั้งหมด (9)</button>
+    <button type="button" data-f="on" aria-pressed="false">พร้อมเรียน (1)</button>
+    <button type="button" data-f="soon" aria-pressed="false">เปิดเร็ว ๆ นี้ (8)</button>
+  </div>
+  <div class="grid g3" id="courses">
+    <article class="card course" data-s="on"><div class="top"><span class="code M">M2</span><span class="st on">พร้อมเรียน</span></div><h3>สูตรคูณแม่ 2–12 ท่องคล่อง</h3><p>ท่อง เขียน ถอยหลัง จับเวลาตามเกณฑ์ชั้น</p><dl><dt>ระดับ</dt><dd>ป.2–ป.4</dd><dt>เนื้อหา</dt><dd>ชุดฝึก 1 เดือน</dd><dt>ราคา (ร่าง)</dt><dd>590–990</dd></dl></article><article class="card course" data-s="soon"><div class="top"><span class="code D">D3</span><span class="st soon">เปิดเร็ว ๆ นี้</span></div><h3>การหารและหารยาว</h3><p>หารคือคูณย้อนกลับ แล้วฝึกหารยาวให้แม่น</p><dl><dt>ระดับ</dt><dd>ป.3–ป.4</dd><dt>เนื้อหา</dt><dd>8 ครั้ง · 8 ชม.</dd><dt>ราคา (ร่าง)</dt><dd>450–590</dd></dl></article><article class="card course" data-s="soon"><div class="top"><span class="code F">F3</span><span class="st soon">เปิดเร็ว ๆ นี้</span></div><h3>เศษส่วน เข้าใจจากภาพ</h3><p>ความหมาย เปรียบเทียบ เศษส่วนที่เท่ากัน</p><dl><dt>ระดับ</dt><dd>ป.3–ป.4</dd><dt>เนื้อหา</dt><dd>8 ครั้ง · 8 ชม.</dd><dt>ราคา (ร่าง)</dt><dd>450–590</dd></dl></article><article class="card course" data-s="soon"><div class="top"><span class="code F">F5</span><span class="st soon">เปิดเร็ว ๆ นี้</span></div><h3>บวก ลบ คูณ หาร เศษส่วน</h3><p>จากแบบจำลองสู่วิธีคิดเร็ว และโจทย์ปัญหา</p><dl><dt>ระดับ</dt><dd>ป.5–ป.6</dd><dt>เนื้อหา</dt><dd>10 ครั้ง · 10 ชม.</dd><dt>ราคา (ร่าง)</dt><dd>550–750</dd></dl></article><article class="card course" data-s="soon"><div class="top"><span class="code P">P4</span><span class="st soon">เปิดเร็ว ๆ นี้</span></div><h3>ทศนิยม</h3><p>หลักและค่าประจำหลัก บวก ลบ คูณ หาร</p><dl><dt>ระดับ</dt><dd>ป.4–ป.5</dd><dt>เนื้อหา</dt><dd>8 ครั้ง · 8 ชม.</dd><dt>ราคา (ร่าง)</dt><dd>450–590</dd></dl></article><article class="card course" data-s="soon"><div class="top"><span class="code G">G5</span><span class="st soon">เปิดเร็ว ๆ นี้</span></div><h3>ห.ร.ม. และ ค.ร.น.</h3><p>แยกตัวประกอบ หารสั้น และโจทย์ปัญหา</p><dl><dt>ระดับ</dt><dd>ป.5–ป.6</dd><dt>เนื้อหา</dt><dd>6 ครั้ง · 6 ชม.</dd><dt>ราคา (ร่าง)</dt><dd>350–490</dd></dl></article><article class="card course" data-s="soon"><div class="top"><span class="code R">R6</span><span class="st soon">เปิดเร็ว ๆ นี้</span></div><h3>ร้อยละ อัตราส่วน</h3><p>ลดราคา กำไร ขาดทุน ใช้ในชีวิตจริง</p><dl><dt>ระดับ</dt><dd>ป.6</dd><dt>เนื้อหา</dt><dd>8 ครั้ง · 8 ชม.</dd><dt>ราคา (ร่าง)</dt><dd>450–590</dd></dl></article><article class="card course" data-s="soon"><div class="top"><span class="code W">W6</span><span class="st soon">เปิดเร็ว ๆ นี้</span></div><h3>โจทย์ปัญหาและสมการ</h3><p>อ่านโจทย์ แปลงเป็นสมการ ตรวจคำตอบ</p><dl><dt>ระดับ</dt><dd>ป.6</dd><dt>เนื้อหา</dt><dd>10 ครั้ง · 10 ชม.</dd><dt>ราคา (ร่าง)</dt><dd>550–750</dd></dl></article><article class="card course" data-s="soon"><div class="top"><span class="code X">X6</span><span class="st soon">เปิดเร็ว ๆ นี้</span></div><h3>ตะลุยข้อสอบเข้า ม.1</h3><p>รวมโจทย์แนวสอบ จับเวลาเหมือนสนามจริง</p><dl><dt>ระดับ</dt><dd>ป.6</dd><dt>เนื้อหา</dt><dd>ร่วมกับสถาบันพาร์ตเนอร์</dd><dt>ราคา (ร่าง)</dt><dd>ตกลงภายหลัง</dd></dl></article>
+  </div>
+  <p class="note">ฉบับร่าง: ราคา จำนวนครั้ง และชั้นเรียนยังไม่ใช่ข้อมูลจริง ต้องตรวจกับหลักสูตรและต้นทุนก่อนเผยแพร่</p>
+</section>
 
-  <section class="sec" aria-labelledby="h-list">
-    <h2 id="h-list">รายการคอร์ส</h2>
-    <div class="wrap"><table>
-      <tr><th>รหัส</th><th>คอร์ส</th><th>ระดับ</th><th>เนื้อหา</th><th>ราคา (ร่าง)</th><th>สถานะ</th></tr>
-      <tr><td><span class="code M">M2</span></td><td><span class="t">สูตรคูณแม่ 2–12 ท่องคล่อง</span><span class="s">ท่อง เขียน ถอยหลัง จับเวลาตามเกณฑ์ชั้น</span></td><td class="num">ป.2–ป.4</td><td class="num">ชุดฝึก 1 เดือน</td><td class="num">590–990</td><td><span class="st on">พร้อมเรียน</span></td></tr>
-      <tr><td><span class="code D">D3</span></td><td><span class="t">การหารและหารยาว</span><span class="s">หารคือคูณย้อนกลับ แล้วฝึกหารยาวให้แม่น</span></td><td class="num">ป.3–ป.4</td><td class="num">8 ครั้ง · 8 ชม.</td><td class="num">450–590</td><td><span class="st soon">เปิดเร็ว ๆ นี้</span></td></tr>
-      <tr><td><span class="code F">F3</span></td><td><span class="t">เศษส่วน เข้าใจจากภาพ</span><span class="s">ความหมาย เปรียบเทียบ เศษส่วนที่เท่ากัน</span></td><td class="num">ป.3–ป.4</td><td class="num">8 ครั้ง · 8 ชม.</td><td class="num">450–590</td><td><span class="st soon">เปิดเร็ว ๆ นี้</span></td></tr>
-      <tr><td><span class="code F">F5</span></td><td><span class="t">บวก ลบ คูณ หาร เศษส่วน</span><span class="s">จากแบบจำลองสู่วิธีคิดเร็ว และโจทย์ปัญหา</span></td><td class="num">ป.5–ป.6</td><td class="num">10 ครั้ง · 10 ชม.</td><td class="num">550–750</td><td><span class="st soon">เปิดเร็ว ๆ นี้</span></td></tr>
-      <tr><td><span class="code P">P4</span></td><td><span class="t">ทศนิยม</span><span class="s">หลักและค่าประจำหลัก บวก ลบ คูณ หาร</span></td><td class="num">ป.4–ป.5</td><td class="num">8 ครั้ง · 8 ชม.</td><td class="num">450–590</td><td><span class="st soon">เปิดเร็ว ๆ นี้</span></td></tr>
-      <tr><td><span class="code G">G5</span></td><td><span class="t">ห.ร.ม. และ ค.ร.น.</span><span class="s">แยกตัวประกอบ หารสั้น และโจทย์ปัญหา</span></td><td class="num">ป.5–ป.6</td><td class="num">6 ครั้ง · 6 ชม.</td><td class="num">350–490</td><td><span class="st soon">เปิดเร็ว ๆ นี้</span></td></tr>
-      <tr><td><span class="code R">R6</span></td><td><span class="t">ร้อยละ อัตราส่วน</span><span class="s">ลดราคา กำไร ขาดทุน ใช้ในชีวิตจริง</span></td><td class="num">ป.6</td><td class="num">8 ครั้ง · 8 ชม.</td><td class="num">450–590</td><td><span class="st soon">เปิดเร็ว ๆ นี้</span></td></tr>
-      <tr><td><span class="code W">W6</span></td><td><span class="t">โจทย์ปัญหาและสมการ</span><span class="s">อ่านโจทย์ แปลงเป็นสมการ ตรวจคำตอบ</span></td><td class="num">ป.6</td><td class="num">10 ครั้ง · 10 ชม.</td><td class="num">550–750</td><td><span class="st soon">เปิดเร็ว ๆ นี้</span></td></tr>
-      <tr><td><span class="code X">X6</span></td><td><span class="t">ตะลุยข้อสอบเข้า ม.1</span><span class="s">รวมโจทย์แนวสอบ จับเวลาเหมือนสนามจริง</span></td><td class="num">ป.6</td><td class="num">ร่วมกับสถาบันพาร์ตเนอร์</td><td class="num">ตกลงภายหลัง</td><td><span class="st soon">เปิดเร็ว ๆ นี้</span></td></tr>
-    </table></div>
-    <p class="note">ฉบับร่าง: ราคา จำนวนครั้ง และชั้นเรียนยังไม่ใช่ข้อมูลจริง ต้องตรวจกับหลักสูตรและต้นทุนก่อนเผยแพร่</p>
-  </section>
-
-  <section class="sec" aria-labelledby="h-ways">
-    <h2 id="h-ways">เรียนได้ 3 แบบ</h2>
-    <div class="ways">
-      <div class="way"><b>เรียนสดกลุ่มเล็ก</b><span>ที่สถาบันพาร์ตเนอร์หรือออนไลน์ ถาม-ตอบกับครูได้ทันที</span></div>
-      <div class="way"><b>คอร์สเทป</b><span>อัดจากรอบสด ดูซ้ำได้ เรียนตามเวลาที่สะดวก</span></div>
-      <div class="way"><b>ชุดฝึกส่งถึงบ้าน</b><span>เล่มฝึกพิมพ์จริง ใช้คู่กับคลิปและโปรแกรมวัดผล</span></div>
-    </div>
-    <div class="cta">
-      <a class="btn" href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener">ทำแบบวัดผลสูตรคูณฟรี</a>
-      <a class="btn alt" href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener">ลองควิซสูตรคูณ</a>
-    </div>
-  </section>
+<section class="card" aria-labelledby="h-ways">
+  <h2 class="sec" id="h-ways">เรียนได้ 3 แบบ</h2>
+  <div class="grid g3">
+    <div class="way"><b>เรียนสดกลุ่มเล็ก</b><span class="mut">ที่สถาบันพาร์ตเนอร์หรือออนไลน์ ถาม-ตอบกับครูได้ทันที</span></div>
+    <div class="way"><b>คอร์สเทป</b><span class="mut">อัดจากรอบสด ดูซ้ำได้ เรียนตามเวลาที่สะดวก</span></div>
+    <div class="way"><b>ชุดฝึกส่งถึงบ้าน</b><span class="mut">เล่มฝึกพิมพ์จริง ใช้คู่กับคลิปและโปรแกรมวัดผล</span></div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+    <a class="btn" href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener">ทำแบบวัดผลสูตรคูณฟรี</a>
+    <a class="btn alt" href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener">ลองควิซสูตรคูณ</a>
+  </div>
+</section>
+</div></main>
 </div>
+<script src="assets/site.js"></script>
+<script>
+(function(){
+var btns=document.querySelectorAll("#flt button"),cards=document.querySelectorAll("#courses .course");
+btns.forEach(function(b){b.addEventListener("click",function(){
+  btns.forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+  cards.forEach(function(c){c.hidden=!(b.dataset.f==="all"||c.dataset.s===b.dataset.f)})})});
+})();
+</script>
 </body></html>

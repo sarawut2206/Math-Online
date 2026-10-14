@@ -1,135 +1,104 @@
 <!doctype html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
-<title>แผนรายได้ครูกับติวเตอร์</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@500&family=Sarabun:wght@400;500;700&display=swap">
-<style>
-/* Layout: summary tiles → monthly chart → inputs (two columns) → monthly table. Teacher = blue, tutor = orange everywhere. */
-:root{
-  --bg:#f3f5f9;--surface:#fff;--fg:#18202e;--mut:#5a6479;--line:#dfe4ec;--grid:#e9edf3;
-  --ink:#1f4fa3;--ink-soft:#e8eefa;--mark:#f2c230;--mark-soft:#fff6d6;--ok:#1b7a4b;--neg:#b42318;
-  --s-teacher:#2a78d6;--s-tutor:#eb6834;
-  --display:"Mitr","Sarabun",system-ui,sans-serif;--body:"Sarabun","TH Sarabun New",system-ui,sans-serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f131b;--surface:#181e2c;--fg:#e8ecf4;--mut:#9aa5ba;--line:#2a3246;--grid:#232a3b;
-  --ink:#8fb2f2;--ink-soft:#1d2a47;--mark-soft:#2d2812;--ok:#6fd0a0;--neg:#ff8a80;--s-teacher:#3987e5;--s-tutor:#d95926;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f131b;--surface:#181e2c;--fg:#e8ecf4;--mut:#9aa5ba;--line:#2a3246;--grid:#232a3b;
-  --ink:#8fb2f2;--ink-soft:#1d2a47;--mark-soft:#2d2812;--ok:#6fd0a0;--neg:#ff8a80;--s-teacher:#3987e5;--s-tutor:#d95926;color-scheme:dark}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);padding:20px 16px 64px}
-main{max-width:1080px;margin:0 auto;display:grid;gap:18px}
-a{color:var(--ink)}
-.head{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:flex-end;justify-content:space-between}
-h1{font:500 26px/1.25 var(--display);margin:0;text-wrap:balance}
-h2{font:500 19px/1.3 var(--display);margin:0 0 10px}
-.mut{color:var(--mut)}.note{font-size:13px;color:var(--mut);margin:8px 0 0}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
-.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-@media(max-width:820px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;min-width:0}
-.tile span{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--mut)}
-.tile b{display:block;font:500 24px/1.3 var(--display);font-variant-numeric:tabular-nums;margin-top:2px}
-.sw{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
-.sw.t{background:var(--s-teacher)}.sw.u{background:var(--s-tutor)}
-.seg{display:flex;flex-wrap:wrap;gap:6px}
-.seg button{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:7px 14px;border-radius:99px;font:500 15px var(--body);cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
-:root[data-theme="dark"] .seg button[aria-pressed="true"]{color:#0f131b}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .seg button[aria-pressed="true"]{color:#0f131b}}
-button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--mut);margin-bottom:6px}
-.legend span{display:flex;align-items:center;gap:6px}
-.chartbox{position:relative}
-svg.chart{display:block;width:100%;height:auto}
-svg.chart text{fill:var(--mut);font:12px var(--body)}
-.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.12);min-width:170px;font-variant-numeric:tabular-nums}
-.tip div{display:flex;justify-content:space-between;gap:12px}
-.inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-@media(max-width:900px){.inputs{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.inputs{grid-template-columns:minmax(0,1fr)}}
-fieldset{border:1px solid var(--line);border-radius:12px;padding:10px 12px 4px;margin:0;min-width:0}
-legend{font-weight:700;padding:0 6px;color:var(--ink)}
-label{display:grid;gap:2px;font-size:14px;font-weight:500;margin-bottom:8px}
-input[type=number]{font:16px var(--body);padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%}
-.wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:900px;font-size:14px;font-variant-numeric:tabular-nums}
-th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
-th:first-child,td:first-child{text-align:left}
-th{color:var(--mut);font-size:12.5px;font-weight:700}
-tr.sum td{font-weight:700;border-top:2px solid var(--line)}
-.neg{color:var(--neg)}
-.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-@media(max-width:760px){.how{grid-template-columns:1fr}}
-.how div{border:1px solid var(--line);border-radius:12px;padding:12px}
-.how b{display:block;margin-bottom:2px}
-</style></head>
-<body>
-<main>
-  <div class="head">
-    <div><a href="./">← แดชบอร์ด</a><h1>แผนรายได้ครูกับติวเตอร์ 12 เดือน</h1>
-    <span class="mut">ปรับตัวเลขด้านล่างแล้วกราฟและตารางคำนวณใหม่ทันที · ทุกค่าเริ่มต้นเป็นสมมติฐาน</span></div>
-    <div class="seg" role="group" aria-label="เลือกสถานการณ์">
-      <button type="button" data-sc="low">ขายช้า</button>
-      <button type="button" data-sc="mid" aria-pressed="true">ปานกลาง</button>
-      <button type="button" data-sc="high">ขายดี</button>
-    </div>
+<title>แผนรายได้ครูกับติวเตอร์ 12 เดือน</title>
+<meta name="description" content="จำลองรายได้รายเดือนของครูและติวเตอร์">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Mitr:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><h3>สินค้าและตัวเลข</h3><a href="catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html" aria-current="page"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner">
+<nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> สินค้าและตัวเลข <span aria-hidden="true">›</span> แผนรายได้</nav>
+<header class="page-head"><h1>แผนรายได้ครูกับติวเตอร์ 12 เดือน</h1><p>ปรับตัวเลขด้านล่างแล้วกราฟและตารางคำนวณใหม่ทันที ทุกค่าเริ่มต้นเป็นสมมติฐาน</p></header>
+<div class="card flat" style="display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between">
+  <b>เลือกสถานการณ์ยอดขาย</b>
+  <div class="seg" role="group" aria-label="เลือกสถานการณ์">
+    <button type="button" data-sc="low" aria-pressed="false">ขายช้า</button>
+    <button type="button" data-sc="mid" aria-pressed="true">ปานกลาง</button>
+    <button type="button" data-sc="high" aria-pressed="false">ขายดี</button>
   </div>
-
-  <div class="tiles" aria-live="polite">
-    <div class="tile"><span><i class="sw t"></i>ครูได้รวม 12 เดือน</span><b id="k_t">–</b></div>
-    <div class="tile"><span><i class="sw u"></i>ติวเตอร์ได้สุทธิรวม</span><b id="k_u">–</b></div>
-    <div class="tile"><span>ครูได้ในเดือนที่ 12</span><b id="k_t12">–</b></div>
-    <div class="tile"><span>ติวเตอร์คืนทุนเดือนที่</span><b id="k_be">–</b></div>
+</div>
+<div class="tiles" aria-live="polite">
+  <div class="tile"><span><i class="sw t"></i>ครูได้รวม 12 เดือน</span><b id="k_t">–</b></div>
+  <div class="tile"><span><i class="sw u"></i>ติวเตอร์ได้สุทธิรวม</span><b id="k_u">–</b></div>
+  <div class="tile"><span>ครูได้ในเดือนที่ 12</span><b id="k_t12">–</b></div>
+  <div class="tile"><span>ติวเตอร์คืนทุนเดือนที่</span><b id="k_be">–</b></div>
+</div>
+<section class="card" aria-labelledby="h-chart">
+  <h2 class="sec" id="h-chart">รายได้แต่ละเดือน</h2>
+  <div class="legend"><span><i class="sw t"></i>ครู (คอร์สเทป + สอนสด)</span><span><i class="sw u"></i>ติวเตอร์ สุทธิหลังหักเงินที่ลง</span></div>
+  <div class="chartbox" id="cbox"><svg class="chart" id="chart" viewBox="0 0 960 320" role="img" aria-label="กราฟแท่งรายได้ครูและติวเตอร์รายเดือน"></svg><div class="tip" id="tip" hidden></div></div>
+  <p class="note">แท่งต่ำกว่าเส้นศูนย์ = เดือนที่ติวเตอร์ลงเงินโฆษณามากกว่าที่ได้คืน</p>
+</section>
+<section class="card" aria-labelledby="h-how">
+  <h2 class="sec" id="h-how">เงินไหลอย่างไร</h2>
+  <div class="grid g3 how">
+    <div><b>1. คอร์สเทป</b>หักค่าธรรมเนียมและค่าพิมพ์ส่ง → คืนเงินที่ติวเตอร์ลง (สะสมข้ามเดือนจนครบ) → กำไรที่เหลือแบ่งตามสัดส่วน</div>
+    <div><b>2. สอนสดที่สถาบัน</b>ค่าเรียนแบ่งตรงตามสัดส่วนสอนสด ครูได้ค่าสอน สถาบันได้ค่าสถานที่และหานักเรียน</div>
+    <div><b>3. คอร์สใหม่</b>อัดจากรอบสด แล้วเพิ่มเข้าแคตตาล็อกเดือนละคอร์ส ยอดขายรวมจึงโตตามจำนวนคอร์ส</div>
   </div>
-
-  <section class="card" aria-labelledby="h-chart">
-    <h2 id="h-chart">รายได้แต่ละเดือน</h2>
-    <div class="legend"><span><i class="sw t"></i>ครู (คอร์สเทป + สอนสด)</span><span><i class="sw u"></i>ติวเตอร์ สุทธิหลังหักเงินที่ลง</span></div>
-    <div class="chartbox" id="cbox"><svg class="chart" id="chart" viewBox="0 0 960 320" role="img" aria-label="กราฟแท่งรายได้ครูและติวเตอร์รายเดือน"></svg><div class="tip" id="tip" hidden></div></div>
-    <p class="note">แท่งต่ำกว่าเส้นศูนย์ = เดือนที่ติวเตอร์ลงเงินโฆษณามากกว่าที่ได้คืน</p>
-  </section>
-
-  <section class="card" aria-labelledby="h-how">
-    <h2 id="h-how">เงินไหลอย่างไร</h2>
-    <div class="how">
-      <div><b>1. คอร์สเทป</b>หักค่าธรรมเนียมและค่าพิมพ์ส่ง → คืนเงินที่ติวเตอร์ลง (สะสมข้ามเดือนจนครบ) → กำไรที่เหลือแบ่งตามสัดส่วน</div>
-      <div><b>2. สอนสดที่สถาบัน</b>ค่าเรียนแบ่งตรงตามสัดส่วนสอนสด ครูได้ค่าสอน สถาบันได้ค่าสถานที่และหานักเรียน</div>
-      <div><b>3. คอร์สใหม่</b>อัดจากรอบสด แล้วเพิ่มเข้าแคตตาล็อกเดือนละคอร์ส ยอดขายรวมจึงโตตามจำนวนคอร์ส</div>
-    </div>
-  </section>
-
-  <section class="card" aria-labelledby="h-in">
-    <h2 id="h-in">ตัวเลขที่ปรับได้</h2>
-    <div class="inputs">
-      <fieldset><legend>คอร์สเทป</legend>
-        <label>ราคาเฉลี่ยต่อออเดอร์ (บาท)<input id="i_price" type="number" min="0" value="690"></label>
-        <label>ค่าธรรมเนียมชำระเงิน (%)<input id="i_fee" type="number" min="0" step="0.1" value="3.5"></label>
-        <label>ค่าพิมพ์ + ส่งเฉลี่ยต่อออเดอร์ (บาท)<input id="i_print" type="number" min="0" value="80"></label>
-        <label>ยอดขายเดือนแรกต่อคอร์ส (ออเดอร์)<input id="i_base" type="number" min="0" value="8"></label>
-        <label>ยอดขายโตต่อเดือน (%)<input id="i_grow" type="number" min="-50" value="5"></label>
-      </fieldset>
-      <fieldset><legend>ติวเตอร์ลงเงิน และสัดส่วน</legend>
-        <label>ค่าโฆษณาต่อเดือน (บาท)<input id="i_ads" type="number" min="0" value="5000"></label>
-        <label>ค่าตัดต่อต่อเดือน (บาท · ครูตัดเองใส่ 0)<input id="i_edit" type="number" min="0" value="0"></label>
-        <label>ส่วนครูจากกำไรคอร์สเทป (%)<input id="i_share" type="number" min="0" max="100" value="55"></label>
-        <label>เปิดคอร์สใหม่ทุกกี่เดือน (เริ่มเดือนที่ 4)<input id="i_every" type="number" min="1" value="1"></label>
-        <label>จำนวนคอร์สสูงสุดในแคตตาล็อก<input id="i_max" type="number" min="1" value="9"></label>
-      </fieldset>
-      <fieldset><legend>สอนสดที่สถาบัน</legend>
-        <label>เริ่มสอนสดเดือนที่<input id="i_lstart" type="number" min="1" max="12" value="2"></label>
-        <label>รุ่นต่อเดือน<input id="i_lclass" type="number" min="0" value="1"></label>
-        <label>นักเรียนต่อรุ่น (คน)<input id="i_lstu" type="number" min="0" value="8"></label>
-        <label>ค่าเรียนต่อคนต่อคอร์ส (บาท)<input id="i_lfee" type="number" min="0" value="1500"></label>
-        <label>ส่วนครูจากค่าเรียนสด (%)<input id="i_lshare" type="number" min="0" max="100" value="60"></label>
-      </fieldset>
-    </div>
-    <p class="note">ค่าเริ่มต้น: ครูตัดต่อเอง (แบ่ง 55:45 ตามแผนสำรอง) ติวเตอร์ลงค่าโฆษณาเดือนละ 5,000 บาท ทุกตัวเลขเป็นสมมติฐานเพื่อวางแผน ไม่ใช่ข้อตกลงหรือคำรับรองรายได้</p>
-  </section>
-
-  <section class="card" aria-labelledby="h-tbl">
-    <h2 id="h-tbl">ตารางรายเดือน</h2>
-    <div class="wrap"><table id="tbl"></table></div>
-  </section>
-</main>
-
+</section>
+<details class="card fold" open>
+  <summary>ตัวเลขที่ปรับได้</summary>
+  <div>
+  <div class="inputs">
+    <fieldset><legend>คอร์สเทป</legend>
+      <label class="f">ราคาเฉลี่ยต่อออเดอร์ (บาท)<input id="i_price" type="number" min="0" value="690"></label>
+      <label class="f">ค่าธรรมเนียมชำระเงิน (%)<input id="i_fee" type="number" min="0" step="0.1" value="3.5"></label>
+      <label class="f">ค่าพิมพ์ + ส่งเฉลี่ยต่อออเดอร์ (บาท)<input id="i_print" type="number" min="0" value="80"></label>
+      <label class="f">ยอดขายเดือนแรกต่อคอร์ส (ออเดอร์)<input id="i_base" type="number" min="0" value="8"></label>
+      <label class="f">ยอดขายโตต่อเดือน (%)<input id="i_grow" type="number" min="-50" value="5"></label>
+    </fieldset>
+    <fieldset><legend>ติวเตอร์ลงเงิน และสัดส่วน</legend>
+      <label class="f">ค่าโฆษณาต่อเดือน (บาท)<input id="i_ads" type="number" min="0" value="5000"></label>
+      <label class="f">ค่าตัดต่อต่อเดือน (บาท · ครูตัดเองใส่ 0)<input id="i_edit" type="number" min="0" value="0"></label>
+      <label class="f">ส่วนครูจากกำไรคอร์สเทป (%)<input id="i_share" type="number" min="0" max="100" value="55"></label>
+      <label class="f">เปิดคอร์สใหม่ทุกกี่เดือน (เริ่มเดือนที่ 4)<input id="i_every" type="number" min="1" value="1"></label>
+      <label class="f">จำนวนคอร์สสูงสุดในแคตตาล็อก<input id="i_max" type="number" min="1" value="9"></label>
+    </fieldset>
+    <fieldset><legend>สอนสดที่สถาบัน</legend>
+      <label class="f">เริ่มสอนสดเดือนที่<input id="i_lstart" type="number" min="1" max="12" value="2"></label>
+      <label class="f">รุ่นต่อเดือน<input id="i_lclass" type="number" min="0" value="1"></label>
+      <label class="f">นักเรียนต่อรุ่น (คน)<input id="i_lstu" type="number" min="0" value="8"></label>
+      <label class="f">ค่าเรียนต่อคนต่อคอร์ส (บาท)<input id="i_lfee" type="number" min="0" value="1500"></label>
+      <label class="f">ส่วนครูจากค่าเรียนสด (%)<input id="i_lshare" type="number" min="0" max="100" value="60"></label>
+    </fieldset>
+  </div>
+  <p class="note">ค่าเริ่มต้น: ครูตัดต่อเอง (แบ่ง 55:45 ตามแผนสำรอง) ติวเตอร์ลงค่าโฆษณาเดือนละ 5,000 บาท ทุกตัวเลขเป็นสมมติฐานเพื่อวางแผน ไม่ใช่ข้อตกลงหรือคำรับรองรายได้</p>
+  </div>
+</details>
+<section class="card" aria-labelledby="h-tbl">
+  <h2 class="sec" id="h-tbl">ตารางรายเดือน</h2>
+  <div class="scroll"><table id="tbl" class="wide"></table></div>
+</section>
+</div></main>
+</div>
+<script src="assets/site.js"></script>
 <script>
 (function(){
 var $=function(id){return document.getElementById(id)};

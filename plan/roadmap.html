@@ -1,21 +1,45 @@
 <!doctype html>
-<html lang="th"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>แผนคอร์สออนไลน์คณิตตรงจุด</title>
-<style>
-:root{--bg:#fff;--fg:#1d2433;--mut:#5b6577;--line:#e3e7ee;--acc:#d9480f;--soft:#fff4ec}
-@media(prefers-color-scheme:dark){:root{--bg:#141821;--fg:#e8ebf2;--mut:#9aa4b8;--line:#2b3242;--acc:#ff8c5a;--soft:#241d1a}}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.7 "Sarabun","TH Sarabun New",system-ui,sans-serif}
-main{max-width:860px;margin:0 auto;padding:24px 16px 64px}
-h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin:36px 0 8px;border-bottom:2px solid var(--acc);padding-bottom:4px}h3{font-size:17px;margin:20px 0 4px}
-.mut{color:var(--mut)}.box{background:var(--soft);border-left:4px solid var(--acc);padding:10px 14px;margin:12px 0;border-radius:4px}
-table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}th{background:var(--soft)}
-.wrap{overflow-x:auto}li{margin:2px 0}
-</style></head><body><main>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>แผนคอร์สออนไลน์ คณิตตรงจุด (ครูแซม)</title>
+<meta name="description" content="ร่างสำหรับคุยกับติวเตอร์พาร์ตเนอร์ · ตัวเลขทุกจุดเป็นสมมติฐานเพื่อวางแผน ต้องปรับตามต้นทุนจริงและผลทดลองตลาด">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Mitr:wght@500&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="../index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="../index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="../plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="../plan/roadmap.html" aria-current="page"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="../plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><h3>สินค้าและตัวเลข</h3><a href="../catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="../pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="../income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner has-toc">
+<nav class="crumb" aria-label="เส้นทาง"><a href="../index.html">ภาพรวม</a> <span aria-hidden="true">›</span> แผนงาน <span aria-hidden="true">›</span> แผนระยะยาว</nav>
+<header class="page-head"><h1>แผนคอร์สออนไลน์ คณิตตรงจุด (ครูแซม)</h1><p>ร่างสำหรับคุยกับติวเตอร์พาร์ตเนอร์ · ตัวเลขทุกจุดเป็น<strong>สมมติฐานเพื่อวางแผน</strong> ต้องปรับตามต้นทุนจริงและผลทดลองตลาด</p><div class="chips"><span class="chip warn">ฉบับร่าง</span><span class="chip ">1 · 3 · 6 · 12 เดือน</span></div></header><div class="doc-wrap"><nav class="toc" aria-label="ในหน้านี้"><b>ในหน้านี้</b><ol><li><a href="#s1">1. สรุปคำตอบสั้น ๆ</a></li><li><a href="#s2">2. วิเคราะห์สิ่งที่คุณมีอยู่</a></li><li><a href="#s3">3. โครงสินค้า (Product ladder)</a></li><li><a href="#s4">4. การแบ่งรายได้กับติวเตอร์ (ฉบับแก้ไข)</a></li><li><a href="#s5">5. แผนงานตามช่วงเวลา</a></li><li><a href="#s6">6. ความเสี่ยงที่ต้องคุมตั้งแต่ต้น</a></li><li><a href="#s7">7. สิ่งที่ต้องคุยกับติวเตอร์ (เช็กลิสต์)</a></li></ol></nav><article class="doc">
 
-<h1>แผนคอร์สออนไลน์ คณิตตรงจุด (ครูแซม)</h1>
-<p class="mut">ร่างสำหรับคุยกับติวเตอร์พาร์ตเนอร์ · ตัวเลขทุกจุดเป็น<strong>สมมติฐานเพื่อวางแผน</strong> ต้องปรับตามต้นทุนจริงและผลทดลองตลาด</p>
 
-<h2>1. สรุปคำตอบสั้น ๆ</h2>
+
+
+<h2 id="s1">1. สรุปคำตอบสั้น ๆ</h2>
 <ul>
 <li><strong>เริ่มที่คอร์สไหน:</strong> “สูตรคูณ” เพราะคุณทำไปแล้วราว 70% (ออกแบบคอร์ส, เล่มฝึก ~100 หน้า, เล่มวัดผล ~20 หน้า, โปรแกรมวัดผล HTML 2 ตัว, สคริปต์ 20 คลิปการตลาด, ตารางโพสต์ 30 วัน)</li>
 <li><strong>เริ่มเนื้อหาอะไร:</strong> ถ่ายคลิปสอนตามที่ออกแบบไว้ก่อน (ราว 12 คลิปสั้น + คลิปแนะนำ) ไม่ต้องรอสมบูรณ์แบบ</li>
@@ -23,7 +47,7 @@ table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}th,td{bor
 <li><strong>แบ่งรายได้:</strong> ติวเตอร์ลงเงินโฆษณาและตัดต่อ ได้คืนก่อนจากยอดขาย แล้วแบ่งกำไรที่เหลือ ครู 50 : ติวเตอร์ 50 ครูไม่ต้องลงเงินสด (รายละเอียดข้อ 4)</li>
 </ul>
 
-<h2>2. วิเคราะห์สิ่งที่คุณมีอยู่</h2>
+<h2 id="s2">2. วิเคราะห์สิ่งที่คุณมีอยู่</h2>
 <div class="wrap"><table>
 <tr><th>จุดแข็ง</th><th>จุดอ่อน / ความเสี่ยง</th></tr>
 <tr><td>
@@ -41,7 +65,7 @@ table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}th,td{bor
 <h3>ตัวเทียบตลาด (จากโบรชัวร์ในโฟลเดอร์)</h3>
 <p>คอร์สโอลิมปิก/แข่งขันของติวเตอร์ชื่อดังขายราว 2,500–8,000 บาทต่อคอร์ส แต่เป็นระดับ ม.ต้น ที่ยากกว่าและแบรนด์แข็งแรง คอร์สพื้นฐานระดับประถมของคุณควรตั้งต่ำกว่านั้นมากเพื่อให้ผู้ปกครองตัดสินใจเร็ว</p>
 
-<h2>3. โครงสินค้า (Product ladder)</h2>
+<h2 id="s3">3. โครงสินค้า (Product ladder)</h2>
 <div class="wrap"><table>
 <tr><th>ขั้น</th><th>สินค้า</th><th>ราคาเสนอ (ทดลอง)</th><th>หน้าที่</th></tr>
 <tr><td>0</td><td>โปรแกรมวัดผลสูตรคูณ (HTML) + ตรวจระดับฟรี</td><td>ฟรี</td><td>ดึง lead (ขอ LINE/อีเมลแลกผล)</td></tr>
@@ -52,7 +76,7 @@ table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}th,td{bor
 </table></div>
 <div class="box"><strong>หมายเหตุราคา:</strong> คอร์สสูตรคูณมีคลิปรวมไม่ถึง ~15 นาที คุณค่าที่ขายได้คือ “ระบบ + เล่มฝึก + วัดผล” จึงควรขายเป็นชุดฝึก 1 เดือน ไม่ใช่ขายตามเวลาคลิป ให้ทดลอง 2 ราคาแล้วดูอัตราซื้อจริง</div>
 
-<h2>4. การแบ่งรายได้กับติวเตอร์ (ฉบับแก้ไข)</h2>
+<h2 id="s4">4. การแบ่งรายได้กับติวเตอร์ (ฉบับแก้ไข)</h2>
 <div class="box"><strong>หลักคิดข้อเดียว:</strong> ใครลงเงินเสี่ยง คนนั้นได้เงินคืนก่อน แล้วค่อยแบ่งกำไรที่เหลือ ใครลงแรงก็ได้ส่วนแบ่ง ครูไม่ต้องควักเงินสดเลย ถ้าขายไม่ได้ ครูเสียแค่เวลา</div>
 
 <h3>ใครลงอะไร</h3>
@@ -94,7 +118,7 @@ table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}th,td{bor
 <li><strong>ตั้งเกณฑ์ไปต่อไว้ก่อน</strong> เช่น พรีออเดอร์ตั้งแต่ 10 ชุด หรือมีคนทิ้งช่องทางติดต่อตั้งแต่ 100 คน (ตัวเลขเสนอ ให้ปรับกับติวเตอร์) ถ้าไม่ถึง ให้หยุดหรือแก้ข้อเสนอก่อนถ่ายครบ</li>
 </ol>
 
-<h2>5. แผนงานตามช่วงเวลา</h2>
+<h2 id="s5">5. แผนงานตามช่วงเวลา</h2>
 
 <h3>เดือนที่ 1 — ทำให้ “ขายได้จริง” (เป้า: เปิดพรีออเดอร์)</h3>
 <ul>
@@ -136,7 +160,7 @@ table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}th,td{bor
 <li>ปลายปี: ประเมินผลทั้งปี ตัดสินใจต่อสัญญากับติวเตอร์และขยายไปชั้นสูงขึ้น</li>
 </ul>
 
-<h2>6. ความเสี่ยงที่ต้องคุมตั้งแต่ต้น</h2>
+<h2 id="s6">6. ความเสี่ยงที่ต้องคุมตั้งแต่ต้น</h2>
 <ul>
 <li><strong>คลิปรั่วไหล/แชร์ต่อ:</strong> ใส่ลายน้ำ จำกัดการเข้าถึง และให้ “เล่มฝึกที่พิมพ์” กับโปรแกรมวัดผลเป็นของที่แชร์ยาก</li>
 <li><strong>ไม่ทำคอร์สใหม่ก่อนพิสูจน์ตัวแรก:</strong> อย่าเริ่มคอร์สที่ 2–3 จนกว่าสูตรคูณขายได้ตามเป้า</li>
@@ -145,7 +169,7 @@ table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}th,td{bor
 <li><strong>คำโฆษณา:</strong> อย่ารับประกันผล (เช่น “จำได้แน่นอน”) ให้ใช้ “ผ่านเกณฑ์ที่กำหนดตามวิธีฝึก”</li>
 </ul>
 
-<h2>7. สิ่งที่ต้องคุยกับติวเตอร์ (เช็กลิสต์)</h2>
+<h2 id="s7">7. สิ่งที่ต้องคุยกับติวเตอร์ (เช็กลิสต์)</h2>
 <ol>
 <li>ใครถือลิขสิทธิ์/แบรนด์/รายชื่อลูกค้า (ควรเป็นครู; รายชื่อที่ติวเตอร์หามา ตกลงกันให้ชัด)</li>
 <li>สัดส่วนและวิธีคิดต้นทุน + ใครจ่ายค่าตัดต่อ/โฆษณา</li>
@@ -154,4 +178,9 @@ table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}th,td{bor
 <li>เงื่อนไขเลิกสัญญา และสิทธิ์ใช้คลิป/ผลงานหลังเลิก</li>
 </ol>
 
-</main></body></html>
+</article></div><footer class="foot">ฉบับร่างสำหรับวางแผน ราคา ต้นทุน และเป้าหมายเป็นประมาณการ ปรับตามข้อมูลจริง</footer>
+</div></main>
+</div>
+<script src="../assets/site.js"></script>
+
+</body></html>

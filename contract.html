@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>ร่างสัญญากับติวเตอร์</title>
+<meta name="description" content="เครื่องมือกรอกเงื่อนไขและดูตัวอย่างสัญญาความร่วมมือกับติวเตอร์">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Mitr:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>/* contract model page. Layout: form column + sticky live preview on wide screens; one view at a time on phones. */
+.inner.wide{max-width:1320px}
+select{font:16px var(--body);padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%}
+input[type=text]{font:16px var(--body);padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%}
+input[type=text]:focus,select:focus{border-color:var(--ink)}
+.cview{display:grid;gap:18px;align-items:start}
+.form-col,.prev-col,.nego{display:none;min-width:0}
+.cview[data-v="form"] .form-col,.cview[data-v="preview"] .prev-col,.cview[data-v="nego"] .nego{display:block}
+.mo-only{display:inline-block}.dk-only{display:none}
+@media(min-width:1100px){
+  .mo-only{display:none}.dk-only{display:inline-block}
+  .cview:not([data-v="nego"]){grid-template-columns:minmax(360px,5fr) minmax(0,7fr)}
+  .cview:not([data-v="nego"]) .form-col,.cview:not([data-v="nego"]) .prev-col{display:block}
+  .prev-col{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;padding-right:4px}
+}
+.step{border:1px solid var(--line);border-radius:16px;padding:14px 16px 6px;margin:0 0 14px;background:var(--surface);min-width:0}
+.step legend{display:flex;align-items:center;gap:10px;font:500 17px var(--display);color:var(--fg);padding:0 8px}
+.stepno{width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--on-ink);display:grid;place-items:center;font:600 14px var(--body)}
+.hint{margin:-2px 0 10px;color:var(--mut);font-size:14px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+@media(max-width:520px){.row2{grid-template-columns:minmax(0,1fr)}}
+.opts{display:grid;gap:10px;margin-bottom:12px}
+.optcard{display:flex;gap:12px;align-items:flex-start;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;background:var(--bg)}
+.optcard:has(input:checked){border-color:var(--ink);background:var(--ink-soft)}
+.optcard input{margin-top:5px;accent-color:var(--ink);width:18px;height:18px;flex:none}
+.optcard b{display:block}.optcard small{display:block;color:var(--mut);font-size:13.5px;line-height:1.5}
+.chk2{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;margin:4px 0 10px}
+.chk2 input{margin-top:5px;accent-color:var(--ok);width:18px;height:18px}
+.form-actions{display:flex;justify-content:flex-end;margin:0 0 20px}
+.sumbox{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+@media(max-width:560px){.sumbox{grid-template-columns:minmax(0,1fr)}}
+.sumbox .tile b{font-size:20px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.paper{background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);padding:clamp(18px,4vw,44px);font-family:"Sarabun","IBM Plex Sans Thai",serif;font-size:16px;line-height:1.85}
+.paper .ptitle{font:600 21px/1.5 "Sarabun","IBM Plex Sans Thai",serif;text-align:center;margin:0 0 4px}
+.paper .draft{text-align:center;color:#b42318;font-size:14px;margin:0 0 18px}
+.paper h3{font:700 17px "Sarabun","IBM Plex Sans Thai",serif;margin:20px 0 6px}
+.paper p{margin:0 0 6px;text-align:justify}
+.paper .it{padding-left:2.2em;text-indent:-2.2em}
+.paper .it2{padding-left:4.4em;text-indent:-2.2em}
+.paper mark{background:#fff176;color:#3a3000;border-radius:4px;padding:0 3px}
+.paper .fv{border-bottom:1.5px solid var(--ink);font-weight:600}
+.paper .sigs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 20px;margin-top:30px;text-align:center}
+.paper .sigs span{display:block}
+.paper .pb{margin-top:34px;padding-top:20px;border-top:2px dashed var(--line)}
+.paper table{min-width:420px;font-size:14.5px}
+.paper .note{margin-top:8px}
+.mh{margin:0 0 6px;font-size:17px}
+.ol{margin:0;padding-left:22px}.ol li{margin:4px 0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--on-ink);padding:10px 18px;border-radius:99px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:30}
+@media print{
+  .side,.page-head,.crumb,#vbar,.form-col,.nego,.sumbox,.actions,.prev-col>.note,footer,.toast{display:none!important}
+  .app{display:block}.content{padding:0}.inner,.inner.wide{max-width:none}
+  .cview,.cview[data-v]{display:block!important}
+  .prev-col{display:block!important;position:static;max-height:none;overflow:visible}
+  body{background:#fff}
+  :root{--surface:#fff;--fg:#000;--line:#999;--ink:#000}
+  .paper{border:0;box-shadow:none;padding:0;color:#000}
+  .paper .pb{page-break-before:always;border-top:0}
+}
+</style></head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+<symbol id="sign" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 18c1.5-2 2.5-2 3 0s2 1.5 3-1"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><a href="contract.html" aria-current="page"><svg class="i"><use href="#sign"/></svg>ร่างสัญญากับติวเตอร์</a><h3>สินค้าและตัวเลข</h3><a href="exam-course.html"><svg class="i"><use href="#target"/></svg>คอร์สตะลุยข้อสอบ</a><a href="catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner wide">
+<nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> แผนงาน <span aria-hidden="true">›</span> ร่างสัญญา</nav>
+<header class="page-head"><h1>ร่างสัญญากับติวเตอร์</h1><p>เลือกเงื่อนไข กรอกข้อมูล แล้วดูสัญญาและตัวเลขรายได้ปรับตามทันที ใช้เป็นร่างตั้งต้นสำหรับคุยกับติวเตอร์</p><div class="chips"><span class="chip warn">ไม่ใช่คำแนะนำทางกฎหมาย</span><span class="chip ">ข้อมูลที่กรอกอยู่ในเบราว์เซอร์นี้เท่านั้น</span></div></header>
+<div class="seg" id="vbar" role="group" aria-label="เลือกมุมมอง">
+  <button type="button" data-v="build" class="dk-only" aria-pressed="true">ข้อตกลงและตัวอย่างสัญญา</button>
+  <button type="button" data-v="form" class="mo-only" aria-pressed="true">กรอกข้อมูล</button>
+  <button type="button" data-v="preview" class="mo-only" aria-pressed="false">ตัวอย่างสัญญา</button>
+  <button type="button" data-v="nego" aria-pressed="false">ประเด็นต่อรอง</button>
+</div>
+
+<div class="cview" id="cview" data-v="form">
+<form class="form-col" id="form" onsubmit="return false" autocomplete="off">
+  <fieldset class="step"><legend><span class="stepno">1</span>ทางเลือกการแบ่งรายได้</legend><p class="hint">เลือกหนึ่งทางเลือก ตัวเลขในสัญญาและตัวอย่างรายได้จะเปลี่ยนตาม</p>
+    <div class="opts" role="radiogroup" aria-label="ทางเลือกการแบ่งรายได้">
+      <label class="optcard"><input type="radio" name="k_opt" value="A" checked><span><b>ก · ค่าผลิต + ส่วนแบ่ง</b><small>ผู้ผลิตได้ค่าผลิตแน่นอนส่วนหนึ่ง แล้วแบ่งรายได้สุทธิ ความเสี่ยงต่ำกว่าสำหรับผู้ผลิต (แนะนำเริ่มเสนอ)</small></span></label>
+      <label class="optcard"><input type="radio" name="k_opt" value="B"><span><b>ข · คืนทุนก่อนแล้วแบ่งกำไร</b><small>ติวเตอร์ลงเงินโฆษณา ได้คืนก่อน แล้วแบ่งกำไรที่เหลือ ผู้ผลิตไม่ได้ค่าผลิต ถ้าขายน้อยอาจไม่ได้เงิน</small></span></label>
+    </div>
+    <div data-opt="A"><div class="row2"><label class="f" for="k_fee0">ค่าผลิต (บาท)<input id="k_fee0" type="number" min="0" value="40000" inputmode="numeric" ></label><label class="f" for="k_inst1">งวดแรก (% ของค่าผลิต)<input id="k_inst1" type="number" min="0" value="50" inputmode="numeric" ></label></div><label class="f" for="k_spA">ส่วนแบ่งผู้ผลิตจากรายได้สุทธิ (%)<input id="k_spA" type="number" min="0" value="30" inputmode="numeric" max="100"></label></div>
+    <div data-opt="B" hidden><label class="f" for="k_invest">ติวเตอร์ลงเงินโฆษณา/ตัดต่อไม่เกิน (บาท)<input id="k_invest" type="number" min="0" value="40000" inputmode="numeric" ></label><label class="f" for="k_spB">ส่วนแบ่งผู้ผลิตจากกำไรหลังคืนทุน (%)<input id="k_spB" type="number" min="0" value="50" inputmode="numeric" max="100"></label></div>
+    <label class="f" for="k_adcap">เพดานค่าโฆษณาต่อเดือน (บาท)<input id="k_adcap" type="number" min="0" value="10000" inputmode="numeric" ></label></fieldset>
+  <fieldset class="step"><legend><span class="stepno">2</span>คู่สัญญาและคอร์ส</legend><p class="hint">เว้นว่างไว้ได้ ช่องที่ยังไม่กรอกจะขึ้นไฮไลต์ในสัญญา · ไม่ต้องกรอกเลขประจำตัวประชาชนที่นี่</p>
+    <label class="f" for="k_cname">ชื่อคอร์ส<input id="k_cname" type="text" value="คอร์สตะลุยข้อสอบคณิตศาสตร์ 18 ชุด" placeholder="" ></label>
+    <div class="row2"><label class="f" for="k_pn">ชื่อผู้ผลิต (คุณ)<input id="k_pn" type="text" value="" placeholder="ชื่อ-สกุล" ></label><label class="f" for="k_tn">ชื่อพาร์ตเนอร์ (ติวเตอร์)<input id="k_tn" type="text" value="" placeholder="ชื่อ-สกุล/นิติบุคคล" ></label></div>
+    <div class="row2"><label class="f" for="k_pa">ที่อยู่ผู้ผลิต<input id="k_pa" type="text" value="" placeholder="" ></label><label class="f" for="k_ta">ที่อยู่พาร์ตเนอร์<input id="k_ta" type="text" value="" placeholder="" ></label></div>
+    <div class="row2"><label class="f" for="k_pc">ช่องทางติดต่อผู้ผลิต<input id="k_pc" type="text" value="" placeholder="อีเมล/LINE" ></label><label class="f" for="k_tc">ช่องทางติดต่อพาร์ตเนอร์<input id="k_tc" type="text" value="" placeholder="อีเมล/LINE" ></label></div>
+    <div class="row2"><label class="f" for="k_place">ทำที่<input id="k_place" type="text" value="" placeholder="" ></label><label class="f" for="k_date">วันที่<input id="k_date" type="text" value="" placeholder="วัน เดือน พ.ศ." ></label></div></fieldset>
+  <fieldset class="step"><legend><span class="stepno">3</span>สิทธิ์และแบรนด์</legend><p class="hint">ข้อที่สำคัญที่สุดคือโจทย์เป็นของใคร</p>
+    <label class="f" for="k_qowner">โจทย์ในคอร์สเป็นของ<select id="k_qowner" ><option value="partner">พาร์ตเนอร์</option><option value="third">บุคคลที่สามที่พาร์ตเนอร์ได้รับอนุญาต</option><option value="self">ผู้ผลิตเขียนเอง</option></select></label>
+    <div id="k_qthird_wrap" hidden><label class="f" for="k_qthird">ชื่อบุคคล/สำนักพิมพ์ที่ให้สิทธิ์<input id="k_qthird" type="text" value="" placeholder="" ></label></div>
+    <label class="f" for="k_license">สิทธิ์ที่ให้พาร์ตเนอร์จำหน่ายผลงานของผู้ผลิต<select id="k_license" ><option value="sole">เฉพาะพาร์ตเนอร์รายเดียว</option><option value="nonsole">ไม่เป็นการเฉพาะ</option></select></label>
+    <div class="row2"><label class="f" for="k_bmode">ชื่อคอร์สใช้<select id="k_bmode" ><option value="tutor">ชื่อติวเตอร์</option><option value="brand">ชื่อแบรนด์</option><option value="joint">ชื่อร่วม</option></select></label><label class="f" for="k_bname">ชื่อที่ใช้<input id="k_bname" type="text" value="" placeholder="" ></label></div>
+    <label class="f" for="k_exist">นักเรียนคอร์สสดเดิม<select id="k_exist" ><option value="disc">ได้ส่วนลด</option><option value="free">ได้ดูฟรี</option><option value="separate">ซื้อแยกราคาปกติ</option></select></label>
+    <div id="k_exDisc_wrap"><label class="f" for="k_exDisc">ส่วนลด (%)<input id="k_exDisc" type="number" min="0" value="20" inputmode="numeric" max="100"></label></div>
+    <label class="f" for="k_exCount">นับเป็นรายได้ที่ต้องแบ่งหรือไม่<select id="k_exCount" ><option value="count">นับ</option><option value="nocount">ไม่นับ</option></select></label>
+    <label class="f" for="k_sched">ช่วงเปิดขายที่ไม่ชนคอร์สสด<input id="k_sched" type="text" value="" placeholder="เช่น เปิดรุ่นเดือน ... หลังคอร์สสดจบ" ></label></fieldset>
+  <fieldset class="step"><legend><span class="stepno">4</span>การเงินและรายงาน</legend>
+    <div class="row2"><label class="f" for="k_acct">บัญชีรับเงิน<input id="k_acct" type="text" value="" placeholder="ธนาคาร/ชื่อบัญชี" ></label><label class="f" for="k_acctOwner">บัญชีเป็นของ<select id="k_acctOwner" ><option value="partner">พาร์ตเนอร์</option><option value="producer">ผู้ผลิต</option></select></label></div>
+    <div class="row2"><label class="f" for="k_reportDay">ส่งรายงานภายในวันที่<input id="k_reportDay" type="number" min="0" value="10" inputmode="numeric" ></label><label class="f" for="k_payDays">โอนส่วนแบ่งภายใน (วัน)<input id="k_payDays" type="number" min="0" value="7" inputmode="numeric" ></label></div>
+    <div class="row2"><label class="f" for="k_auditDays">ขอดูข้อมูลได้ภายใน (วัน)<input id="k_auditDays" type="number" min="0" value="15" inputmode="numeric" ></label><label class="f" for="k_variance">รายงานคลาดเคลื่อนเกิน (%)<input id="k_variance" type="number" min="0" value="5" inputmode="numeric" ></label></div>
+    <label class="f" for="k_discPct">ลดราคา/แจกฟรีเกินกี่ % ต้องแจ้งก่อน<input id="k_discPct" type="number" min="0" value="20" inputmode="numeric" ></label></fieldset>
+  <fieldset class="step"><legend><span class="stepno">5</span>ระยะเวลาและเงื่อนไขเลิกสัญญา</legend>
+    <div class="row2"><label class="f" for="k_trial">ช่วงทดลอง (เดือน)<input id="k_trial" type="number" min="0" value="6" inputmode="numeric" ></label><label class="f" for="k_renew">ต่ออายุครั้งละ (เดือน)<input id="k_renew" type="number" min="0" value="12" inputmode="numeric" ></label></div>
+    <div class="row2"><label class="f" for="k_gate">จุดตัดสินใจที่ (เดือน)<input id="k_gate" type="number" min="0" value="3" inputmode="numeric" ></label><label class="f" for="k_gateMin">ผู้จองขั้นต่ำ (คน)<input id="k_gateMin" type="number" min="0" value="20" inputmode="numeric" ></label></div>
+    <div class="row2"><label class="f" for="k_cure">เวลาแก้ไขเมื่อผิดสัญญา (วัน)<input id="k_cure" type="number" min="0" value="30" inputmode="numeric" ></label><label class="f" for="k_stop">หยุดขายหลังเลิก (วัน)<input id="k_stop" type="number" min="0" value="30" inputmode="numeric" ></label></div>
+    <div class="row2"><label class="f" for="k_conf">รักษาความลับหลังสิ้นสุด (ปี)<input id="k_conf" type="number" min="0" value="2" inputmode="numeric" ></label><label class="f" for="k_reviewDays">ตรวจรับงานภายใน (วัน)<input id="k_reviewDays" type="number" min="0" value="7" inputmode="numeric" ></label></div>
+    <div class="row2"><label class="f" for="k_fixDays">แก้ข้อผิดพลาดภายใน (วัน)<input id="k_fixDays" type="number" min="0" value="7" inputmode="numeric" ></label><label class="f" for="k_adReview">ตรวจข้อความโฆษณา (วันทำการ)<input id="k_adReview" type="number" min="0" value="3" inputmode="numeric" ></label></div>
+    <label class="f" for="k_court">ศาลที่มีเขตอำนาจ<input id="k_court" type="text" value="" placeholder="" ></label>
+    <label class="chk2"><input type="checkbox" id="k_c16" checked> ใส่ข้อ 16 คำรับรองด้านระเบียบต้นสังกัด (ถ้าเป็นข้าราชการครู)</label></fieldset>
+  <fieldset class="step"><legend><span class="stepno">6</span>ตัวเลขสำหรับตัวอย่างรายได้</legend><p class="hint">ใช้คำนวณเอกสารแนบ 2 และกล่องสรุปด้านขวา</p>
+    <div class="row2"><label class="f" for="k_buyers">ผู้ซื้อทั้งปี (คน)<input id="k_buyers" type="number" min="0" value="120" inputmode="numeric" ></label><label class="f" for="k_avg">ราคาเฉลี่ยต่อคน (บาท)<input id="k_avg" type="number" min="0" value="3731" inputmode="numeric" ></label></div>
+    <div class="row2"><label class="f" for="k_cFee">ค่าชำระเงิน (%)<input id="k_cFee" type="number" min="0" value="3.5" inputmode="numeric" step="0.1"></label><label class="f" for="k_cPlat">ค่าแพลตฟอร์ม (%)<input id="k_cPlat" type="number" min="0" value="8" inputmode="numeric" step="0.1"></label></div>
+    <div class="row2"><label class="f" for="k_cAds">ค่าโฆษณา (%)<input id="k_cAds" type="number" min="0" value="20" inputmode="numeric" step="0.1"></label><label class="f" for="k_cRef">คืนเงิน/ส่วนลด (%)<input id="k_cRef" type="number" min="0" value="4" inputmode="numeric" step="0.1"></label></div></fieldset>
+  <div class="form-actions"><button type="reset" class="btn alt" id="b_reset">ล้างข้อมูล</button></div>
+</form>
+
+<div class="prev-col">
+  <div class="sumbox" aria-live="polite">
+    <div class="tile"><span>ผู้ผลิตได้ (กรณีกลาง)</span><b id="s_p">–</b></div>
+    <div class="tile"><span>พาร์ตเนอร์ได้สุทธิ</span><b id="s_t">–</b></div>
+    <div class="tile"><span>ผู้ซื้อที่ใช้คำนวณ</span><b id="s_n">–</b></div>
+    <p class="note" id="s_low" style="grid-column:1/-1;margin:0"></p>
+  </div>
+  <div class="actions">
+    <button type="button" class="btn" id="b_copy"><svg class="i"><use href="#doc"/></svg>คัดลอกข้อความ</button>
+    <button type="button" class="btn alt" id="b_print"><svg class="i"><use href="#ext"/></svg>พิมพ์ / บันทึก PDF</button>
+  </div>
+  <article class="paper" id="paper" aria-label="ตัวอย่างสัญญา"></article>
+  <p class="note">ข้อความที่ไฮไลต์เหลืองคือช่องที่ยังไม่ได้กรอก · เอกสารแนบ 1 และ 3 (กำหนดส่งงานและราคา) ดูในไฟล์ Word ฉบับเต็ม · ควรให้ทนายความและนักบัญชีตรวจก่อนลงนาม</p>
+</div>
+
+<div class="nego">
+  <div class="callout"><svg class="i"><use href="#info"/></svg><div>ใช้เองเท่านั้น ไม่ต้องส่งให้คู่สัญญา ข้อเสนอเป็นความเห็นประกอบการเจรจา ไม่ใช่คำแนะนำทางกฎหมาย</div></div>
+  <h2 class="sec" style="margin-top:18px">ประเด็นหลักและจุดยืน</h2>
+  <div class="scroll"><table><tr><th>ประเด็น</th><th>เริ่มเสนอ</th><th>ยอมได้ถึง</th><th>ต้องมี</th></tr><tr><td><b>สิทธิ์ในโจทย์</b></td><td>พาร์ตเนอร์รับรองสิทธิ์พร้อมหลักฐาน</td><td>ผู้ผลิตเขียนโจทย์คู่ขนานเองบางส่วน</td><td>มีหลักฐานว่าใช้โจทย์ได้ถูกกฎหมาย</td></tr><tr><td><b>ลิขสิทธิ์วิดีโอและเฉลย</b></td><td>เป็นของผู้ผลิต ให้พาร์ตเนอร์ใช้ขายตามสัญญา</td><td>ลิขสิทธิ์ร่วม แต่ผู้ผลิตใช้ต่อได้</td><td>ผู้ผลิตยังใช้งานของตัวเองในการสอนได้</td></tr><tr><td><b>ค่าผลิต</b></td><td>40,000–50,000 บาท</td><td>30,000 บาท</td><td>มีค่าผลิตขั้นต่ำ ไม่ทำฟรีทั้งหมด (ถ้าเลือกทางเลือก ก)</td></tr><tr><td><b>ส่วนแบ่ง</b></td><td>ผู้ผลิต 35% ของรายได้สุทธิ</td><td>30% ถ้ามีค่าผลิต / 50% ถ้าไม่มีค่าผลิต</td><td>คิดจากรายได้สุทธิที่นิยามชัด</td></tr><tr><td><b>เพดานโฆษณาและนิยามรายได้สุทธิ</b></td><td>เพดานต่อเดือน รายการหักมีหลักฐาน</td><td>ปรับเพดานตามผลสามเดือนแรก</td><td>เพดานเป็นตัวเลข ไม่ปล่อยกว้าง</td></tr><tr><td><b>รายงานและสิทธิตรวจสอบ</b></td><td>รายงานทุกเดือน ดูข้อมูลระบบจริงได้</td><td>ตรวจรายไตรมาส</td><td>เข้าถึงข้อมูลยอดขายจริงได้</td></tr><tr><td><b>ช่วงทดลอง</b></td><td>6 เดือน มีจุดตัดสินใจเดือน 3</td><td>4 เดือน</td><td>มีทางออกถ้าขายไม่ถึงเป้า</td></tr><tr><td><b>หลังเลิกสัญญา</b></td><td>ผู้ซื้อเดิมเรียนต่อ หยุดขาย 30 วัน ส่วนแบ่งยังได้จนครบ</td><td>พาร์ตเนอร์ซื้อสิทธิ์ต่อ</td><td>ผู้ซื้อเดิมได้เรียน และผู้ผลิตยังได้ส่วนแบ่งจากรายได้ที่เกิดแล้ว</td></tr><tr><td><b>ชื่อและเครดิต</b></td><td>ระบุชื่อผู้ผลิตในหน้าขายและวิดีโอ</td><td>ระบุในหน้ารายละเอียดคอร์ส</td><td>มีเครดิตที่ตรวจสอบได้</td></tr><tr><td><b>นักเรียนคอร์สสดเดิม</b></td><td>ได้ส่วนลดและนับในฐานส่วนแบ่ง</td><td>ได้ดูฟรี แต่ไม่นับเป็นรายได้</td><td>ตกลงให้ชัดว่าใครเข้าสูตรแบ่งรายได้</td></tr></table></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3 class="mh">คำถามที่ต้องถามติวเตอร์ก่อน</h3><ol class="ol">
+      <li>โจทย์ใน 18 ชุดเป็นของใคร และมีหลักฐานการอนุญาตหรือไม่</li><li>เล่มมีเฉลยละเอียดแล้วหรือไม่ (ถ้าไม่มี ต้องเขียนเฉลยเอง 720 ข้อ)</li><li>ฐานนักเรียนเดิมมีกี่คน และเคยขายคอร์สออนไลน์หรือไม่</li><li>พร้อมลงเงินโฆษณาและตัดต่อเท่าไร และมีทีมตัดต่อหรือไม่</li><li>ใครเป็นผู้รับเงิน ใครดูแลเรื่องภาษี</li><li>ชื่อคอร์สและแบรนด์ใช้ชื่ออะไร</li><li>จะเปิดขายกี่รอบต่อปี และชนกับคอร์สสดอย่างไร</li></ol></div>
+    <div class="card"><h3 class="mh">ลำดับการคุย</h3><ol class="ol">
+      <li>เริ่มจากเป้าหมายร่วม: ทำผลิตภัณฑ์ที่ขายซ้ำได้ ไม่ใช่รับจ้างอัดวิดีโอ</li><li>ตกลงหลักการ 4 ข้อก่อนตัวเลข: ชื่อ ลิขสิทธิ์ โจทย์ นักเรียนเดิม</li><li>ค่อยคุยเงิน: เสนอทางเลือก ก ก่อน</li><li>ตกลงช่วงทดลองและจุดตัดสินใจ</li><li>จบด้วยกำหนดวันส่งร่างฉบับแก้ไข และวันเซ็นหลังตรวจสัญญา</li></ol>
+      <h3 class="mh" style="margin-top:14px">ก่อนลงนาม</h3><ul class="ol"><li>ให้ทนายความตรวจร่างฉบับสุดท้าย (ลิขสิทธิ์ ข้อมูลส่วนบุคคล การเลิกสัญญา)</li><li>ปรึกษานักบัญชีเรื่องรับเงิน ใบเสร็จ ภาษี และอากรแสตมป์</li><li>ถ้าเป็นครูโรงเรียนรัฐ ตรวจระเบียบเรื่องรายได้พิเศษ</li><li>เก็บหลักฐานส่งมอบงานทุกครั้ง</li></ul></div>
+  </div>
+</div>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+</div></main>
+</div>
+<script src="assets/site.js"></script>
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+function val(k){var e=$("k_"+k);return e?e.value.trim():""}
+function num(k){var x=parseFloat(val(k));return isFinite(x)?Math.max(0,x):0}
+function th(x){return Math.round(x).toLocaleString("th-TH")}
+/* markers: \u0001 filled value \u0002 ; \u0003 blank placeholder \u0004 */
+function F(v,ph){v=String(v==null?"":v).trim();return v?"\u0001"+v+"\u0002":"\u0003"+(ph||"……")+"\u0004"}
+function N(k){return F(th(num(k)))}
+var opt=function(){var r=document.querySelector('input[name="k_opt"]:checked');return r?r.value:"A"};
+
+function build(){
+  var A=opt()==="A",C=[];
+  function cl(h,items){C.push({h:h,items:items})}
+  var sp=A?num("spA"):num("spB");
+  var qown=val("qowner");
+  var qtxt=qown==="partner"?F("พาร์ตเนอร์"):qown==="third"?F(val("qthird"),"ระบุชื่อบุคคลหรือสำนักพิมพ์ที่ให้สิทธิ์")+" ซึ่งพาร์ตเนอร์ได้รับอนุญาตให้ใช้":"ผู้ผลิต (ผู้ผลิตเขียนโจทย์เองทั้งหมด)";
+  var brand=val("bmode")==="tutor"?"ชื่อของพาร์ตเนอร์":val("bmode")==="joint"?"ชื่อร่วมของคู่สัญญา":"ชื่อแบรนด์";
+  var exist=val("exist"),exTxt=exist==="free"?"ได้ดูฟรี":exist==="disc"?"ได้ส่วนลด "+F(String(num("exDisc")))+"%":"ซื้อแยกในราคาปกติ";
+  var exCount=val("exCount")==="count"?"นับ":"ไม่นับ";
+  cl("ข้อ 1  วัตถุประสงค์และผลิตภัณฑ์",[
+   ["1.1","คู่สัญญาตกลงร่วมกันผลิตและจำหน่ายคอร์สออนไลน์ชื่อ "+F(val("cname"),"ชื่อคอร์ส")+" (เรียกว่า \"คอร์ส\")"],
+   ["1.2","คอร์สประกอบด้วย (ก) ชุดปรับพื้นฐาน 1 ชุด (ข) ชุดตะลุยข้อสอบ 18 ชุด ชุดละ 40 ข้อ (ค) ชุดพิเศษ 1 ชุด (ง) วิดีโอเฉลย ใบงาน ระบบข้อสอบจับเวลาและรายงานผล ตามรายละเอียดและกำหนดส่งในเอกสารแนบ 1 (เรียกรวมว่า \"ผลิตภัณฑ์\")"],
+   ["1.3","หากจะขยายความร่วมมือไปยังคอร์สอื่น ต้องทำข้อตกลงเพิ่มเติมเป็นลายลักษณ์อักษร"]]);
+  cl("ข้อ 2  หน้าที่ของคู่สัญญา",[
+   ["2.1","ผู้ผลิตมีหน้าที่ ออกแบบโครงคอร์ส เขียนและตรวจเฉลย ถ่ายทำและตัดต่อ (หรือควบคุมการตัดต่อ) วิดีโอ จัดทำใบงานและระบบข้อสอบ และส่งมอบงานตามกำหนดในเอกสารแนบ 1"],
+   ["2.2","พาร์ตเนอร์มีหน้าที่ (ก) จัดหาโจทย์และรับรองสิทธิ์ตามข้อ 3.1 (ข) ทำการตลาด โฆษณา และดูแลช่องทางจำหน่าย (ค) รับชำระเงินและดูแลลูกค้า (ง) ลงทุนตามข้อ 4"],
+   ["2.3","พาร์ตเนอร์ตรวจรับงานแต่ละส่วนภายใน "+N("reviewDays")+" วันนับแต่ได้รับ หากไม่แจ้งเป็นลายลักษณ์อักษรภายในกำหนดให้ถือว่ารับงานแล้ว ขอแก้ไขได้ไม่เกิน 2 รอบต่อหนึ่งชุด"],
+   ["2.4","คู่สัญญาประชุมสรุปผลการดำเนินงานอย่างน้อยเดือนละ 1 ครั้ง"]]);
+  cl("ข้อ 3  ทรัพย์สินทางปัญญาและข้อมูล",[
+   ["3.1","โจทย์ที่ใช้ในคอร์ส เป็นของ "+qtxt+(qown==="self"?"":" พาร์ตเนอร์รับรองว่ามีสิทธิ์ใช้โจทย์ดังกล่าวและอนุญาตให้ผู้ผลิตใช้ในการเขียนเฉลย ผลิตวิดีโอ และเผยแพร่ในคอร์สตลอดอายุสัญญา หากมีผู้อ้างว่าละเมิดสิทธิ์ในโจทย์ พาร์ตเนอร์เป็นผู้รับผิดชอบ")],
+   ["3.2","งานที่ผู้ผลิตสร้างขึ้น ได้แก่ วิดีโอ เฉลย ใบงาน สไลด์ และโปรแกรมข้อสอบ ลิขสิทธิ์เป็นของผู้ผลิต ผู้ผลิตให้สิทธิ์พาร์ตเนอร์นำไปเผยแพร่และจำหน่ายในช่องทางตามบันทึกข้อตกลงนี้ตลอดอายุสัญญา โดยเป็นสิทธิ์"+(val("license")==="sole"?"แต่เพียงผู้เดียว":"ไม่เป็นการเฉพาะ")+" และไม่สามารถโอนหรือให้ช่วงสิทธิ์ต่อได้เว้นแต่ผู้ผลิตยินยอม"],
+   ["3.3","ชื่อและแบรนด์ของคอร์สใช้"+brand+(val("bname")?" คือ "+F(val("bname")):" "+F("","ระบุชื่อ"))+" และต้องระบุเครดิตผู้ผลิตว่า \"ออกแบบและสอนโดย "+F(val("pn"),"ชื่อผู้ผลิต")+"\" ในหน้าขายและในวิดีโอ"],
+   ["3.4","คู่สัญญาแต่ละฝ่ายต้องไม่คัดลอก ดัดแปลง หรือนำงานของอีกฝ่ายไปใช้นอกขอบเขตที่ตกลง"],
+   ["3.5","ข้อมูลผู้ซื้อที่ได้จากช่องทางของพาร์ตเนอร์เป็นของพาร์ตเนอร์ ผู้ผลิตเข้าถึงได้เท่าที่จำเป็นเพื่อดูแลผู้เรียนและวิเคราะห์ผลการเรียน และต้องไม่นำไปใช้เพื่อประโยชน์อื่น"]]);
+  var money=[
+   ["4.1","ความหมาย",[
+     ["(ก)","\"รายได้ขั้นต้น\" คือเงินที่ได้รับจริงจากการจำหน่ายคอร์สทุกแพ็กเกจ ไม่รวมภาษีมูลค่าเพิ่ม (ถ้ามี)"],
+     ["(ข)","\"ต้นทุนการขาย\" คือ ค่าธรรมเนียมชำระเงิน ค่าแพลตฟอร์ม/โฮสต์วิดีโอ เงินคืนให้ลูกค้า ส่วนลดที่ให้จริง ค่าจัดพิมพ์และจัดส่งเล่ม (ถ้ามี)"+(A?" และค่าโฆษณาที่จ่ายจริงภายในเพดานตามข้อ 4.4":"")+" โดยต้องมีหลักฐาน"],
+     ["(ค)","\"รายได้สุทธิ\" คือ รายได้ขั้นต้น หักต้นทุนการขายตาม (ข)"]]]];
+  if(A){
+    money.push(["4.2","ค่าผลิตและส่วนแบ่ง: พาร์ตเนอร์จ่ายค่าผลิต "+N("fee0")+" บาท แบ่งเป็นสองงวด งวดที่หนึ่ง "+N("inst1")+"% เมื่อส่งโครงคอร์สและบทต้นแบบ งวดที่สองเมื่อส่งมอบตามเอกสารแนบ 1 ครบ และให้แบ่งรายได้สุทธิ ผู้ผลิต "+F(String(sp))+"% พาร์ตเนอร์ "+F(String(100-sp))+"%"]);
+  }else{
+    money.push(["4.2","คืนทุนก่อนแล้วแบ่งกำไร: พาร์ตเนอร์ลงเงินค่าโฆษณาและค่าตัดต่อไม่เกิน "+N("invest")+" บาท จากรายได้ขั้นต้นหักต้นทุนการขาย (ไม่รวมค่าโฆษณา) ให้คืนเงินที่พาร์ตเนอร์ลงจริงก่อน (ไม่เกินจำนวนที่ลงจริง และไม่เกินรายได้ที่มี) ส่วนที่เหลือแบ่งผู้ผลิต "+F(String(sp))+"% พาร์ตเนอร์ "+F(String(100-sp))+"% หากรายได้ไม่พอคืนทุน พาร์ตเนอร์รับความเสี่ยงส่วนที่เหลือ ผู้ผลิตไม่ต้องจ่ายเงินสด"]);
+  }
+  money.push(["4.3","ตัวอย่างการคำนวณอยู่ในเอกสารแนบ 2 ซึ่งเป็นตัวเลขสมมติเพื่อประกอบความเข้าใจ ไม่ใช่การรับรองรายได้"]);
+  money.push(["4.4","พาร์ตเนอร์ใช้จ่ายค่าโฆษณาได้ไม่เกิน "+N("adcap")+" บาทต่อเดือน หากเกินต้องได้รับความยินยอมเป็นลายลักษณ์อักษรจากผู้ผลิตก่อน"]);
+  money.push(["4.5","ช่องทางรับเงินและรายงาน",[
+     ["(ก)","รับเงินผ่านบัญชี "+F(val("acct"),"ธนาคาร / ชื่อบัญชี / เลขที่")+" ซึ่งเป็นของ "+(val("acctOwner")==="producer"?"ผู้ผลิต":"พาร์ตเนอร์")+" และห้ามใช้บัญชีอื่นรับชำระ"],
+     ["(ข)","จัดทำสรุปรายรับ-รายจ่ายรายเดือนในไฟล์ที่คู่สัญญาเปิดดูได้ ส่งภายในวันที่ "+N("reportDay")+" ของเดือนถัดไป พร้อมหลักฐานรายการสำคัญ"],
+     ["(ค)","โอนส่วนแบ่งให้อีกฝ่ายภายใน "+N("payDays")+" วันนับแต่ส่งรายงาน"]]]);
+  money.push(["4.6","สิทธิตรวจสอบ: ผู้ผลิตขอดูข้อมูลยอดขายจากระบบชำระเงินหรือแพลตฟอร์มโดยตรงได้ภายใน "+N("auditDays")+" วันนับแต่ขอ หากพบว่ารายงานคลาดเคลื่อนเกิน "+N("variance")+"% ฝ่ายที่รับเงินต้องชำระส่วนต่างพร้อมค่าใช้จ่ายในการตรวจสอบ"]);
+  money.push(["4.7","การลดราคาหรือแจกฟรีเกิน "+N("discPct")+"% ของราคาปกติ ต้องแจ้งอีกฝ่ายล่วงหน้าเป็นลายลักษณ์อักษร"]);
+  money.push(["4.8","ภาษี: คู่สัญญาแต่ละฝ่ายรับผิดชอบภาษีของตน และหักภาษี ณ ที่จ่ายตามกฎหมายเมื่อมีหน้าที่ต้องหัก วิธีออกใบเสร็จหรือใบกำกับภาษีให้ปรึกษานักบัญชีก่อนเริ่มขาย"]);
+  cl("ข้อ 4  การลงทุน รายได้ และการแบ่งรายได้",money);
+  cl("ข้อ 5  ราคาและการขาย",[
+   ["5.1","ราคาและแพ็กเกจเริ่มต้นเป็นไปตามเอกสารแนบ 3 การเปลี่ยนแปลงต้องได้รับความยินยอมจากคู่สัญญาทั้งสองฝ่าย"],
+   ["5.2","การโฆษณาต้องไม่รับประกันผลสอบหรือคะแนน ต้องไม่ใช้ชื่อ รูป หรือผลงานของเด็กโดยไม่มีหนังสือยินยอมจากผู้ปกครอง และผู้ผลิตมีสิทธิ์ตรวจความถูกต้องด้านเนื้อหาของข้อความโฆษณาก่อนเผยแพร่ภายใน "+N("adReview")+" วันทำการ"],
+   ["5.3","นักเรียนคอร์สสดเดิมของพาร์ตเนอร์ "+exTxt+" และ"+exCount+"เป็นรายได้ที่ต้องแบ่งตามข้อ 4"],
+   ["5.4","การเปิดขายคอร์สออนไลน์ต้องไม่ซ้ำช่วงหรือกลุ่มเป้าหมายกับคอร์สสด ตามที่คู่สัญญาตกลง: "+F(val("sched"),"ระบุช่วงเวลา/เงื่อนไข")]]);
+  cl("ข้อ 6  ระยะเวลา ช่วงทดลอง และจุดตัดสินใจ",[
+   ["6.1","บันทึกข้อตกลงนี้มีผลตั้งแต่วันลงนาม โดยมีช่วงทดลอง "+N("trial")+" เดือน นับจากวันเปิดขายครั้งแรก"],
+   ["6.2","จุดตัดสินใจที่ 1 ในเดือนที่ "+N("gate")+" นับจากวันลงนาม หากมีผู้จองล่วงหน้าไม่ถึง "+N("gateMin")+" คน คู่สัญญาหารือเพื่อปรับข้อเสนอ ผลิตต่อ หรือยุติ โดยไม่ต้องชดใช้ความเสียหายเกินกว่าเงินที่จ่ายหรือต้องจ่ายตามงานที่ส่งมอบไปแล้ว"],
+   ["6.3","เมื่อสิ้นสุดช่วงทดลอง คู่สัญญาประชุมทบทวนผล และตัดสินใจเลือก ต่ออายุ ปรับสัดส่วน หรือยุติ"],
+   ["6.4","หากต่ออายุ ให้มีผลครั้งละ "+N("renew")+" เดือน และต่อเนื่องอัตโนมัติเว้นแต่ฝ่ายใดแจ้งไม่ต่ออายุล่วงหน้าไม่น้อยกว่า 60 วัน"]]);
+  cl("ข้อ 7  การรักษาความลับและการไม่แข่งขัน",[
+   ["7.1","คู่สัญญาต้องรักษาความลับของข้อมูลทางธุรกิจ ยอดขาย กลยุทธ์ และเนื้อหาที่ยังไม่เผยแพร่ ตลอดอายุสัญญาและ "+N("conf")+" ปีหลังสิ้นสุด เว้นแต่เป็นข้อมูลสาธารณะ หรือต้องเปิดเผยตามกฎหมาย หรือเปิดเผยแก่ที่ปรึกษาวิชาชีพที่มีหน้าที่รักษาความลับ"],
+   ["7.2","ตลอดอายุสัญญา ผู้ผลิตจะไม่ผลิตคอร์สที่มีเนื้อหาและโครงสร้างเทียบเท่ากันให้บุคคลที่สามจำหน่ายในช่องทางเดียวกัน ทั้งนี้ไม่เป็นการห้ามประกอบอาชีพสอนตามปกติ"]]);
+  cl("ข้อ 8  ข้อมูลส่วนบุคคล",[
+   ["8.1","คู่สัญญาปฏิบัติตามกฎหมายว่าด้วยการคุ้มครองข้อมูลส่วนบุคคล พาร์ตเนอร์เป็นผู้ควบคุมข้อมูลของผู้ซื้อจากช่องทางจำหน่าย การเก็บข้อมูลเด็กต้องได้รับความยินยอมจากผู้ปกครอง เก็บเท่าที่จำเป็น และแจ้งอีกฝ่ายภายใน 72 ชั่วโมงเมื่อพบเหตุข้อมูลรั่วไหล"]]);
+  cl("ข้อ 9  คุณภาพและคำรับรอง",[
+   ["9.1","ผู้ผลิตรับรองว่างานที่ตนสร้างขึ้นและส่งมอบ เป็นงานที่ตนมีสิทธิ์ และไม่ละเมิดสิทธิ์ของผู้อื่น (ไม่รวมโจทย์ตามข้อ 3.1)"],
+   ["9.2","ผู้ผลิตแก้ไขข้อผิดพลาดด้านเนื้อหาภายใน "+N("fixDays")+" วันนับแต่ได้รับแจ้ง"],
+   ["9.3","ไม่มีฝ่ายใดรับประกันผลการสอบของผู้เรียนหรือยอดขาย"]]);
+  cl("ข้อ 10  ความรับผิด",[
+   ["10.1","ความรับผิดของแต่ละฝ่ายต่ออีกฝ่ายตามบันทึกข้อตกลงนี้ ไม่เกินจำนวนเงินที่ฝ่ายนั้นได้รับตามบันทึกข้อตกลงนี้ในช่วง 12 เดือนก่อนเกิดเหตุ ยกเว้นกรณีจงใจ ประมาทเลินเล่ออย่างร้ายแรง ละเมิดความลับ หรือละเมิดทรัพย์สินทางปัญญา"]]);
+  cl("ข้อ 11  การเลิกสัญญาและผลหลังเลิก",[
+   ["11.1","หากฝ่ายใดผิดสัญญาในสาระสำคัญและไม่แก้ไขภายใน "+N("cure")+" วันนับแต่ได้รับหนังสือแจ้ง อีกฝ่ายเลิกสัญญาได้ นอกจากนี้คู่สัญญาอาจตกลงเลิกร่วมกัน หรือไม่ต่ออายุตามข้อ 6.4"],
+   ["11.2","เมื่อสัญญาสิ้นสุด",[
+     ["(ก)","ผู้ซื้อที่ชำระเงินแล้วยังเข้าเรียนต่อได้จนครบระยะที่ขายไว้"],
+     ["(ข)","พาร์ตเนอร์หยุดขายภายใน "+N("stop")+" วัน และไม่ใช้วิดีโอ เฉลย ใบงาน หรือระบบข้อสอบของผู้ผลิตต่อ ยกเว้นตาม (ก)"],
+     ["(ค)","รายได้จากการขายก่อนวันสิ้นสุด และจากผู้เรียนเดิมตาม (ก) ยังต้องแบ่งตามข้อ 4 จนครบ"],
+     ["(ง)","คู่สัญญาคืนข้อมูลลับและทรัพย์สินของอีกฝ่าย"],
+     ["(จ)","ผู้ผลิตนำงานของตนไปใช้ต่อได้ ยกเว้นโจทย์ที่เป็นของพาร์ตเนอร์หรือบุคคลที่สามตามข้อ 3.1"]]]]);
+  cl("ข้อ 12  เหตุสุดวิสัย",[["12.1","คู่สัญญาไม่ต้องรับผิดต่อความล่าช้าหรือการไม่ปฏิบัติตามสัญญาอันเกิดจากเหตุสุดวิสัยที่ควบคุมไม่ได้ แต่ต้องแจ้งอีกฝ่ายโดยเร็ว"]]);
+  cl("ข้อ 13  การแจ้งข้อความ",[["13.1","การแจ้งตามบันทึกข้อตกลงนี้ให้ทำเป็นลายลักษณ์อักษร ส่งทางอีเมลหรือช่องทางที่ระบุ ผู้ผลิต: "+F(val("pc"),"อีเมล/LINE")+" พาร์ตเนอร์: "+F(val("tc"),"อีเมล/LINE")+" ถือว่าได้รับเมื่อส่งถึงช่องทางดังกล่าว"]]);
+  cl("ข้อ 14  กฎหมายที่ใช้และการระงับข้อพิพาท",[["14.1","บันทึกข้อตกลงนี้อยู่ภายใต้กฎหมายไทย หากเกิดข้อพิพาท คู่สัญญาตกลงเจรจากันภายใน 30 วัน หากไม่ได้ผล ให้ไกล่เกลี่ยก่อนฟ้องคดี และหากยังไม่ตกลงกันได้ ให้เสนอข้อพิพาทต่อศาล "+F(val("court"),"ศาลที่มีเขตอำนาจ")]]);
+  cl("ข้อ 15  ข้อกำหนดทั่วไป",[
+   ["15.1","บันทึกข้อตกลงนี้พร้อมเอกสารแนบเป็นข้อตกลงฉบับสมบูรณ์ ใช้แทนข้อตกลงด้วยวาจาหรือเอกสารก่อนหน้า การแก้ไขต้องทำเป็นลายลักษณ์อักษรและลงนามทั้งสองฝ่าย"],
+   ["15.2","คู่สัญญาเป็นอิสระต่อกัน ไม่เป็นนายจ้างลูกจ้าง ตัวแทน หรือหุ้นส่วนกัน และห้ามโอนสิทธิหรือหน้าที่ให้บุคคลอื่นโดยไม่ได้รับความยินยอมเป็นลายลักษณ์อักษร"],
+   ["15.3","หากข้อใดไม่สมบูรณ์หรือบังคับไม่ได้ ข้ออื่นยังมีผลต่อไป"]]);
+  if($("k_c16").checked)cl("ข้อ 16  คำรับรองด้านระเบียบต้นสังกัด",[["16.1","ผู้ผลิตรับรองว่าได้ตรวจสอบระเบียบที่เกี่ยวกับการรับรายได้พิเศษหรือการประกอบกิจการนอกเวลาของต้นสังกัดแล้ว และการดำเนินงานตามบันทึกข้อตกลงนี้ไม่ขัดต่อระเบียบดังกล่าว"]]);
+  return C;
+}
+
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function mk(s){return esc(s).replace(/\u0001([^\u0002]*)\u0002/g,'<span class="fv">$1</span>').replace(/\u0003([^\u0004]*)\u0004/g,'<mark>[$1]</mark>')}
+function plain(s){return s.replace(/\u0001([^\u0002]*)\u0002/g,"$1").replace(/\u0003([^\u0004]*)\u0004/g,"[$1]")}
+
+var lastText="";
+function annex(A){
+  var n=num("buyers"),avg=num("avg"),fee=num("cFee"),pl=num("cPlat"),ad=num("cAds"),rf=num("cRef");
+  var rows=[[40,"ต่ำ"],[120,"กลาง"],[300,"สูง"]];
+  if(n&&rows.every(function(r){return r[0]!==n}))rows.splice(1,0,[n,"กำหนดเอง"]);
+  var spv=A?num("spA"):num("spB"),out=[];
+  rows.forEach(function(r){
+    var gross=r[0]*avg,p,t;
+    if(A){var vc=gross*(fee+pl+ad+rf)/100,net=gross-vc;p=num("fee0")+net*spv/100;t=net*(100-spv)/100-num("fee0")}
+    else{var m=gross-gross*(fee+pl+rf)/100,inv=num("invest"),rep=Math.min(Math.max(m,0),inv),prf=Math.max(m-rep,0);p=prf*spv/100;t=rep+prf*(100-spv)/100-inv}
+    out.push({n:r[0],label:r[1],gross:gross,p:p,t:t});
+  });
+  return out;
+}
+function render(){
+  var A=opt()==="A",C=build(),h="",tx=[];
+  var head=[
+   "บันทึกข้อตกลงความร่วมมือ",
+   "ในการผลิตและจำหน่ายคอร์สออนไลน์"];
+  h+='<h2 class="ptitle">'+head[0]+'<br>'+head[1]+'</h2><p class="draft">ร่างสำหรับหารือ ยังไม่มีผลผูกพันจนกว่าคู่สัญญาจะลงนาม</p>';
+  tx.push(head[0],head[1],"(ร่างสำหรับหารือ ยังไม่มีผลผูกพันจนกว่าคู่สัญญาจะลงนาม)","");
+  var intro=["ทำที่ "+F(val("place"),"สถานที่")+"  วันที่ "+F(val("date"),"วัน เดือน พ.ศ."),
+    "บันทึกข้อตกลงฉบับนี้ทำขึ้นระหว่าง",
+    "(1) "+F(val("pn"),"ชื่อ-สกุล ผู้ผลิต")+" ที่อยู่ "+F(val("pa"),"ที่อยู่")+" เลขประจำตัวประชาชน "+F("","เลข 13 หลัก")+" ซึ่งต่อไปเรียกว่า \"ผู้ผลิต\"",
+    "(2) "+F(val("tn"),"ชื่อ-สกุล/ชื่อนิติบุคคล พาร์ตเนอร์")+" ที่อยู่ "+F(val("ta"),"ที่อยู่")+" เลขประจำตัวประชาชน/เลขทะเบียนนิติบุคคล "+F("","เลข")+" ซึ่งต่อไปเรียกว่า \"พาร์ตเนอร์\"",
+    "ผู้ผลิตและพาร์ตเนอร์ ต่อไปเรียกรวมกันว่า \"คู่สัญญา\" โดยคู่สัญญาตกลงกันดังต่อไปนี้"];
+  intro.forEach(function(s,i){h+='<p class="'+(i>1&&i<4?'it':'')+'">'+mk(s)+'</p>';tx.push(plain(s))});
+  C.forEach(function(c){
+    h+='<h3>'+esc(c.h)+'</h3>';tx.push("",c.h);
+    c.items.forEach(function(it){
+      h+='<p class="it"><b>'+it[0]+'</b> '+mk(it[1])+'</p>';tx.push(it[0]+" "+plain(it[1]));
+      if(it[2])it[2].forEach(function(s){h+='<p class="it2"><b>'+s[0]+'</b> '+mk(s[1])+'</p>';tx.push("    "+s[0]+" "+plain(s[1]))});
+    })});
+  var closing="บันทึกข้อตกลงนี้ทำขึ้นเป็นสองฉบับ มีข้อความตรงกัน คู่สัญญาได้อ่านและเข้าใจข้อความโดยตลอดแล้ว จึงลงลายมือชื่อไว้เป็นสำคัญต่อหน้าพยาน และเก็บไว้ฝ่ายละหนึ่งฉบับ";
+  h+='<p style="margin-top:18px">'+esc(closing)+'</p>';tx.push("",closing,"");
+  var sig=[[val("pn")||"ผู้ผลิต","ผู้ผลิต"],[val("tn")||"พาร์ตเนอร์","พาร์ตเนอร์"],["…………………","พยาน"],["…………………","พยาน"]];
+  h+='<div class="sigs">'+sig.map(function(s){return '<div><span>ลงชื่อ ………………………………</span><span>( '+esc(s[0])+' )</span><span>'+s[1]+'</span></div>'}).join("")+'</div>';
+  sig.forEach(function(s){tx.push("ลงชื่อ ……………………………… ( "+s[0]+" ) "+s[1])});
+  /* annex 2 */
+  var rows=annex(A);
+  h+='<h3 class="pb">เอกสารแนบ 2  ตัวอย่างการคำนวณ (ตัวเลขสมมติ ทางเลือก '+(A?"ก":"ข")+')</h3><div class="scroll"><table><tr><th>สถานการณ์</th><th class="n">ผู้ซื้อ (คน)</th><th class="n">รายได้ขั้นต้น</th><th class="n">ผู้ผลิตได้</th><th class="n">พาร์ตเนอร์ได้สุทธิ</th></tr>'+
+   rows.map(function(r){return '<tr><td>'+r.label+'</td><td class="n">'+th(r.n)+'</td><td class="n">'+th(r.gross)+'</td><td class="n">'+th(r.p)+'</td><td class="n'+(r.t<0?' neg':'')+'">'+th(r.t)+'</td></tr>'}).join("")+'</table></div>'+
+   '<p class="note">'+(A?"ผู้ผลิตได้ = ค่าผลิต + ส่วนแบ่งรายได้สุทธิ · พาร์ตเนอร์ได้สุทธิ = ส่วนแบ่งของพาร์ตเนอร์ หักค่าผลิตที่จ่าย":"ผู้ผลิตได้ = ส่วนแบ่งกำไรหลังคืนทุน · พาร์ตเนอร์ได้สุทธิ = เงินคืนทุน + ส่วนแบ่งกำไร หักเงินที่ลงจริง")+' ยังไม่หักภาษี</p>';
+  tx.push("","เอกสารแนบ 2 ตัวอย่างการคำนวณ (สมมติ) ทางเลือก "+(A?"ก":"ข"));
+  rows.forEach(function(r){tx.push(r.label+" · ผู้ซื้อ "+th(r.n)+" · รายได้ขั้นต้น "+th(r.gross)+" · ผู้ผลิตได้ "+th(r.p)+" · พาร์ตเนอร์ได้สุทธิ "+th(r.t))});
+  $("paper").innerHTML=h;lastText=tx.join("\n");
+  /* summary tiles */
+  var mid=rows.filter(function(r){return r.label!=="ต่ำ"&&r.label!=="สูง"})[0]||rows[1];
+  $("s_p").textContent=th(mid.p)+" บาท";$("s_t").textContent=(mid.t<0?"ขาดทุน ":"")+th(Math.abs(mid.t))+" บาท";$("s_n").textContent=th(mid.n)+" คน";
+  var low=rows[0];$("s_low").textContent=(opt()==="A"?"ผู้ผลิตได้ค่าผลิตแน่นอนก่อน ":"ผู้ผลิตได้เมื่อรายได้เกินเงินลงทุนของติวเตอร์เท่านั้น ")+"· ถ้าขายได้ "+th(low.n)+" คน ผู้ผลิตได้ "+th(low.p)+" บาท พาร์ตเนอร์ได้สุทธิ "+th(low.t)+" บาท";
+  /* show only the fields for the chosen option */
+  document.querySelectorAll("[data-opt]").forEach(function(e){e.hidden=e.dataset.opt!==opt()});
+  $("k_qthird_wrap").hidden=val("qowner")!=="third";
+  $("k_exDisc_wrap").hidden=val("exist")!=="disc";
+}
+var timer=null;
+function queue(){clearTimeout(timer);timer=setTimeout(render,60)}
+document.querySelectorAll("#form input,#form select,#form textarea").forEach(function(e){e.addEventListener("input",queue);e.addEventListener("change",queue)});
+
+/* views */
+var cv=$("cview");
+function setView(v){cv.dataset.v=v;document.querySelectorAll("#vbar button").forEach(function(b){
+  var on=b.dataset.v===v||(b.dataset.v==="build"&&v!=="nego");b.setAttribute("aria-pressed",on)})}
+document.querySelectorAll("#vbar button").forEach(function(b){b.addEventListener("click",function(){
+  var v=b.dataset.v;if(v==="build")v=(cv.dataset.v==="preview"?"preview":"form");setView(v)})});
+
+/* actions */
+function toast(t){var e=$("toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},2600)}
+$("b_copy").addEventListener("click",function(){
+  var done=function(){toast("คัดลอกข้อความสัญญาแล้ว")};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,function(){fallback()})}else fallback();
+  function fallback(){var ta=document.createElement("textarea");ta.value=lastText;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done()}catch(e){toast("คัดลอกไม่ได้ ให้ลองพิมพ์/บันทึกเป็น PDF แทน")}ta.remove()}
+});
+$("b_print").addEventListener("click",function(){window.print()});
+$("form").addEventListener("reset",function(){setTimeout(function(){render();toast("ล้างข้อมูลที่กรอกแล้ว")},0)});
+render();
+})();
+
+</script>
+</body></html>

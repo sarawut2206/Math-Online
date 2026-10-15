@@ -76,6 +76,10 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
 .bchart .vl.ng{fill:var(--neg)}
 .chartwrap{margin:6px 0 12px}
 @media print{.chartcard{display:none!important}.bchart text{fill:#000!important}}
+
+.paper .flash{animation:flashbg 2s ease-out;border-radius:4px}
+@keyframes flashbg{0%,35%{background:#fff176;box-shadow:0 0 0 4px #fff176}100%{background:transparent;box-shadow:0 0 0 4px transparent}}
+@media(prefers-reduced-motion:reduce){.paper .flash{animation:none;background:#fff176}}
 </style></head><body>
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -344,11 +348,11 @@ function render(){
     "(1) "+F(val("pn"),"ชื่อ-สกุล ผู้ผลิต")+" ที่อยู่ "+F(val("pa"),"ที่อยู่")+" เลขประจำตัวประชาชน "+F("","เลข 13 หลัก")+" ซึ่งต่อไปเรียกว่า \"ผู้ผลิต\"",
     "(2) "+F(val("tn"),"ชื่อ-สกุล/ชื่อนิติบุคคล พาร์ตเนอร์")+" ที่อยู่ "+F(val("ta"),"ที่อยู่")+" เลขประจำตัวประชาชน/เลขทะเบียนนิติบุคคล "+F("","เลข")+" ซึ่งต่อไปเรียกว่า \"พาร์ตเนอร์\"",
     "ผู้ผลิตและพาร์ตเนอร์ ต่อไปเรียกรวมกันว่า \"คู่สัญญา\" โดยคู่สัญญาตกลงกันดังต่อไปนี้"];
-  intro.forEach(function(s,i){h+='<p class="'+(i>1&&i<4?'it':'')+'">'+mk(s)+'</p>';tx.push(plain(s))});
+  intro.forEach(function(s,i){h+='<p id="intro'+i+'" class="'+(i>1&&i<4?'it':'')+'">'+mk(s)+'</p>';tx.push(plain(s))});
   C.forEach(function(c){
     h+='<h3>'+esc(c.h)+'</h3>';tx.push("",c.h);
     c.items.forEach(function(it){
-      h+='<p class="it"><b>'+it[0]+'</b> '+mk(it[1])+'</p>';tx.push(it[0]+" "+plain(it[1]));
+      h+='<p class="it" id="c'+it[0].replace('.','_')+'"><b>'+it[0]+'</b> '+mk(it[1])+'</p>';tx.push(it[0]+" "+plain(it[1]));
       if(it[2])it[2].forEach(function(s){h+='<p class="it2"><b>'+s[0]+'</b> '+mk(s[1])+'</p>';tx.push("    "+s[0]+" "+plain(s[1]))});
     })});
   var closing="บันทึกข้อตกลงนี้ทำขึ้นเป็นสองฉบับ มีข้อความตรงกัน คู่สัญญาได้อ่านและเข้าใจข้อความโดยตลอดแล้ว จึงลงลายมือชื่อไว้เป็นสำคัญต่อหน้าพยาน และเก็บไว้ฝ่ายละหนึ่งฉบับ";
@@ -359,7 +363,7 @@ function render(){
   /* annex 2 */
   var rows=annex(A),svg=chart(rows);
   $("chartbox").innerHTML=svg;
-  h+='<h3 class="pb">เอกสารแนบ 2  ตัวอย่างการคำนวณ (ตัวเลขสมมติ ทางเลือก '+(A?"ก":"ข")+')</h3><div class="chartwrap">'+svg+'</div><div class="scroll"><table><tr><th>สถานการณ์</th><th class="n">ผู้ซื้อ (คน)</th><th class="n">รายได้ขั้นต้น</th><th class="n">ผู้ผลิตได้</th><th class="n">พาร์ตเนอร์ได้สุทธิ</th></tr>'+
+  h+='<h3 class="pb" id="annex">เอกสารแนบ 2  ตัวอย่างการคำนวณ (ตัวเลขสมมติ ทางเลือก '+(A?"ก":"ข")+')</h3><div class="chartwrap">'+svg+'</div><div class="scroll"><table><tr><th>สถานการณ์</th><th class="n">ผู้ซื้อ (คน)</th><th class="n">รายได้ขั้นต้น</th><th class="n">ผู้ผลิตได้</th><th class="n">พาร์ตเนอร์ได้สุทธิ</th></tr>'+
    rows.map(function(r){return '<tr><td>'+r.label+'</td><td class="n">'+th(r.n)+'</td><td class="n">'+th(r.gross)+'</td><td class="n">'+th(r.p)+'</td><td class="n'+(r.t<0?' neg':'')+'">'+th(r.t)+'</td></tr>'}).join("")+'</table></div>'+
    '<p class="note">'+(A?"ผู้ผลิตได้ = ค่าผลิต + ส่วนแบ่งรายได้สุทธิ · พาร์ตเนอร์ได้สุทธิ = ส่วนแบ่งของพาร์ตเนอร์ หักค่าผลิตที่จ่าย":"ผู้ผลิตได้ = ส่วนแบ่งกำไรหลังคืนทุน · พาร์ตเนอร์ได้สุทธิ = เงินคืนทุน + ส่วนแบ่งกำไร หักเงินที่ลงจริง")+' ยังไม่หักภาษี</p>';
   tx.push("","เอกสารแนบ 2 ตัวอย่างการคำนวณ (สมมติ) ทางเลือก "+(A?"ก":"ข"));
@@ -374,9 +378,26 @@ function render(){
   $("k_qthird_wrap").hidden=val("qowner")!=="third";
   $("k_exDisc_wrap").hidden=val("exist")!=="disc";
 }
-var timer=null;
-function queue(){clearTimeout(timer);timer=setTimeout(render,60)}
-document.querySelectorAll("#form input,#form select,#form textarea").forEach(function(e){e.addEventListener("input",queue);e.addEventListener("change",queue)});
+var timer=null,pending=null;
+var MAP={place:"intro0",date:"intro0",pn:"intro2",pa:"intro2",tn:"intro3",ta:"intro3",cname:"c1_1",qowner:"c3_1",qthird:"c3_1",license:"c3_2",bmode:"c3_3",bname:"c3_3",
+ opt:"c4_2",fee0:"c4_2",inst1:"c4_2",spA:"c4_2",spB:"c4_2",invest:"c4_2",adcap:"c4_4",acct:"c4_5",acctOwner:"c4_5",reportDay:"c4_5",payDays:"c4_5",auditDays:"c4_6",variance:"c4_6",discPct:"c4_7",
+ exist:"c5_3",exDisc:"c5_3",exCount:"c5_3",sched:"c5_4",adReview:"c5_2",trial:"c6_1",gate:"c6_2",gateMin:"c6_2",renew:"c6_4",conf:"c7_1",fixDays:"c9_2",reviewDays:"c2_3",cure:"c11_1",stop:"c11_2",
+ pc:"c13_1",tc:"c13_1",court:"c14_1",c16:"c16_1",buyers:"annex",avg:"annex",cFee:"annex",cPlat:"annex",cAds:"annex",cRef:"annex"};
+function showEdit(){
+  var k=pending;pending=null;if(!k||!MAP[k])return;
+  var el=$(MAP[k]);if(!el)return;
+  var c=document.querySelector(".prev-col"),hidden=getComputedStyle(c).display==="none";
+  var label=MAP[k]==="annex"?"เอกสารแนบ 2":/^c\d/.test(MAP[k])?"ข้อ "+MAP[k].slice(1).replace("_","."):"ส่วนต้นของสัญญา";
+  if(hidden){toast("อัปเดต"+label+"แล้ว · ดูในแท็บ ตัวอย่างสัญญา");return}
+  if(c.scrollHeight>c.clientHeight+4){
+    var top=el.getBoundingClientRect().top-c.getBoundingClientRect().top+c.scrollTop-120;
+    c.scrollTop=Math.max(0,top);
+  }else{el.scrollIntoView({block:"center"})}
+  el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");
+}
+function queue(){clearTimeout(timer);timer=setTimeout(function(){render();showEdit()},60)}
+function onEdit(ev){var t=ev.target;pending=t.name==="k_opt"?"opt":(t.id||"").replace(/^k_/,"");queue()}
+document.querySelectorAll("#form input,#form select,#form textarea").forEach(function(e){e.addEventListener("input",onEdit);e.addEventListener("change",onEdit)});
 
 /* views */
 var cv=$("cview");

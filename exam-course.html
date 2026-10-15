@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>คอร์สตะลุยข้อสอบคณิตศาสตร์ 18 ชุด</title>
+<meta name="description" content="แดชบอร์ดวางแผนคอร์สตะลุยข้อสอบ 18 ชุด">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Mitr:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>.pgchart{display:flex;align-items:flex-end;gap:5px;height:130px;margin-top:12px}
+.pgbar{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+.pgbar i{display:block;width:100%;background:var(--ink);border-radius:4px 4px 0 0;min-height:3px}
+.pgbar:last-child i{background:var(--mark)}.pgbar:first-child i{background:var(--ok)}
+.pgbar span{font-size:11px;color:var(--mut);white-space:nowrap}
+.split{display:flex;height:22px;border-radius:8px;overflow:hidden;background:var(--line);margin-top:10px}
+.split i{display:block;height:100%}
+table.trk{min-width:420px}table.trk th.c,table.trk td.c{text-align:center}
+table.trk input{width:20px;height:20px;accent-color:var(--ok);cursor:pointer}
+.stat small{display:block}</style></head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><h3>สินค้าและตัวเลข</h3><a href="exam-course.html" aria-current="page"><svg class="i"><use href="#target"/></svg>คอร์สตะลุยข้อสอบ</a><a href="catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner">
+<nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> สินค้าและตัวเลข <span aria-hidden="true">›</span> คอร์สตะลุยข้อสอบ</nav>
+<header class="page-head"><h1>คอร์สตะลุยข้อสอบคณิตศาสตร์ 18 ชุด</h1><p>แดชบอร์ดวางแผนเฉพาะคอร์สนี้ ตั้งแต่ออกแบบคอร์ส แผนอัดวิดีโอ ติดตามงาน ราคา ไปจนถึงต้นทุนและกำไร</p><div class="chips"><span class="chip ">ตะลุยข้อสอบ 18 ชุด × 40 ข้อ</span><span class="chip warn">ตัวเลขเป็นสมมติฐาน ปรับได้</span></div></header>
+<section id="overview" aria-labelledby="h-ov">
+  <h2 class="sec" id="h-ov"><svg class="i"><use href="#target"/></svg>สินค้าที่มีอยู่</h2>
+  <div class="grid g4">
+    <div class="stat"><b>720</b><small>ข้อ (18 ชุด × 40 ข้อ)</small></div>
+    <div class="stat"><b>273</b><small>หน้าในเล่ม</small></div>
+    <div class="stat"><b>20</b><small>ตอน: ปรับพื้นฐาน 1 · ตะลุย 18 · พิเศษ 1</small></div>
+    <div class="stat"><b>~13</b><small>หน้าต่อชุด (ชุดพิเศษ 28 หน้า)</small></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <b>จำนวนหน้าแต่ละตอน (จากสารบัญ)</b>
+    <div class="pgchart" role="img" aria-label="กราฟแท่งจำนวนหน้าแต่ละตอน ชุดพิเศษยาวที่สุด 28 หน้า"><div class="pgbar" title="ปรับพื้นฐาน: 11 หน้า (หน้า 2–12)"><i style="height:39%"></i><span>พื้นฐาน</span></div><div class="pgbar" title="ชุด 1: 14 หน้า (หน้า 13–26)"><i style="height:50%"></i><span>1</span></div><div class="pgbar" title="ชุด 2: 15 หน้า (หน้า 27–41)"><i style="height:54%"></i><span>2</span></div><div class="pgbar" title="ชุด 3: 14 หน้า (หน้า 42–55)"><i style="height:50%"></i><span>3</span></div><div class="pgbar" title="ชุด 4: 14 หน้า (หน้า 56–69)"><i style="height:50%"></i><span>4</span></div><div class="pgbar" title="ชุด 5: 13 หน้า (หน้า 70–82)"><i style="height:46%"></i><span>5</span></div><div class="pgbar" title="ชุด 6: 13 หน้า (หน้า 83–95)"><i style="height:46%"></i><span>6</span></div><div class="pgbar" title="ชุด 7: 13 หน้า (หน้า 96–108)"><i style="height:46%"></i><span>7</span></div><div class="pgbar" title="ชุด 8: 13 หน้า (หน้า 109–121)"><i style="height:46%"></i><span>8</span></div><div class="pgbar" title="ชุด 9: 12 หน้า (หน้า 122–133)"><i style="height:43%"></i><span>9</span></div><div class="pgbar" title="ชุด 10: 12 หน้า (หน้า 134–145)"><i style="height:43%"></i><span>10</span></div><div class="pgbar" title="ชุด 11: 12 หน้า (หน้า 146–157)"><i style="height:43%"></i><span>11</span></div><div class="pgbar" title="ชุด 12: 12 หน้า (หน้า 158–169)"><i style="height:43%"></i><span>12</span></div><div class="pgbar" title="ชุด 13: 12 หน้า (หน้า 170–181)"><i style="height:43%"></i><span>13</span></div><div class="pgbar" title="ชุด 14: 12 หน้า (หน้า 182–193)"><i style="height:43%"></i><span>14</span></div><div class="pgbar" title="ชุด 15: 13 หน้า (หน้า 194–206)"><i style="height:46%"></i><span>15</span></div><div class="pgbar" title="ชุด 16: 13 หน้า (หน้า 207–219)"><i style="height:46%"></i><span>16</span></div><div class="pgbar" title="ชุด 17: 12 หน้า (หน้า 220–231)"><i style="height:43%"></i><span>17</span></div><div class="pgbar" title="ชุด 18: 14 หน้า (หน้า 232–245)"><i style="height:50%"></i><span>18</span></div><div class="pgbar" title="ชุดพิเศษ: 28 หน้า (หน้า 246–273)"><i style="height:100%"></i><span>พิเศษ</span></div></div>
+    <p class="note" style="margin:8px 0 0">ชุดตะลุยแต่ละชุดยาวใกล้เคียงกัน (12–15 หน้า) จึงวางแผนเวลาผลิตแบบคงที่ต่อชุดได้ ชุดพิเศษยาวกว่าสองเท่า ควรแยกเป็นสองรอบ</p>
+  </div>
+  <div class="callout" style="margin-top:14px"><svg class="i"><use href="#info"/></svg><div><b>สองข้อที่ต้องเคลียร์ก่อนเริ่ม</b><br>1) สารบัญไม่มีส่วนเฉลย ถ้าเล่มไม่มีเฉลยละเอียด ต้องเขียนเฉลยเองทั้ง 720 ข้อ (นับเป็นงานใหญ่ที่สุด)<br>2) เจ้าของลิขสิทธิ์โจทย์เป็นใคร ถ้าเป็นเล่มของติวเตอร์หรือสำนักพิมพ์ ต้องมีข้อตกลงก่อนเอาโจทย์ขึ้นวิดีโอและขายต่อ</div></div>
+</section>
+
+<section id="design" aria-labelledby="h-ds">
+  <h2 class="sec" id="h-ds"><svg class="i"><use href="#map"/></svg>ออกแบบคอร์สให้ขายได้</h2>
+  <p class="sec-note">คอร์สแนวตะลุยข้อสอบถูกก๊อปปี้ได้ง่ายที่สุด ถ้าขายแค่ วิดีโอเฉลย จะแข่งกับคลิปฟรี จึงควรขายเป็น "โปรแกรมเตรียมสอบ 20 สัปดาห์" ไม่ใช่ "ชุดคลิป"</p>
+  <div class="grid g2">
+    <div class="card"><b>1. ขายเป็นรุ่น (Cohort) ไม่ใช่เปิดขายตลอดปี</b><p class="mut" style="margin:6px 0 0">เปิดรับสมัคร 2 รอบ/ปี มีวันเริ่มและวันปิดรับ ชุดที่ 1 ปล่อยพร้อมกัน ทุกคนเรียนจังหวะเดียวกัน มีกำหนดส่งการบ้าน ช่วยให้คนซื้อตัดสินใจเร็วและเรียนจบมากกว่าคอร์สที่ดูเมื่อไรก็ได้</p></div>
+    <div class="card"><b>2. ให้ทำข้อสอบจับเวลาก่อน แล้วค่อยดูเฉลย</b><p class="mut" style="margin:6px 0 0">แต่ละชุด 40 ข้อทำเป็นข้อสอบจำลองจับเวลา ส่งคำตอบ แล้วจึงเปิดวิดีโอเฉลย คุณมีโปรแกรมวัดผล HTML อยู่แล้ว ต่อยอดเป็นระบบสอบ 18 ชุดได้</p></div>
+    <div class="card"><b>3. ติดป้ายหัวข้อทุกข้อ แล้วทำรายงานจุดอ่อน</b><p class="mut" style="margin:6px 0 0">ติดป้าย 720 ข้อว่าเป็นเรื่องอะไร (เศษส่วน ร้อยละ ฯลฯ) ผลสอบแต่ละชุดบอกได้ว่าอ่อนเรื่องไหน แล้วแนะนำให้ย้อนดูคลิปหัวข้อนั้น นี่คือสิ่งที่คลิปฟรีให้ไม่ได้</p></div>
+    <div class="card"><b>4. ตอนปรับพื้นฐานเป็นด่านคัดกรอง</b><p class="mut" style="margin:6px 0 0">ให้ทุกคนทำชุดปรับพื้นฐานก่อน ผลคะแนนกำหนดเส้นทาง: ผ่านเกณฑ์เริ่มชุด 1 ได้เลย ไม่ผ่านให้ดูคลิปเสริมก่อน ลดการเรียนแล้วท้อใจ</p></div>
+    <div class="card"><b>5. เฉลยแบบ "คิดอย่างไร" ไม่ใช่แค่ผลลัพธ์</b><p class="mut" style="margin:6px 0 0">ทุกข้อใหญ่สอน 3 อย่าง: มองโจทย์เห็นอะไร วิธีลัดหรือวิธีมาตรฐาน และกับดักที่เด็กมักตก ข้อง่ายรวมหลายข้อเป็นหนึ่งคลิป ข้อยากแยกคลิปละข้อ</p></div>
+    <div class="card"><b>6. สร้างหลักฐานผลลัพธ์ตั้งแต่รุ่นแรก</b><p class="mut" style="margin:6px 0 0">เก็บคะแนนชุดแรกเทียบชุดสุดท้าย (ได้รับอนุญาตจากผู้ปกครอง ไม่ใช้ชื่อเด็ก) ใช้เป็นหน้าขายของรุ่นถัดไป ห้ามรับประกันผลสอบ</p></div>
+  </div>
+  <h3 style="margin:22px 0 8px">จังหวะหนึ่งสัปดาห์ (ใช้ซ้ำทั้ง 18 สัปดาห์)</h3>
+  <div class="scroll"><table>
+    <tr><th>วัน</th><th>ผู้เรียนทำ</th><th>คุณทำ</th></tr>
+    <tr><td>จันทร์</td><td>รับชุดใหม่ ทำข้อสอบ 40 ข้อจับเวลา</td><td>เปิดชุดประจำสัปดาห์</td></tr>
+    <tr><td>พุธ–พฤหัส</td><td>ส่งคำตอบ ดูผลและจุดอ่อน แล้วดูวิดีโอเฉลย</td><td>ปล่อยวิดีโอเฉลยหลังปิดส่ง (ถ่ายล่วงหน้าไว้แล้ว)</td></tr>
+    <tr><td>เสาร์ หรือ อาทิตย์</td><td>ถามในไลฟ์ ฝึกข้อที่ผิดซ้ำ</td><td>ไลฟ์ถามตอบ 1 ชั่วโมง (เฉพาะแพ็กเกจ Plus ขึ้นไป)</td></tr>
+  </table></div>
+  <h3 style="margin:22px 0 8px">ปฏิทิน 20 สัปดาห์</h3>
+  <div class="scroll"><table>
+    <tr><th>สัปดาห์</th><th>เนื้อหา</th><th>หมายเหตุ</th></tr>
+    <tr><td>0</td><td>ปรับพื้นฐาน (หน้า 2–12)</td><td>ด่านคัดกรอง แยกเส้นทางตามคะแนน</td></tr>
+    <tr><td>1–6</td><td>ชุด 1–6</td><td>สร้างนิสัย ทำจับเวลา ทุกสัปดาห์</td></tr>
+    <tr><td>7–12</td><td>ชุด 7–12</td><td>กลางทาง คนหลุดมากที่สุด ใส่การแจ้งเตือนและกิจกรรมสร้างแรงจูงใจ</td></tr>
+    <tr><td>13–18</td><td>ชุด 13–18</td><td>เน้นเวลาและความแม่น ทบทวนข้อผิดซ้ำ</td></tr>
+    <tr><td>19–20</td><td>ชุดพิเศษ (หน้า 246–273)</td><td>ข้อสอบจำลองปิดคอร์ส วัดผลก่อน–หลัง</td></tr>
+  </table></div>
+</section>
+
+<section id="video" aria-labelledby="h-vd">
+  <h2 class="sec" id="h-vd"><svg class="i"><use href="#video"/></svg>แผนอัดวิดีโอเฉลย</h2>
+  <p class="sec-note">ปรับตัวเลขได้ ระบบคำนวณชั่วโมงงานทั้งหมดและความยาววิดีโอ</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:17px">สมมติฐานการผลิต</h3>
+      <label class="f">จำนวนข้อต่อชุด<input id="v_q" type="number" min="1" value="40"></label>
+      <label class="f">สัดส่วนข้อง่าย / ปานกลาง / ยาก (%)
+        <span style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"><input id="v_pe" type="number" min="0" value="30" aria-label="ข้อง่าย %"><input id="v_pm" type="number" min="0" value="50" aria-label="ข้อปานกลาง %"><input id="v_ph" type="number" min="0" value="20" aria-label="ข้อยาก %"></span></label>
+      <label class="f">นาทีต่อข้อ (ง่าย / ปานกลาง / ยาก)
+        <span style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"><input id="v_te" type="number" min="0" step="0.5" value="1.5" aria-label="นาทีข้อง่าย"><input id="v_tm" type="number" min="0" step="0.5" value="3.5" aria-label="นาทีข้อปานกลาง"><input id="v_th" type="number" min="0" step="0.5" value="6.5" aria-label="นาทีข้อยาก"></span></label>
+      <label class="f">จำนวนข้อชุดปรับพื้นฐาน / ชุดพิเศษ
+        <span style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px"><input id="v_qb" type="number" min="0" value="40" aria-label="ข้อชุดปรับพื้นฐาน"><input id="v_qs" type="number" min="0" value="60" aria-label="ข้อชุดพิเศษ"></span></label>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:17px">เวลาทำงานต่อ 1 ข้อ/ต่อ 1 นาทีวิดีโอ</h3>
+      <label class="f">เขียนเฉลยและเตรียมสไลด์ (นาทีต่อข้อ · ใส่ 0 ถ้ามีเฉลยครบแล้ว)<input id="v_wr" type="number" min="0" value="4"></label>
+      <label class="f">อัด (เท่าของความยาวคลิป รวมอัดซ้ำ)<input id="v_rc" type="number" min="0" step="0.1" value="1.4"></label>
+      <label class="f">ตัดต่อ (เท่าของความยาวคลิป)<input id="v_ed" type="number" min="0" step="0.1" value="0.8"></label>
+      <label class="f">ตรวจความถูกต้อง (เท่าของความยาวคลิป)<input id="v_qc" type="number" min="0" step="0.1" value="0.3"></label>
+      <label class="f">ชั่วโมงที่ทำได้ต่อสัปดาห์<input id="v_hw" type="number" min="1" value="12"></label>
+    </div>
+  </div>
+  <div class="tiles" style="margin-top:14px" aria-live="polite">
+    <div class="tile"><span>วิดีโอทั้งหมด</span><b id="o_hrs">–</b></div>
+    <div class="tile"><span>ชั่วโมงงานรวม</span><b id="o_work">–</b></div>
+    <div class="tile"><span>ใช้เวลาประมาณ</span><b id="o_wk">–</b></div>
+    <div class="tile"><span>จำนวนข้อทั้งหมด</span><b id="o_q">–</b></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><b>วิธีจัดคลิปในแต่ละชุด</b>
+      <ul style="margin:8px 0 0;padding-left:20px"><li><b>ข้อง่าย:</b> รวม 3–4 ข้อเป็นหนึ่งคลิป ความยาว 4–6 นาที</li><li><b>ข้อปานกลาง:</b> หนึ่งข้อต่อหนึ่งคลิป 3–4 นาที</li><li><b>ข้อยาก:</b> หนึ่งข้อต่อหนึ่งคลิป 6–8 นาที มีแนวคิด วิธีลัด และกับดัก</li><li>ตั้งชื่อไฟล์เป็นรหัส เช่น <span class="tpl">S07-Q23</span> (ชุด 7 ข้อ 23)</li></ul></div>
+    <div class="card"><b>ลำดับการผลิต</b>
+      <ol style="margin:8px 0 0;padding-left:20px"><li>ปรับพื้นฐาน (เป็นด่านแรก ต้องเสร็จก่อนเปิดรุ่น)</li><li>ชุด 1–4 ให้พร้อมก่อนเปิดรับสมัคร</li><li>ที่เหลือผลิตล่วงหน้าไม่เกิน 2–3 ชุดจากสัปดาห์ที่กำลังสอน</li><li>ชุดพิเศษผลิตระหว่างรุ่นรันอยู่ ใช้คำถามจากผู้เรียนปรับเฉลย</li></ol>
+      <p class="note" style="margin:8px 0 0">ผลิตล่วงหน้าไม่ต้องครบ 20 ตอนก่อนขาย ช่วยให้รู้ผลตลาดเร็ว แต่ต้องมั่นใจว่าส่งชุดใหม่ทันทุกสัปดาห์</p></div>
+  </div>
+</section>
+
+<section id="tracker" aria-labelledby="h-tk">
+  <h2 class="sec" id="h-tk"><svg class="i"><use href="#check"/></svg>ติดตามความคืบหน้า 20 ตอน</h2>
+  <p class="sec-note">ติ๊กสถานะแต่ละขั้น ระบบจำในเบราว์เซอร์นี้</p>
+  <div class="card hero" style="margin-bottom:14px">
+    <div class="ring"><svg width="128" height="128" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="12"/><circle id="tarc" cx="60" cy="60" r="52" fill="none" stroke="var(--ok)" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg><b id="tpct" class="num">0%</b></div>
+    <div><h2 style="margin:0 0 4px;font:500 20px var(--display)">ความคืบหน้าการผลิตรวม</h2><p class="mut" style="margin:0"><span id="tdone" class="num">0</span> จาก <span id="tall" class="num">80</span> ขั้น (20 ตอน × 4 ขั้น)</p><div class="next"><svg class="i"><use href="#arrow"/></svg><div><b>งานถัดไป</b><br><span id="tnext"></span></div></div></div>
+  </div>
+  <div class="scroll"><table id="trk" class="trk"></table></div>
+</section>
+
+<section id="pricing" aria-labelledby="h-pr">
+  <h2 class="sec" id="h-pr"><svg class="i"><use href="#coin"/></svg>แพ็กเกจและราคา</h2>
+  <div class="grid g3">
+    <div class="card"><span class="chip">Self-paced</span><h3 style="margin:8px 0 4px">เรียนเอง</h3><p class="mut" style="margin:0 0 8px">ข้อสอบ 20 ชุด + วิดีโอเฉลย + รายงานผล</p><b class="num" style="font:500 26px var(--display)">2,490</b> <span class="mut">บาท</span></div>
+    <div class="card"><span class="chip ok">แนะนำ</span><h3 style="margin:8px 0 4px">Plus · เรียนเป็นรุ่น</h3><p class="mut" style="margin:0 0 8px">ทุกอย่างของ Self-paced + กำหนดการ 20 สัปดาห์ + ไลฟ์ถามตอบรายสัปดาห์ + รายงานจุดอ่อนถึงผู้ปกครอง</p><b class="num" style="font:500 26px var(--display)">4,490</b> <span class="mut">บาท</span></div>
+    <div class="card"><span class="chip warn">จำกัดที่นั่ง</span><h3 style="margin:8px 0 4px">Premium · โค้ช</h3><p class="mut" style="margin:0 0 8px">ทุกอย่างของ Plus + ตรวจการบ้านเฉพาะบุคคล + ติดตามผลรายเดือน (จำกัดจำนวนรุ่นละไม่เกิน 20 คน)</p><b class="num" style="font:500 26px var(--display)">6,900</b> <span class="mut">บาท</span></div>
+  </div>
+  <p class="note">ราคาเป็นข้อเสนอเริ่มต้นเพื่อทดสอบ ถ้าคอร์สสดของติวเตอร์ขายอยู่ราว 8,000 บาทต่อวิชา คอร์สออนไลน์แบบรุ่นควรต่ำกว่านั้นอย่างชัดเจน ให้ทดลองสองราคาในรอบพรีเซลก่อนล็อก</p>
+</section>
+
+<section id="model" aria-labelledby="h-md">
+  <h2 class="sec" id="h-md"><svg class="i"><use href="#calc"/></svg>โมเดลธุรกิจ ต้นทุน และกำไร (ปีแรก)</h2>
+  <p class="sec-note">เปลี่ยนจำนวนผู้ซื้อหรือต้นทุน ผลลัพธ์คำนวณใหม่ทันที เปลี่ยนสถานการณ์ด้วยปุ่มด้านล่าง</p>
+  <div class="seg" role="group" aria-label="เลือกสถานการณ์" id="msc" style="margin-bottom:14px">
+    <button type="button" data-n="40" aria-pressed="false">ต่ำ · 40 คน</button>
+    <button type="button" data-n="120" aria-pressed="true">กลาง · 120 คน</button>
+    <button type="button" data-n="300" aria-pressed="false">สูง · 300 คน</button>
+  </div>
+  <div class="tiles" aria-live="polite">
+    <div class="tile"><span>รายรับรวม</span><b id="m_rev">–</b></div>
+    <div class="tile"><span>กำไรสุทธิ</span><b id="m_pf">–</b></div>
+    <div class="tile"><span>คุ้มทุนที่</span><b id="m_be">–</b></div>
+    <div class="tile"><span>ค่าตอบแทนต่อชั่วโมง</span><b id="m_hr">–</b></div>
+  </div>
+  <div class="card" style="margin-top:14px"><b>เงิน 100 บาทที่ได้รับ ไปที่ไหน</b>
+    <div class="split" id="m_split" role="img" aria-label="สัดส่วนต้นทุนและกำไรต่อรายรับ 100 บาท"></div>
+    <div class="legend" id="m_leg" style="margin-top:8px"></div></div>
+  <div class="grid g3" style="margin-top:14px">
+    <fieldset><legend>ผู้ซื้อและราคา</legend>
+      <label class="f">จำนวนผู้ซื้อทั้งปี<input id="m_n" type="number" min="0" value="120"></label>
+      <label class="f">ราคา Self-paced / Plus / Premium
+        <span style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><input id="m_p1" type="number" min="0" value="2490" aria-label="ราคา Self-paced"><input id="m_p2" type="number" min="0" value="4490" aria-label="ราคา Plus"><input id="m_p3" type="number" min="0" value="6900" aria-label="ราคา Premium"></span></label>
+      <label class="f">สัดส่วนผู้ซื้อ % (รวมให้ได้ 100)
+        <span style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><input id="m_s1" type="number" min="0" value="50" aria-label="สัดส่วน Self-paced"><input id="m_s2" type="number" min="0" value="40" aria-label="สัดส่วน Plus"><input id="m_s3" type="number" min="0" value="10" aria-label="สัดส่วน Premium"></span></label>
+    </fieldset>
+    <fieldset><legend>ต้นทุนแปรผัน (% ของรายรับ)</legend>
+      <label class="f">ค่าธรรมเนียมชำระเงิน (%)<input id="m_fee" type="number" min="0" step="0.1" value="3.5"></label>
+      <label class="f">ค่าแพลตฟอร์ม/ระบบคอร์ส (%)<input id="m_plat" type="number" min="0" step="0.1" value="8"></label>
+      <label class="f">ค่าโฆษณา (%)<input id="m_ads" type="number" min="0" step="0.1" value="20"></label>
+      <label class="f">คืนเงินและส่วนลด (%)<input id="m_ref" type="number" min="0" step="0.1" value="4"></label>
+    </fieldset>
+    <fieldset><legend>ต้นทุนคงที่ (บาท) และพาร์ตเนอร์</legend>
+      <label class="f">อุปกรณ์อัด (ครั้งเดียว)<input id="m_eq" type="number" min="0" value="30000"></label>
+      <label class="f">โฮสต์วิดีโอ + เครื่องมือ (ต่อเดือน)<input id="m_mo" type="number" min="0" value="2000"></label>
+      <label class="f">เพจขาย + ภาพโฆษณา (ครั้งเดียว)<input id="m_lp" type="number" min="0" value="6000"></label>
+      <label class="f">ผู้ช่วยตอบ/ตัดต่อ (ต่อปี)<input id="m_hp" type="number" min="0" value="0"></label>
+      <label class="f">ส่วนแบ่งให้พาร์ตเนอร์/ผู้ถือลิขสิทธิ์ (% ของยอดหลังหักต้นทุนแปรผัน)<input id="m_pt" type="number" min="0" max="100" value="0"></label>
+    </fieldset>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><b>ชั่วโมงงานในปีแรก</b><p class="mut" style="margin:4px 0 0">ผลิตวิดีโอ (จากหัวข้อก่อนหน้า) <b class="num" id="m_hprod">–</b> ชั่วโมง + ไลฟ์/ดูแลผู้เรียน <input id="m_hlive" type="number" min="0" value="80" style="width:90px;display:inline-block;padding:4px 8px" aria-label="ชั่วโมงไลฟ์และดูแลผู้เรียน"> ชั่วโมง (เช่น 2 รุ่น × 20 สัปดาห์ × 2 ชั่วโมง)</p></div>
+    <div class="card"><b>วิธีอ่านผล</b><p class="mut" style="margin:4px 0 0">ถ้าผู้ซื้อไม่ถึงจุดคุ้มทุน ให้ดูว่าปัญหาคือขายไม่ได้ หรือค่าโฆษณาสูงเกิน ถ้ามีพาร์ตเนอร์ ให้ใส่ส่วนแบ่งแล้วดูกำไรของคุณหลังแบ่ง</p></div>
+  </div>
+  <p class="note">ไม่รวมภาษี ค่าพิมพ์/ส่งเล่ม (ถ้ามี) และค่าแรงตัวเองในกำไรสุทธิ ส่วนค่าตอบแทนต่อชั่วโมงคำนวณจากกำไรหลังแบ่งหารด้วยชั่วโมงงานทั้งหมด</p>
+</section>
+
+<section id="launch" aria-labelledby="h-ln">
+  <h2 class="sec" id="h-ln"><svg class="i"><use href="#plan"/></svg>แผนเปิดตัวและจุดตัดสินใจ</h2>
+  <div class="scroll"><table>
+    <tr><th>ช่วง</th><th>ทำอะไร</th><th>ตัดสินใจ</th></tr>
+    <tr><td>เดือน 0</td><td>เคลียร์ลิขสิทธิ์ ตกลงพาร์ตเนอร์ ตรวจว่ามีเฉลยหรือไม่ สัมภาษณ์ผู้ปกครอง 8–10 คน</td><td>ไปต่อเมื่อสิทธิ์ใช้โจทย์ชัดเจน</td></tr>
+    <tr><td>เดือน 1–2</td><td>ผลิตปรับพื้นฐาน + ชุด 1–2 ทำระบบสอบจับเวลา ทดลองกับเด็ก 8–10 คน</td><td>แก้ตามผลทดลอง</td></tr>
+    <tr><td>เดือน 3</td><td>เปิดรับสมัครล่วงหน้า (พรีเซล) ราคาพิเศษรุ่นแรก ผลิตชุด 3–4</td><td><b>จุดตัดสินใจที่ 1:</b> ผู้จองถึงเป้า (เช่น 20 คน) จึงเปิดรุ่น</td></tr>
+    <tr><td>เดือน 4–8</td><td>รุ่นที่ 1 เริ่ม ปล่อยชุดทุกสัปดาห์ ผลิตล่วงหน้า 2–3 ชุดเสมอ เก็บคะแนนและความเห็น</td><td>ติดตามอัตราส่งข้อสอบและอัตราหลุด</td></tr>
+    <tr><td>เดือน 9</td><td>ปิดรุ่นที่ 1 ผลิตชุดพิเศษ สรุปผลก่อน–หลัง</td><td><b>จุดตัดสินใจที่ 2:</b> ปรับราคา เนื้อหา และเปิดรุ่นที่ 2</td></tr>
+    <tr><td>เดือน 10–12</td><td>เปิดรุ่นที่ 2 ใช้ผลรุ่นแรกเป็นหน้าขาย ปรับเฉลยตามคำถามที่พบบ่อย</td><td>ตัดสินใจขยายไปคอร์สระดับอื่น</td></tr>
+  </table></div>
+  <h3 style="margin:22px 0 8px">ความเสี่ยงหลัก</h3>
+  <div class="scroll"><table>
+    <tr><th>ความเสี่ยง</th><th>วิธีรับมือ</th></tr>
+    <tr><td>ลิขสิทธิ์โจทย์ไม่ชัด</td><td>ทำข้อตกลงเป็นลายลักษณ์อักษรก่อนผลิต หรือเขียนโจทย์คู่ขนานของตัวเอง</td></tr>
+    <tr><td>งานเขียนเฉลย 720 ข้อใช้เวลานาน</td><td>ตั้งเวลาต่อชุด เริ่มจากชุดที่ต้องใช้ก่อน ผลิตล่วงหน้าเป็นชุดเล็ก ๆ</td></tr>
+    <tr><td>ผู้เรียนหลุดกลางทาง (สัปดาห์ 7–12)</td><td>แจ้งเตือน กิจกรรมเล็ก ๆ รายงานให้ผู้ปกครอง และไลฟ์ทบทวน</td></tr>
+    <tr><td>คลิปถูกแชร์ต่อ</td><td>ใช้ระบบที่ผูกกับบัญชีผู้เรียน ใส่ลายน้ำ และให้ระบบสอบกับรายงานจุดอ่อนเป็นคุณค่าที่แชร์ไม่ได้</td></tr>
+    <tr><td>ขายไม่ถึงเป้ารุ่นแรก</td><td>เลื่อนรุ่นหรือขายแบบเรียนเองก่อน ปรับข้อเสนอ แล้วเปิดรุ่นใหม่ ไม่ผลิตต่อจนกว่าจะรู้ผล</td></tr>
+  </table></div>
+  <h3 style="margin:22px 0 8px">คำถามที่ต้องตอบก่อนเริ่ม</h3>
+  <ol style="padding-left:22px;margin:0"><li>ข้อสอบชุดนี้เตรียมสอบอะไร (เช่น สอบเข้า ม.1 หรือ ม.4) และกลุ่มเป้าหมายคือใคร</li><li>ใครเป็นเจ้าของลิขสิทธิ์โจทย์ในเล่ม และจะแบ่งส่วนแบ่งกันอย่างไร</li><li>เล่มมีเฉลยละเอียดแล้วหรือไม่</li><li>ผู้ซื้อต้องได้เล่มพิมพ์ด้วยหรือไม่ (มีค่าพิมพ์และส่งเพิ่ม)</li></ol>
+</section>
+</div></main>
+</div>
+<script src="assets/site.js"></script>
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+function n(id){var x=parseFloat($(id).value);return isFinite(x)?Math.max(0,x):0}
+function fmt(x){return Math.round(x).toLocaleString("th-TH")}
+var SETS=["ปรับพื้นฐาน","ชุด 1","ชุด 2","ชุด 3","ชุด 4","ชุด 5","ชุด 6","ชุด 7","ชุด 8","ชุด 9","ชุด 10","ชุด 11","ชุด 12","ชุด 13","ชุด 14","ชุด 15","ชุด 16","ชุด 17","ชุด 18","ชุดพิเศษ"];
+var STAGES=["เฉลย","อัด","ตัดต่อ","ตรวจ"];
+
+/* production model */
+var prod={hrs:0,work:0};
+function video(){
+  var q=n("v_q"),pe=n("v_pe"),pm=n("v_pm"),ph=n("v_ph"),tot=Math.max(1,pe+pm+ph);
+  var perQ=(pe*n("v_te")+pm*n("v_tm")+ph*n("v_th"))/tot;
+  var setMin=q*perQ;
+  var qb=n("v_qb"),qs=n("v_qs"),total=q*18+qb+qs;
+  var min=setMin*18+qb*n("v_te")*1.6+qs*perQ*1.1;
+  var work=(total*n("v_wr")/60)+(min/60)*(n("v_rc")+n("v_ed")+n("v_qc"));
+  var wk=work/Math.max(1,n("v_hw"));
+  prod.hrs=min/60;prod.work=work;
+  $("o_hrs").textContent=(min/60).toFixed(1)+" ชม.";
+  $("o_work").textContent=fmt(work)+" ชม.";
+  $("o_wk").textContent=Math.ceil(wk)+" สัปดาห์ (~"+(wk/4.33).toFixed(1)+" เดือน)";
+  $("o_q").textContent=fmt(total)+" ข้อ";
+  model();
+}
+["v_q","v_pe","v_pm","v_ph","v_te","v_tm","v_th","v_qb","v_qs","v_wr","v_rc","v_ed","v_qc","v_hw"].forEach(function(id){$(id).addEventListener("input",video)});
+
+/* business model */
+var COL=["var(--s-tutor)","var(--mark)","var(--s-teacher)","var(--mut)","var(--ok)"];
+function model(){
+  var N=n("m_n"),s1=n("m_s1"),s2=n("m_s2"),s3=n("m_s3"),st=Math.max(1,s1+s2+s3);
+  var avg=(n("m_p1")*s1+n("m_p2")*s2+n("m_p3")*s3)/st;
+  var rev=N*avg;
+  var fee=rev*n("m_fee")/100,plat=rev*n("m_plat")/100,ads=rev*n("m_ads")/100,ref=rev*n("m_ref")/100;
+  var vcost=fee+plat+ads+ref,contrib=rev-vcost;
+  var fixed=n("m_eq")+n("m_mo")*12+n("m_lp")+n("m_hp");
+  var pre=contrib-fixed,partner=Math.max(0,contrib-fixed)*n("m_pt")/100;
+  var profit=pre-partner;
+  var hours=prod.work+n("m_hlive");
+  var unit=avg*(1-(n("m_fee")+n("m_plat")+n("m_ads")+n("m_ref"))/100);
+  var be=unit>0?Math.ceil(fixed/unit):null;
+  $("m_hprod").textContent=fmt(prod.work);
+  $("m_rev").textContent=fmt(rev)+" บาท";
+  $("m_pf").textContent=(profit<0?"ขาดทุน ":"")+fmt(Math.abs(profit))+" บาท";$("m_pf").className=profit<0?"neg":"";
+  $("m_be").textContent=be===null?"–":fmt(be)+" คน";
+  $("m_hr").textContent=hours>0?fmt(profit/hours)+" บาท/ชม.":"–";
+  var parts=[["ค่าโฆษณา",ads],["ค่าแพลตฟอร์ม+ชำระเงิน+คืนเงิน",fee+plat+ref],["ต้นทุนคงที่",Math.min(fixed,Math.max(rev-vcost,0))],["พาร์ตเนอร์",partner],["กำไรของคุณ",Math.max(profit,0)]];
+  var sum=parts.reduce(function(a,p){return a+p[1]},0)||1,h="",lg="";
+  parts.forEach(function(p,i){var pc=100*p[1]/sum;if(pc>0.2)h+='<i style="width:'+pc+'%;background:'+COL[i]+'"></i>';
+    lg+='<span><i class="sw" style="background:'+COL[i]+'"></i>'+p[0]+' '+pc.toFixed(0)+'%</span>'});
+  $("m_split").innerHTML=h;$("m_leg").innerHTML=lg;
+}
+["m_n","m_p1","m_p2","m_p3","m_s1","m_s2","m_s3","m_fee","m_plat","m_ads","m_ref","m_eq","m_mo","m_lp","m_hp","m_pt","m_hlive"].forEach(function(id){$(id).addEventListener("input",model)});
+var btns=document.querySelectorAll("#msc button");
+btns.forEach(function(b){b.addEventListener("click",function(){$("m_n").value=b.dataset.n;btns.forEach(function(x){x.setAttribute("aria-pressed",x===b)});model()})});
+
+/* tracker */
+var K="ex-track-v1";
+function load(){try{return JSON.parse(localStorage.getItem(K))||{}}catch(e){return{}}}
+function save(s){try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}}
+var T=load();
+function drawTracker(){
+  var h='<tr><th>ตอน</th>'+STAGES.map(function(s){return '<th class="c">'+s+'</th>'}).join('')+'<th class="n">ครบ</th></tr>',done=0,nextT=null;
+  SETS.forEach(function(name,i){
+    var c=0;h+='<tr><td>'+name+'</td>';
+    STAGES.forEach(function(s,j){var id="t"+i+"_"+j,ck=!!T[id];if(ck){c++;done++}else if(!nextT)nextT=name+" · "+s;
+      h+='<td class="c"><input type="checkbox" class="tk" id="'+id+'" aria-label="'+name+' ขั้น'+s+'"'+(ck?' checked':'')+'></td>'});
+    h+='<td class="n">'+c+'/4</td></tr>'});
+  $("trk").innerHTML=h;
+  var p=Math.round(100*done/80);
+  $("tpct").textContent=p+"%";$("tdone").textContent=done;
+  $("tarc").style.strokeDashoffset=326.7*(1-done/80);
+  $("tnext").textContent=nextT||"ผลิตครบทุกตอนแล้ว";
+  document.querySelectorAll("#trk .tk").forEach(function(cb){cb.addEventListener("change",function(){T[cb.id]=cb.checked;save(T);drawTracker()})});
+}
+drawTracker();video();
+})();
+</script>
+</body></html>

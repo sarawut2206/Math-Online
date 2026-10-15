@@ -66,6 +66,16 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
   .paper{border:0;box-shadow:none;padding:0;color:#000}
   .paper .pb{page-break-before:always;border-top:0}
 }
+.chartcard{margin-bottom:12px}
+.bchart{display:block;width:100%;height:auto}
+.bchart text{font-family:"IBM Plex Sans Thai","Sarabun",sans-serif}
+.bchart .lg1{font-size:13.5px;fill:var(--fg)}
+.bchart .ax{font-size:12px;fill:var(--mut)}
+.bchart .cat{font-size:14px;font-weight:600;fill:var(--fg)}
+.bchart .vl{font-size:13.5px;font-weight:700;fill:var(--fg);font-variant-numeric:tabular-nums}
+.bchart .vl.ng{fill:var(--neg)}
+.chartwrap{margin:6px 0 12px}
+@media print{.chartcard{display:none!important}.bchart text{fill:#000!important}}
 </style></head><body>
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -156,6 +166,7 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
     <div class="tile"><span>ผู้ซื้อที่ใช้คำนวณ</span><b id="s_n">–</b></div>
     <p class="note" id="s_low" style="grid-column:1/-1;margin:0"></p>
   </div>
+  <div class="card chartcard"><b>รายได้ปีแรกตามสถานการณ์ (บาท)</b><p class="note" style="margin:2px 0 6px">ผู้ซื้อ 3 กรณี เทียบส่วนที่ผู้ผลิตและพาร์ตเนอร์ได้ ตามทางเลือกที่เลือก</p><div id="chartbox"></div></div>
   <div class="actions">
     <button type="button" class="btn" id="b_copy"><svg class="i"><use href="#doc"/></svg>คัดลอกข้อความ</button>
     <button type="button" class="btn alt" id="b_print"><svg class="i"><use href="#ext"/></svg>พิมพ์ / บันทึก PDF</button>
@@ -294,6 +305,33 @@ function annex(A){
   });
   return out;
 }
+function niceStep(span){var raw=span/4,p=Math.pow(10,Math.floor(Math.log10(raw||1))),q=raw/p;return (q<=1?1:q<=2?2:q<=5?5:10)*p}
+function chart(rows){
+  var W=640,H=330,L=62,R=12,T=40,B=52,vals=[];
+  rows.forEach(function(r){vals.push(r.p,r.t)});
+  var lo=Math.min(0,Math.min.apply(null,vals)),hi=Math.max(1,Math.max.apply(null,vals));
+  var st=niceStep(hi-lo);lo=Math.floor(lo/st)*st;hi=Math.ceil(hi/st)*st;
+  var y=function(v){return T+(hi-v)/(hi-lo)*(H-T-B)};
+  var gw=(W-L-R)/rows.length,bw=Math.min(62,(gw-30)/2),s="";
+  /* legend */
+  s+='<rect x="'+L+'" y="8" width="14" height="14" rx="3" fill="var(--s-teacher)"/><text x="'+(L+20)+'" y="20" class="lg1">ผู้ผลิต (คุณ)</text>';
+  s+='<rect x="'+(L+150)+'" y="8" width="14" height="14" rx="3" fill="var(--s-tutor)"/><text x="'+(L+170)+'" y="20" class="lg1">พาร์ตเนอร์ (สุทธิ หลังหักเงินที่ลง)</text>';
+  for(var k=lo;k<=hi+1e-9;k+=st){var yy=y(k);
+    s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--grid)" stroke-width="1"/>';
+    s+='<text x="'+(L-8)+'" y="'+(yy+4)+'" text-anchor="end" class="ax">'+(Math.abs(k)>=1000?(k/1000).toLocaleString("th-TH")+"k":k)+'</text>'}
+  s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="var(--mut)" stroke-width="1.4"/>';
+  function bar(x,v,col){
+    var y0=y(0),y1=y(v),h=Math.abs(y1-y0);if(h<0.5)h=1.5;var top=v>=0?y0-h:y0;
+    var t='<rect x="'+x+'" y="'+top+'" width="'+bw+'" height="'+h+'" rx="5" fill="'+col+'"/>';
+    var lab=(v<0?"−":"")+th(Math.abs(v));
+    t+='<text x="'+(x+bw/2)+'" y="'+(v>=0?top-6:top+h+16)+'" text-anchor="middle" class="vl'+(v<0?' ng':'')+'">'+lab+'</text>';
+    return t}
+  rows.forEach(function(r,i){
+    var cx=L+i*gw+gw/2;
+    s+=bar(cx-bw-4,r.p,"var(--s-teacher)")+bar(cx+4,r.t,"var(--s-tutor)");
+    s+='<text x="'+cx+'" y="'+(H-26)+'" text-anchor="middle" class="cat">'+r.label+'</text><text x="'+cx+'" y="'+(H-9)+'" text-anchor="middle" class="ax">'+th(r.n)+' คน</text>'});
+  return '<svg class="bchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="กราฟแท่งเปรียบเทียบรายได้ของผู้ผลิตและพาร์ตเนอร์ในแต่ละสถานการณ์">'+s+'</svg>';
+}
 function render(){
   var A=opt()==="A",C=build(),h="",tx=[];
   var head=[
@@ -319,8 +357,9 @@ function render(){
   h+='<div class="sigs">'+sig.map(function(s){return '<div><span>ลงชื่อ ………………………………</span><span>( '+esc(s[0])+' )</span><span>'+s[1]+'</span></div>'}).join("")+'</div>';
   sig.forEach(function(s){tx.push("ลงชื่อ ……………………………… ( "+s[0]+" ) "+s[1])});
   /* annex 2 */
-  var rows=annex(A);
-  h+='<h3 class="pb">เอกสารแนบ 2  ตัวอย่างการคำนวณ (ตัวเลขสมมติ ทางเลือก '+(A?"ก":"ข")+')</h3><div class="scroll"><table><tr><th>สถานการณ์</th><th class="n">ผู้ซื้อ (คน)</th><th class="n">รายได้ขั้นต้น</th><th class="n">ผู้ผลิตได้</th><th class="n">พาร์ตเนอร์ได้สุทธิ</th></tr>'+
+  var rows=annex(A),svg=chart(rows);
+  $("chartbox").innerHTML=svg;
+  h+='<h3 class="pb">เอกสารแนบ 2  ตัวอย่างการคำนวณ (ตัวเลขสมมติ ทางเลือก '+(A?"ก":"ข")+')</h3><div class="chartwrap">'+svg+'</div><div class="scroll"><table><tr><th>สถานการณ์</th><th class="n">ผู้ซื้อ (คน)</th><th class="n">รายได้ขั้นต้น</th><th class="n">ผู้ผลิตได้</th><th class="n">พาร์ตเนอร์ได้สุทธิ</th></tr>'+
    rows.map(function(r){return '<tr><td>'+r.label+'</td><td class="n">'+th(r.n)+'</td><td class="n">'+th(r.gross)+'</td><td class="n">'+th(r.p)+'</td><td class="n'+(r.t<0?' neg':'')+'">'+th(r.t)+'</td></tr>'}).join("")+'</table></div>'+
    '<p class="note">'+(A?"ผู้ผลิตได้ = ค่าผลิต + ส่วนแบ่งรายได้สุทธิ · พาร์ตเนอร์ได้สุทธิ = ส่วนแบ่งของพาร์ตเนอร์ หักค่าผลิตที่จ่าย":"ผู้ผลิตได้ = ส่วนแบ่งกำไรหลังคืนทุน · พาร์ตเนอร์ได้สุทธิ = เงินคืนทุน + ส่วนแบ่งกำไร หักเงินที่ลงจริง")+' ยังไม่หักภาษี</p>';
   tx.push("","เอกสารแนบ 2 ตัวอย่างการคำนวณ (สมมติ) ทางเลือก "+(A?"ก":"ข"));

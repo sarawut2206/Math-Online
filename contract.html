@@ -4,7 +4,7 @@
 <meta name="description" content="เครื่องมือกรอกเงื่อนไขและดูตัวอย่างสัญญาความร่วมมือกับติวเตอร์">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Mitr:wght@500&display=swap">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=mv98gwd4">
 <script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <style>/* contract model page. Layout: form column + sticky live preview on wide screens; one view at a time on phones. */
 .inner.wide{max-width:1320px}
@@ -100,13 +100,14 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
 <symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
 <symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
 <symbol id="sign" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 18c1.5-2 2.5-2 3 0s2 1.5 3-1"/></symbol>
+<symbol id="db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
 <symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
 </defs></svg>
 <div class="app">
 <aside class="side">
   <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
   <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><a href="contract.html" aria-current="page"><svg class="i"><use href="#sign"/></svg>ร่างสัญญากับติวเตอร์</a><h3>สินค้าและตัวเลข</h3><a href="exam-course.html"><svg class="i"><use href="#target"/></svg>คอร์สตะลุยข้อสอบ</a><a href="catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
-  <div class="side-foot"><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+  <div class="side-foot"><a class="tbtn dbbtn" id="dbbtn" href="database.html" data-s="nopin"><svg class="i"><use href="#db"/></svg><span>ฐานข้อมูล · ยังไม่เชื่อม</span><i class="dot"></i></a><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
 </aside>
 <main class="content" id="main"><div class="inner wide">
 <nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> แผนงาน <span aria-hidden="true">›</span> ร่างสัญญา</nav>
@@ -160,7 +161,8 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
     <div class="row2"><label class="f" for="k_buyers">ผู้ซื้อทั้งปี (คน)<input id="k_buyers" type="number" min="0" value="120" inputmode="numeric" ></label><label class="f" for="k_avg">ราคาเฉลี่ยต่อคน (บาท)<input id="k_avg" type="number" min="0" value="3731" inputmode="numeric" ></label></div>
     <div class="row2"><label class="f" for="k_cFee">ค่าชำระเงิน (%)<input id="k_cFee" type="number" min="0" value="3.5" inputmode="numeric" step="0.1"></label><label class="f" for="k_cPlat">ค่าแพลตฟอร์ม (%)<input id="k_cPlat" type="number" min="0" value="8" inputmode="numeric" step="0.1"></label></div>
     <div class="row2"><label class="f" for="k_cAds">ค่าโฆษณา (%)<input id="k_cAds" type="number" min="0" value="20" inputmode="numeric" step="0.1"></label><label class="f" for="k_cRef">คืนเงิน/ส่วนลด (%)<input id="k_cRef" type="number" min="0" value="4" inputmode="numeric" step="0.1"></label></div></fieldset>
-  <div class="form-actions"><button type="reset" class="btn alt" id="b_reset">ล้างข้อมูล</button></div>
+  <div class="form-actions"><button type="button" class="btn alt" id="b_dbsave">บันทึกร่างลงฐานข้อมูล</button><button type="button" class="btn alt" id="b_dbload">โหลดร่างล่าสุด</button><button type="reset" class="btn alt" id="b_reset">ล้างข้อมูล</button></div>
+  <p class="note" style="margin:-8px 0 20px">ร่างเก็บในชีต Google ของคุณ (ต้อง<a href="database.html">เชื่อมฐานข้อมูล</a>ก่อน) ไม่เก็บเลขประจำตัวประชาชน</p>
 </form>
 
 <div class="prev-col">
@@ -195,7 +197,8 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
 <div class="toast" id="toast" role="status" hidden></div>
 </div></main>
 </div>
-<script src="assets/site.js"></script>
+<script src="assets/db.js?v=mv98gwd4"></script>
+<script src="assets/site.js?v=mv98gwd4"></script>
 <script>
 (function(){
 var $=function(id){return document.getElementById(id)};
@@ -415,6 +418,29 @@ $("b_copy").addEventListener("click",function(){
 });
 $("b_print").addEventListener("click",function(){window.print()});
 $("form").addEventListener("reset",function(){setTimeout(function(){render();toast("ล้างข้อมูลที่กรอกแล้ว")},0)});
+
+/* save / load draft in the database */
+function collect(){
+  var o={};
+  document.querySelectorAll("#form input,#form select").forEach(function(e){
+    if(e.type==="radio"){if(e.checked)o.opt=e.value}
+    else if(e.type==="checkbox")o[e.id]=e.checked;
+    else if(e.id)o[e.id]=e.value});
+  return o}
+function apply(o){
+  document.querySelectorAll("#form input,#form select").forEach(function(e){
+    if(e.type==="radio")e.checked=(e.value===o.opt);
+    else if(e.type==="checkbox"){if(e.id in o)e.checked=!!o[e.id]}
+    else if(e.id&&e.id in o)e.value=o[e.id]});
+  render()}
+$("b_dbsave").addEventListener("click",function(){
+  if(!window.MoDB||!MoDB.hasPin()){toast("ยังไม่ได้เชื่อมฐานข้อมูล · ไปที่เมนู ฐานข้อมูล");return}
+  MoDB.set("drafts","contract",{saved:Date.now(),fields:collect()}).then(function(){toast("บันทึกร่างลงฐานข้อมูลแล้ว")},function(e){toast("บันทึกไม่สำเร็จ: "+e.message)})});
+$("b_dbload").addEventListener("click",function(){
+  if(!window.MoDB||!MoDB.hasPin()){toast("ยังไม่ได้เชื่อมฐานข้อมูล · ไปที่เมนู ฐานข้อมูล");return}
+  MoDB.get("drafts","contract").then(function(j){
+    if(!j.doc||!j.doc.data){toast("ยังไม่มีร่างที่บันทึกไว้");return}
+    apply(j.doc.data.fields||{});toast("โหลดร่างที่บันทึกเมื่อ "+new Date(j.doc.data.saved).toLocaleString("th-TH"))},function(e){toast("โหลดไม่สำเร็จ: "+e.message)})});
 render();
 })();
 

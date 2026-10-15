@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>ฐานข้อมูล</title>
+<meta name="description" content="เชื่อม Google Sheets เป็นฐานข้อมูลของเว็บ">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Mitr:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css?v=mv98gwd4">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+<symbol id="sign" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 18c1.5-2 2.5-2 3 0s2 1.5 3-1"/></symbol>
+<symbol id="db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><a href="contract.html"><svg class="i"><use href="#sign"/></svg>ร่างสัญญากับติวเตอร์</a><h3>สินค้าและตัวเลข</h3><a href="exam-course.html"><svg class="i"><use href="#target"/></svg>คอร์สตะลุยข้อสอบ</a><a href="catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><a class="tbtn dbbtn" id="dbbtn" href="database.html" data-s="nopin"><svg class="i"><use href="#db"/></svg><span>ฐานข้อมูล · ยังไม่เชื่อม</span><i class="dot"></i></a><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner">
+<nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> สินค้าและตัวเลข <span aria-hidden="true">›</span> ฐานข้อมูล</nav>
+<header class="page-head"><h1>ฐานข้อมูล</h1><p>ใช้ Google Sheets ของคุณเป็นที่เก็บข้อมูล ความคืบหน้าและร่างสัญญาจะตามคุณไปทุกเครื่อง ตั้งค่าครั้งเดียวใช้เวลาไม่กี่นาที</p><div class="chips"><span class="chip ">Google Sheets + Apps Script</span><span class="chip warn">ต้องมี PIN</span></div></header>
+<section class="card" aria-labelledby="h-st">
+  <h2 class="sec" id="h-st"><svg class="i"><use href="#db"/></svg>สถานะการเชื่อมต่อ</h2>
+  <p style="margin:0 0 12px"><span class="chip" id="db_state">–</span></p>
+  <div class="dbrow">
+    <label class="f" for="db_pin">PIN ฐานข้อมูล (เก็บในเบราว์เซอร์นี้เท่านั้น)<input id="db_pin" type="password" autocomplete="off" placeholder="PIN จากขั้นตอนที่ 2"></label>
+    <button type="button" class="btn" id="db_connect">เชื่อมต่อ</button>
+    <button type="button" class="btn alt" id="db_disc" hidden>ตัดการเชื่อมต่อ</button>
+  </div>
+  <p class="msg" id="db_msg" hidden></p>
+  <details class="fold" style="margin-top:14px"><summary style="font:500 16px var(--display)">ตั้งค่าขั้นสูง: URL ของสคริปต์</summary><div>
+    <div class="dbrow"><label class="f" for="db_url">URL ของเว็บแอป Apps Script (ลงท้ายด้วย /exec)<input id="db_url" type="text"></label>
+    <button type="button" class="btn alt" id="db_save_url">บันทึก URL</button><button type="button" class="btn alt" id="db_reset_url">ใช้ค่าตั้งต้น</button></div>
+  </div></details>
+</section>
+
+<section aria-labelledby="h-set">
+  <h2 class="sec" id="h-set"><svg class="i"><use href="#plan"/></svg>ตั้งค่าครั้งเดียว</h2>
+  <div class="callout" style="margin-bottom:14px"><svg class="i"><use href="#info"/></svg><div>URL ที่ให้มาตอนนี้ยังไม่มีฟังก์ชัน <code>doGet</code> (ระบบตอบ "ไม่พบฟังก์ชันของสคริปต์") จึงยังเก็บข้อมูลไม่ได้ ต้องวางโค้ดด้านล่างแล้วทำให้ใช้งานเวอร์ชันใหม่ก่อน</div></div>
+  <ol class="steps">
+    <li><div><b>วางโค้ด</b> เปิดโปรเจ็กต์ Apps Script ของ URL นี้ ลบโค้ดใน Code.gs ทั้งหมด วางโค้ดจากกล่องด้านล่าง แล้วกดบันทึก</div></li>
+    <li><div><b>รัน setup ครั้งเดียว</b> เลือกฟังก์ชัน <code>setup</code> กด "เรียกใช้" อนุญาตสิทธิ์เมื่อระบบถาม จากนั้นดู PIN ใน "บันทึกการเรียกใช้งาน" (หรือตั้งเองที่ ตั้งค่าโปรเจ็กต์ → คุณสมบัติของสคริปต์ → <code>PIN</code>) ระบบจะสร้างชีตชื่อ Math-Online DB ในไดรฟ์ของคุณ</div></li>
+    <li><div><b>ทำให้ใช้งานเวอร์ชันใหม่</b> ทำให้ใช้งานได้ → จัดการการทำให้ใช้งานได้ → ไอคอนปากกา → เวอร์ชัน: "เวอร์ชันใหม่" → ทำให้ใช้งานได้ ตั้งค่า เรียกใช้ในฐานะ: ฉัน และ ผู้มีสิทธิ์เข้าถึง: ทุกคน (URL เดิมยังใช้ได้)</div></li>
+    <li><div><b>เชื่อมต่อ</b> กลับมาที่หน้านี้ ใส่ PIN แล้วกด "เชื่อมต่อ" ถ้าขึ้น "เชื่อมต่อแล้ว" ใช้ได้เลย</div></li>
+  </ol>
+  <div class="codebox" style="margin-top:14px"><button type="button" class="btn alt" id="db_copy">คัดลอกโค้ด</button><pre id="db_code" tabindex="0" aria-label="โค้ด Code.gs">/**
+ * Math-Online DB
+ * ใช้ Google Sheets เป็นฐานข้อมูลเอกสาร JSON ขนาดเล็ก
+ * - 1 แท็บ (sheet) = 1 collection  คอลัมน์: id | json | updatedAt
+ * - ทุกคำสั่งต้องส่ง PIN (เก็บใน Script Properties ชื่อ PIN)
+ * - เรียกผ่าน POST (JSON เป็น text/plain) เท่านั้น ส่วน GET ใช้ตรวจว่าบริการทำงานอยู่
+ *
+ * ขั้นตอนติดตั้ง
+ * 1) วางโค้ดนี้แทนที่ Code.gs ทั้งหมด แล้วกดบันทึก
+ * 2) เลือกฟังก์ชัน setup แล้วกด "เรียกใช้" ครั้งเดียว (อนุญาตสิทธิ์เมื่อระบบถาม)
+ *    ดูรหัส PIN ใน "บันทึกการเรียกใช้งาน" (Execution log) หรือตั้งเองที่
+ *    ตั้งค่าโปรเจ็กต์ &gt; คุณสมบัติของสคริปต์ &gt; PIN
+ * 3) ทำให้ใช้งานได้: ทำให้ใช้งานได้ &gt; จัดการการทำให้ใช้งานได้ &gt; ปากกา (แก้ไข)
+ *    &gt; เวอร์ชัน: "เวอร์ชันใหม่" &gt; ทำให้ใช้งานได้ (URL เดิมยังใช้ได้)
+ *    ประเภท: เว็บแอป · เรียกใช้ในฐานะ: ฉัน · ผู้มีสิทธิ์เข้าถึง: ทุกคน
+ */
+
+var MAX_DOC = 45000;       // จำนวนอักขระสูงสุดต่อเอกสาร (เซลล์ Sheets จุได้ ~50,000)
+var MAX_LIST = 200;        // จำนวนเอกสารสูงสุดที่คืนในคำสั่ง list
+var NAME_RE = /^[A-Za-z0-9_-]{1,40}$/;
+var ID_RE = /^[A-Za-z0-9_.-]{1,80}$/;
+
+/** รันครั้งเดียวจากตัวแก้ไข เพื่อสร้างชีตและ PIN */
+function setup() {
+  var p = PropertiesService.getScriptProperties();
+  if (!p.getProperty('PIN')) {
+    var pin = Utilities.getUuid().replace(/-/g, '').slice(0, 8);
+    p.setProperty('PIN', pin);
+    Logger.log('สร้าง PIN ใหม่: ' + pin + '  (เปลี่ยนได้ที่ คุณสมบัติของสคริปต์ &gt; PIN)');
+  } else {
+    Logger.log('มี PIN อยู่แล้ว (ดูที่ คุณสมบัติของสคริปต์ &gt; PIN)');
+  }
+  var ss = spreadsheet_();
+  Logger.log('ชีตฐานข้อมูล: ' + ss.getUrl());
+}
+
+function doGet() {
+  return out_({ ok: true, service: 'math-online-db', time: new Date().toISOString() });
+}
+
+function doPost(e) {
+  try {
+    var req = JSON.parse((e &amp;&amp; e.postData &amp;&amp; e.postData.contents) || '{}');
+    if (!auth_(req.pin)) return out_({ ok: false, error: 'PIN ไม่ถูกต้องหรือยังไม่ได้ตั้งค่า' });
+    switch (req.action) {
+      case 'ping':   return out_({ ok: true });
+      case 'get':    return out_(get_(req));
+      case 'set':    return out_(set_(req));
+      case 'list':   return out_(list_(req));
+      case 'delete': return out_(delete_(req));
+      default:       return out_({ ok: false, error: 'ไม่รู้จักคำสั่ง: ' + req.action });
+    }
+  } catch (err) {
+    return out_({ ok: false, error: String(err &amp;&amp; err.message || err) });
+  }
+}
+
+/* ---------- คำสั่ง ---------- */
+function get_(req) {
+  var sh = sheet_(req.collection, false);
+  if (!sh) return { ok: true, doc: null };
+  var row = findRow_(sh, checkId_(req.id));
+  return { ok: true, doc: row ? rowToDoc_(sh, row) : null };
+}
+
+function set_(req) {
+  var id = checkId_(req.id);
+  var json = JSON.stringify(req.data === undefined ? null : req.data);
+  if (json.length &gt; MAX_DOC) throw new Error('ข้อมูลใหญ่เกินไป (' + json.length + ' อักขระ)');
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    var sh = sheet_(req.collection, true);
+    var row = findRow_(sh, id);
+    var now = Date.now();
+    if (row) {
+      var cur = Number(sh.getRange(row, 3).getValue()) || 0;
+      if (req.ifVersion != null &amp;&amp; Number(req.ifVersion) !== cur) {
+        return { ok: false, conflict: true, error: 'มีการแก้ไขใหม่กว่า', doc: rowToDoc_(sh, row) };
+      }
+      sh.getRange(row, 2, 1, 2).setValues([[json, now]]);
+    } else {
+      sh.appendRow([id, json, now]);
+    }
+    return { ok: true, id: id, updatedAt: now };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function list_(req) {
+  var sh = sheet_(req.collection, false);
+  if (!sh) return { ok: true, docs: [] };
+  var n = sh.getLastRow() - 1;
+  if (n &lt; 1) return { ok: true, docs: [] };
+  var vals = sh.getRange(2, 1, Math.min(n, MAX_LIST), 3).getValues();
+  return { ok: true, docs: vals.map(function (r) { return { id: String(r[0]), data: parse_(r[1]), updatedAt: Number(r[2]) || 0 }; }) };
+}
+
+function delete_(req) {
+  var id = checkId_(req.id);
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    var sh = sheet_(req.collection, false);
+    if (!sh) return { ok: true, deleted: false };
+    var row = findRow_(sh, id);
+    if (row) sh.deleteRow(row);
+    return { ok: true, deleted: !!row };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/* ---------- ตัวช่วย ---------- */
+function auth_(pin) {
+  var real = PropertiesService.getScriptProperties().getProperty('PIN');
+  if (!real || pin == null) return false;
+  pin = String(pin);
+  if (pin.length !== real.length) return false;
+  var diff = 0;
+  for (var i = 0; i &lt; pin.length; i++) diff |= pin.charCodeAt(i) ^ real.charCodeAt(i);
+  return diff === 0;
+}
+
+function out_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function checkId_(id) {
+  if (typeof id !== 'string' || !ID_RE.test(id)) throw new Error('id ต้องเป็นตัวอักษรอังกฤษ ตัวเลข _ - . ไม่เกิน 80 ตัว');
+  return id;
+}
+
+function spreadsheet_() {
+  var p = PropertiesService.getScriptProperties();
+  var sid = p.getProperty('SHEET_ID');
+  if (sid) return SpreadsheetApp.openById(sid);
+  var ss = SpreadsheetApp.create('Math-Online DB');
+  p.setProperty('SHEET_ID', ss.getId());
+  return ss;
+}
+
+function sheet_(name, create) {
+  if (typeof name !== 'string' || !NAME_RE.test(name)) throw new Error('ชื่อ collection ต้องเป็นอังกฤษ ตัวเลข _ - ไม่เกิน 40 ตัว');
+  var ss = spreadsheet_();
+  var sh = ss.getSheetByName(name);
+  if (!sh &amp;&amp; create) {
+    sh = ss.insertSheet(name);
+    sh.getRange(1, 1, 1, 3).setValues([['id', 'json', 'updatedAt']]);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+
+function findRow_(sh, id) {
+  var n = sh.getLastRow() - 1;
+  if (n &lt; 1) return 0;
+  var ids = sh.getRange(2, 1, n, 1).getValues();
+  for (var i = 0; i &lt; ids.length; i++) if (String(ids[i][0]) === id) return i + 2;
+  return 0;
+}
+
+function rowToDoc_(sh, row) {
+  var v = sh.getRange(row, 1, 1, 3).getValues()[0];
+  return { id: String(v[0]), data: parse_(v[1]), updatedAt: Number(v[2]) || 0 };
+}
+
+function parse_(s) {
+  try { return JSON.parse(s); } catch (e) { return null; }
+}
+</pre></div>
+</section>
+
+<section class="card" aria-labelledby="h-sync">
+  <h2 class="sec" id="h-sync"><svg class="i"><use href="#check"/></svg>อะไรถูกเก็บในฐานข้อมูล</h2>
+  <div class="scroll"><table>
+    <tr><th>ข้อมูล</th><th>อยู่ที่ไหน</th><th>เมื่อไรที่บันทึก</th></tr>
+    <tr><td>ความคืบหน้าแผน 30 วันและสิ่งที่มีพร้อม</td><td>ชีต <code>state</code> เอกสาร <code>mo-state-v1</code></td><td>ทุกครั้งที่ติ๊ก และดึงล่าสุดตอนเปิดหน้าแรก</td></tr>
+    <tr><td>ติดตามการผลิตคอร์สตะลุยข้อสอบ</td><td>ชีต <code>state</code> เอกสาร <code>ex-track-v1</code></td><td>ทุกครั้งที่ติ๊ก</td></tr>
+    <tr><td>ร่างสัญญา (ไม่มีเลขประจำตัวประชาชน)</td><td>ชีต <code>drafts</code> เอกสาร <code>contract</code></td><td>เมื่อกด "บันทึกร่างลงฐานข้อมูล" ในหน้าร่างสัญญา</td></tr>
+  </table></div>
+  <p class="note">ถ้าเปิดเว็บโดยไม่ได้เชื่อมต่อ ทุกอย่างยังใช้ได้และบันทึกในเบราว์เซอร์ตามเดิม เมื่อเชื่อมแล้วระบบเทียบเวลาและใช้ฉบับที่ใหม่กว่า</p>
+  <h3 style="margin:18px 0 8px">เอกสารในฐานข้อมูลตอนนี้</h3>
+  <button type="button" class="btn alt" id="db_list">โหลดรายการ</button>
+  <div id="db_docs" style="margin-top:12px"></div>
+</section>
+
+<section class="card" aria-labelledby="h-sec">
+  <h2 class="sec" id="h-sec"><svg class="i"><use href="#info"/></svg>ความปลอดภัย</h2>
+  <ul style="margin:0;padding-left:20px">
+    <li>URL ของสคริปต์อยู่ในโค้ดเว็บที่เป็นสาธารณะ ใครก็เรียกได้ แต่ทุกคำสั่งต้องมี PIN ถ้า PIN ผิดจะไม่ได้ข้อมูลใด ๆ</li>
+    <li>PIN เก็บเฉพาะในเบราว์เซอร์ที่คุณกรอก ไม่อยู่ในโค้ดและไม่ถูก push ขึ้น GitHub ใช้ PIN ที่ยาวและไม่ซ้ำกับรหัสอื่น เปลี่ยนได้ทุกเมื่อที่ คุณสมบัติของสคริปต์ → PIN</li>
+    <li>อย่าเก็บเลขประจำตัวประชาชน ชื่อหรือคะแนนของเด็ก ในฐานข้อมูลนี้ ร่างสัญญาเก็บแค่ชื่อและที่อยู่ที่คุณกรอกเองในช่องที่ให้</li>
+    <li>ชีต Math-Online DB อยู่ในบัญชี Google ของคุณ แชร์ชีตเฉพาะคนที่ต้องดู</li>
+  </ul>
+</section>
+</div></main>
+</div>
+<script src="assets/db.js?v=mv98gwd4"></script>
+<script src="assets/site.js?v=mv98gwd4"></script>
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D=window.MoDB;
+function msg(t,ok){var m=$("db_msg");m.textContent=t;m.className="msg "+(ok?"ok":"bad");m.hidden=!t}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function paint(){
+  var s=D.state(),T={nopin:"ยังไม่ได้เชื่อม",connecting:"กำลังเชื่อมต่อ…",online:"เชื่อมต่อแล้ว",error:"เชื่อมต่อไม่สำเร็จ"};
+  $("db_state").textContent=T[s]||T.nopin;
+  $("db_state").className="chip "+(s==="online"?"ok":s==="error"?"warn":"");
+  $("db_disc").hidden=!D.hasPin();
+  $("db_url").value=D.url();
+}
+window.addEventListener("modb",paint);paint();
+$("db_connect").addEventListener("click",function(){
+  var p=$("db_pin").value.trim();if(!p){msg("ใส่ PIN ก่อน",false);return}
+  msg("กำลังทดสอบ…",true);
+  D.connect(p).then(function(ok){
+    if(ok){msg("เชื่อมต่อสำเร็จ ข้อมูลความคืบหน้าและร่างสัญญาจะซิงค์ขึ้นฐานข้อมูล",true);$("db_pin").value=""}
+    else msg("เชื่อมต่อไม่สำเร็จ: PIN ผิด หรือยังไม่ได้ทำให้ใช้งานเวอร์ชันใหม่ (ดูขั้นตอนด้านล่าง)",false);
+    paint();
+  });
+});
+$("db_disc").addEventListener("click",function(){D.disconnect();msg("ตัดการเชื่อมต่อในเบราว์เซอร์นี้แล้ว (ข้อมูลในชีตยังอยู่)",true);paint()});
+$("db_save_url").addEventListener("click",function(){D.setUrl($("db_url").value.trim());msg("บันทึก URL แล้ว",true);paint()});
+$("db_reset_url").addEventListener("click",function(){D.setUrl("");$("db_url").value=D.url();msg("ใช้ URL ตั้งต้นแล้ว",true)});
+
+$("db_copy").addEventListener("click",function(){
+  var t=$("db_code").textContent;
+  function done(){var b=$("db_copy");b.textContent="คัดลอกแล้ว";setTimeout(function(){b.textContent="คัดลอกโค้ด"},1800)}
+  function fb(){var r=document.createRange();r.selectNodeContents($("db_code"));var s=getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand("copy");done()}catch(e){}}
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,fb);else fb();
+});
+
+var COLS=[["state","ความคืบหน้า (ซิงค์อัตโนมัติ)"],["drafts","ร่างสัญญา"]];
+function loadDocs(){
+  var box=$("db_docs");box.innerHTML='<p class="note">กำลังโหลด…</p>';
+  if(!D.hasPin()){box.innerHTML='<p class="note">เชื่อมต่อฐานข้อมูลก่อน</p>';return}
+  Promise.all(COLS.map(function(c){return D.list(c[0]).then(function(j){return {c:c,docs:j.docs||[]}})})).then(function(res){
+    var h='<div class="scroll"><table><tr><th>ชุดข้อมูล</th><th>รหัสเอกสาร</th><th>แก้ล่าสุด</th><th class="n">ขนาด (ตัวอักษร)</th><th></th></tr>',n=0;
+    res.forEach(function(r){r.docs.forEach(function(d){n++;
+      h+='<tr><td>'+esc(r.c[1])+'</td><td><code>'+esc(r.c[0]+"/"+d.id)+'</code></td><td>'+(d.updatedAt?new Date(d.updatedAt).toLocaleString("th-TH"):"–")+'</td><td class="n">'+JSON.stringify(d.data).length.toLocaleString("th-TH")+'</td><td><button type="button" class="btn alt" data-c="'+r.c[0]+'" data-id="'+esc(d.id)+'" style="padding:4px 10px;font-size:13px">ลบ</button></td></tr>'})});
+    h+='</table></div>';
+    box.innerHTML=n?h:'<p class="note">ยังไม่มีเอกสารในฐานข้อมูล ลองติ๊กงานในแผน 30 วัน หรือกด "บันทึกร่างลงฐานข้อมูล" ในหน้าร่างสัญญา</p>';
+    box.querySelectorAll("button[data-id]").forEach(function(b){b.addEventListener("click",function(){
+      if(b.dataset.arm!=="1"){b.dataset.arm="1";b.textContent="กดอีกครั้งเพื่อลบ";setTimeout(function(){b.dataset.arm="";b.textContent="ลบ"},3000);return}
+      D.del(b.dataset.c,b.dataset.id).then(loadDocs,function(e){msg(e.message,false)})})});
+  },function(e){box.innerHTML="";msg(e.message,false)});
+}
+$("db_list").addEventListener("click",loadDocs);
+})();
+
+</script>
+</body></html>

@@ -15,3 +15,13 @@
     label();
   });
 })();
+
+/* database status dot in the sidebar */
+(function(){
+  var b=document.getElementById("dbbtn");if(!b)return;
+  var dot=b.querySelector(".dot"),txt=b.querySelector("span");
+  var L={nopin:["ยังไม่เชื่อม","ยังไม่ได้ใส่ PIN"],connecting:["กำลังเชื่อม…","กำลังเชื่อมต่อ"],online:["เชื่อมแล้ว","เชื่อมต่อฐานข้อมูลแล้ว"],error:["ผิดพลาด","เชื่อมต่อไม่สำเร็จ"]};
+  function paint(s,msg){var l=L[s]||L.nopin;b.dataset.s=s;txt.textContent="ฐานข้อมูล · "+l[0];b.title=msg||l[1]}
+  window.addEventListener("modb",function(e){paint(e.detail.state,e.detail.msg)});
+  paint(window.MoDB?window.MoDB.state():"nopin");
+})();

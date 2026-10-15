@@ -25,3 +25,36 @@
   window.addEventListener("modb",function(e){paint(e.detail.state,e.detail.msg)});
   paint(window.MoDB?window.MoDB.state():"nopin");
 })();
+
+/* Thai numerals (๐-๙) for all displayed text, per หนังสือราชการ style.
+   Skipped: code, pre, form fields, course codes (F5, M2), anything marked data-latin. */
+(function(){
+  var D="๐๑๒๓๔๕๖๗๘๙";
+  var SKIP={SCRIPT:1,STYLE:1,CODE:1,PRE:1,TEXTAREA:1,INPUT:1,SELECT:1,OPTION:1,NOSCRIPT:1,TITLE:1};
+  function conv(s){return s.replace(/[0-9]/g,function(c){return D.charAt(+c)})}
+  function skip(n){
+    for(var e=n.parentNode;e&&e.nodeType===1;e=e.parentNode){
+      if(SKIP[e.tagName])return true;
+      if(e.hasAttribute("data-latin")||(e.classList&&(e.classList.contains("code")||e.classList.contains("big")||e.classList.contains("tpl"))))return true;
+    }
+    return false;
+  }
+  function fix(n){if(n.nodeValue&&/[0-9]/.test(n.nodeValue)&&!skip(n))n.nodeValue=conv(n.nodeValue)}
+  function walk(root){
+    if(root.nodeType===3){fix(root);return}
+    if(root.nodeType!==1)return;
+    var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;
+    while((n=w.nextNode()))fix(n);
+  }
+  window.moThai=conv;
+  function start(){
+    walk(document.body);
+    new MutationObserver(function(ms){
+      ms.forEach(function(m){
+        if(m.type==="characterData")fix(m.target);
+        else m.addedNodes.forEach(walk);
+      });
+    }).observe(document.body,{childList:true,subtree:true,characterData:true});
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+})();

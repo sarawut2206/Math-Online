@@ -3,8 +3,8 @@
 <title>ฐานข้อมูล</title>
 <meta name="description" content="เชื่อม Google Sheets เป็นฐานข้อมูลของเว็บ">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Mitr:wght@500&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=mv98gwd4">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css?v=mv9r9au8">
 <script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head><body>
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
@@ -240,8 +240,8 @@ function parse_(s) {
   <h2 class="sec" id="h-sync"><svg class="i"><use href="#check"/></svg>อะไรถูกเก็บในฐานข้อมูล</h2>
   <div class="scroll"><table>
     <tr><th>ข้อมูล</th><th>อยู่ที่ไหน</th><th>เมื่อไรที่บันทึก</th></tr>
-    <tr><td>ความคืบหน้าแผน 30 วันและสิ่งที่มีพร้อม</td><td>ชีต <code>state</code> เอกสาร <code>mo-state-v1</code></td><td>ทุกครั้งที่ติ๊ก และดึงล่าสุดตอนเปิดหน้าแรก</td></tr>
-    <tr><td>ติดตามการผลิตคอร์สตะลุยข้อสอบ</td><td>ชีต <code>state</code> เอกสาร <code>ex-track-v1</code></td><td>ทุกครั้งที่ติ๊ก</td></tr>
+    <tr><td>ความคืบหน้าแผน 30 วันและสิ่งที่มีพร้อม</td><td>ชีต <code>state</code> เอกสาร <code>mo-state-v1</code></td><td>ทุกครั้งที่ทำเครื่องหมาย และดึงล่าสุดตอนเปิดหน้าแรก</td></tr>
+    <tr><td>ติดตามการผลิตคอร์สตะลุยข้อสอบ</td><td>ชีต <code>state</code> เอกสาร <code>ex-track-v1</code></td><td>ทุกครั้งที่ทำเครื่องหมาย</td></tr>
     <tr><td>ร่างสัญญา (ไม่มีเลขประจำตัวประชาชน)</td><td>ชีต <code>drafts</code> เอกสาร <code>contract</code></td><td>เมื่อกด "บันทึกร่างลงฐานข้อมูล" ในหน้าร่างสัญญา</td></tr>
   </table></div>
   <p class="note">ถ้าเปิดเว็บโดยไม่ได้เชื่อมต่อ ทุกอย่างยังใช้ได้และบันทึกในเบราว์เซอร์ตามเดิม เมื่อเชื่อมแล้วระบบเทียบเวลาและใช้ฉบับที่ใหม่กว่า</p>
@@ -261,8 +261,8 @@ function parse_(s) {
 </section>
 </div></main>
 </div>
-<script src="assets/db.js?v=mv98gwd4"></script>
-<script src="assets/site.js?v=mv98gwd4"></script>
+<script src="assets/db.js?v=mv9r9au8"></script>
+<script src="assets/site.js?v=mv9r9au8"></script>
 <script>
 (function(){
 var $=function(id){return document.getElementById(id)};
@@ -306,7 +306,7 @@ function loadDocs(){
     res.forEach(function(r){r.docs.forEach(function(d){n++;
       h+='<tr><td>'+esc(r.c[1])+'</td><td><code>'+esc(r.c[0]+"/"+d.id)+'</code></td><td>'+(d.updatedAt?new Date(d.updatedAt).toLocaleString("th-TH"):"–")+'</td><td class="n">'+JSON.stringify(d.data).length.toLocaleString("th-TH")+'</td><td><button type="button" class="btn alt" data-c="'+r.c[0]+'" data-id="'+esc(d.id)+'" style="padding:4px 10px;font-size:13px">ลบ</button></td></tr>'})});
     h+='</table></div>';
-    box.innerHTML=n?h:'<p class="note">ยังไม่มีเอกสารในฐานข้อมูล ลองติ๊กงานในแผน 30 วัน หรือกด "บันทึกร่างลงฐานข้อมูล" ในหน้าร่างสัญญา</p>';
+    box.innerHTML=n?h:'<p class="note">ยังไม่มีเอกสารในฐานข้อมูล ลองทำเครื่องหมายงานในแผน 30 วัน หรือกด "บันทึกร่างลงฐานข้อมูล" ในหน้าร่างสัญญา</p>';
     box.querySelectorAll("button[data-id]").forEach(function(b){b.addEventListener("click",function(){
       if(b.dataset.arm!=="1"){b.dataset.arm="1";b.textContent="กดอีกครั้งเพื่อลบ";setTimeout(function(){b.dataset.arm="";b.textContent="ลบ"},3000);return}
       D.del(b.dataset.c,b.dataset.id).then(loadDocs,function(e){msg(e.message,false)})})});

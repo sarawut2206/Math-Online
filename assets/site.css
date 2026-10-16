@@ -261,8 +261,8 @@ footer.foot{max-width:940px;margin:36px auto 0;color:var(--mut);font-size:16px;b
 .inner>*{min-width:0}
 .codebox pre{max-width:100%}
 
-/* ---------- พิมพ์ตามระเบียบงานสารบรรณ: A4 · ขอบ ซ้าย ๓ / ขวา ๒ / บน ๑.๕ / ล่าง ๒ ซม. · TH Sarabun New ๑๖ pt · เลขหน้ากึ่งกลางด้านบนตั้งแต่หน้า ๒ ---------- */
-@page{size:A4;margin:1.5cm 2cm 2cm 3cm;@top-center{content:counter(page,thai);font-family:"TH Sarabun New","Sarabun",serif;font-size:16pt}}
+/* ---------- พิมพ์ตามระเบียบงานสารบรรณ: A4 · ขอบ ซ้าย 3 / ขวา 2 / บน 1.5 / ล่าง 2 ซม. · TH Sarabun New 16 pt · เลขหน้ากึ่งกลางด้านบนตั้งแต่หน้า 2 ---------- */
+@page{size:A4;margin:1.5cm 2cm 2cm 3cm;@top-center{content:counter(page);font-family:"TH Sarabun New","Sarabun",serif;font-size:16pt}}
 @page:first{@top-center{content:none}}
 @media print{
   html,body{background:#fff!important;color:#000!important}

@@ -4,7 +4,7 @@
 <meta name="description" content="แดชบอร์ดโมเดลค่าผลิตก้อนเดียว บวกแบ่งยอดสุทธิคงที่">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=mvb3773p">
+<link rel="stylesheet" href="assets/site.css?v=mvb3p0t9">
 <script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <style>.split{display:flex;height:26px;border-radius:8px;overflow:hidden;background:var(--line);margin-top:10px}
 .split i{display:block;height:100%}
@@ -63,6 +63,29 @@ table.heat td.cur{outline:2px solid var(--ink);outline-offset:-2px;font-weight:7
 
 <div class="card" style="margin-top:14px" aria-live="polite"><b>ข้อสรุป</b><ul id="ins" style="margin:8px 0 0;padding-left:20px"></ul></div>
 
+<section aria-labelledby="h-price">
+  <h2 class="sec" id="h-price" style="margin-top:22px"><svg class="i"><use href="#coin"/></svg>ราคาต่อคอร์ส และเงินที่แบ่งต่อการขาย ๑ คน</h2>
+  <p class="sec-note">ตั้งราคาแต่ละแพ็กเกจและสัดส่วนผู้ซื้อ ระบบคำนวณราคาเฉลี่ยให้ แล้วแยกว่าขาย ๑ คอร์สแล้วเงินไปที่ไหนบ้าง</p>
+  <div class="grid g2">
+    <div class="card">
+      <b>ราคาและสัดส่วนผู้ซื้อ</b>
+      <div class="scroll" style="margin-top:8px"><table style="min-width:0">
+        <tr><th>แพ็กเกจ</th><th class="n">ราคา (บาท)</th><th class="n">ผู้ซื้อ (%)</th></tr>
+        <tr><td>เรียนเอง (เล่ม + วิดีโอเฉลย + รายงานผล)</td><td class="n"><input id="pp1" type="number" min="0" value="2490" aria-label="ราคาเรียนเอง" style="width:110px"></td><td class="n"><input id="ps1" type="number" min="0" max="100" value="50" aria-label="สัดส่วนเรียนเอง" style="width:80px"></td></tr>
+        <tr><td>Plus (เรียนเป็นรุ่น + ไลฟ์ถามตอบ)</td><td class="n"><input id="pp2" type="number" min="0" value="4490" aria-label="ราคา Plus" style="width:110px"></td><td class="n"><input id="ps2" type="number" min="0" max="100" value="40" aria-label="สัดส่วน Plus" style="width:80px"></td></tr>
+        <tr><td>Premium (โค้ชตรวจการบ้าน)</td><td class="n"><input id="pp3" type="number" min="0" value="6900" aria-label="ราคา Premium" style="width:110px"></td><td class="n"><input id="ps3" type="number" min="0" max="100" value="10" aria-label="สัดส่วน Premium" style="width:80px"></td></tr>
+        <tr><td><b>ราคาเฉลี่ยต่อคอร์ส</b></td><td class="n"><b id="avgShow">–</b></td><td class="n" id="mixSum">–</td></tr>
+      </table></div>
+      <p class="note" style="margin:8px 0 0">สัดส่วนรวมไม่ถึงหรือเกิน ๑๐๐% ระบบปรับสัดส่วนให้รวมเป็น ๑๐๐% อัตโนมัติตอนคำนวณ</p>
+    </div>
+    <div class="card"><b>จำนวนคอร์สที่ต้องขายให้คุ้ม</b>
+      <ul id="unitBE" style="margin:8px 0 0;padding-left:20px"></ul></div>
+  </div>
+  <div class="card" style="margin-top:14px"><b>ขาย ๑ คอร์ส เงินไปที่ไหน (บาทต่อคน)</b>
+    <div class="scroll" style="margin-top:8px"><table id="unit" class="wide"></table></div>
+    <p class="note" style="margin:8px 0 0">คิดตามค่าใช้จ่ายโดยตรงและวิธีหักค่าโฆษณาที่ตั้งไว้ด้านล่าง ไม่รวมค่าผลิตก้อนเดียว</p></div>
+</section>
+
 <div class="grid g2" style="margin-top:14px">
   <div class="card"><b>เงิน ๑๐๐ บาทที่ลูกค้าจ่าย ไปที่ไหน (รวม ๑๒ เดือน)</b>
     <div class="split" id="stack" role="img" aria-label="สัดส่วนยอดขายแยกตามผู้รับ"></div>
@@ -114,7 +137,7 @@ table.heat td.cur{outline:2px solid var(--ink);outline-offset:-2px;font-weight:7
     <fieldset><legend>ยอดขายคอร์ส</legend>
       <label class="f" for="b0">ผู้ซื้อใหม่เดือนแรก (คน)<input id="b0" type="number" min="0" value="15"></label>
       <label class="f" for="g">ผู้ซื้อโตต่อเดือน (%)<input id="g" type="number" step="0.5" value="8"></label>
-      <label class="f" for="avg">ราคาเฉลี่ยต่อคน (บาท)<input id="avg" type="number" min="0" value="3731"></label>
+      <label class="f" for="avg">ราคาเฉลี่ยต่อคอร์ส (บาท · คำนวณจากแพ็กเกจด้านบน)<input id="avg" type="number" min="0" value="3731" readonly></label>
     </fieldset>
     <fieldset><legend>ค่าใช้จ่ายโดยตรง</legend>
       <label class="f" for="pf">แพลตฟอร์ม + ชำระเงิน (% ของยอดขาย)<input id="pf" type="number" min="0" step="0.5" value="5"></label>
@@ -149,8 +172,8 @@ table.heat td.cur{outline:2px solid var(--ink);outline-offset:-2px;font-weight:7
 </section>
 </div></main>
 </div>
-<script src="assets/db.js?v=mvb3773p"></script>
-<script src="assets/site.js?v=mvb3773p"></script>
+<script src="assets/db.js?v=mvb3p0t9"></script>
+<script src="assets/site.js?v=mvb3p0t9"></script>
 <script>
 (function(){
 var $=function(id){return document.getElementById(id)};
@@ -211,12 +234,47 @@ function gchart(cats,series,labels){
   return '<svg class="bchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="กราฟแท่งรายได้ของคุณและติวเตอร์">'+s+'</svg>';
 }
 
+function packages(){
+  var p=[n("pp1"),n("pp2"),n("pp3")],s=[n("ps1"),n("ps2"),n("ps3")],sum=s[0]+s[1]+s[2];
+  var avg=sum>0?(p[0]*s[0]+p[1]*s[1]+p[2]*s[2])/sum:0;
+  $("avg").value=Math.round(avg);
+  $("avgShow").textContent=fmt(avg)+" บาท";
+  $("mixSum").textContent="รวม "+fmt(sum)+"%";
+  return {p:p,s:sum>0?s.map(function(x){return x/sum*100}):[0,0,0],avg:avg};
+}
+function unitRow(P,o){
+  var fees=P*o.pf,ref=P*o.rf,book=o.bk,ads=P*o.ad,netPre=P-fees-ref-book,shared=o.mode==="shared";
+  var base=shared?netPre-ads:netPre,sp=Math.max(base,0);
+  return {P:P,fees:fees,ref:ref,book:book,ads:ads,base:base,you:sp*o.share/100,tut:sp*(100-o.share)/100-(shared?0:ads)};
+}
+function unitTable(o,pk){
+  var cols=[["เรียนเอง",pk.p[0]],["Plus",pk.p[1]],["Premium",pk.p[2]],["เฉลี่ย",pk.avg]].map(function(c){return {name:c[0],u:unitRow(c[1],o)}});
+  var shared=o.mode==="shared";
+  var rows=[["ราคาขาย","P"],["หัก แพลตฟอร์ม + ชำระเงิน","fees",1],["หัก คืนเงิน/ส่วนลด","ref",1],["หัก ค่าพิมพ์และส่งเล่ม","book",1],[shared?"หัก ค่าโฆษณา (ก่อนแบ่ง)":"ค่าโฆษณา (ติวเตอร์ออกเอง ไม่หักก่อนแบ่ง)","ads",shared?1:2],["ยอดที่นำมาแบ่ง","base"],["คุณได้ ("+fmt(o.share)+"%)","you"],["ติวเตอร์ได้ (หลังโฆษณาที่เขาออก)","tut"]];
+  var h='<tr><th>รายการ</th>'+cols.map(function(c){return '<th class="n">'+c.name+'</th>'}).join("")+'</tr>';
+  rows.forEach(function(r){
+    var strong=(r[1]==="base"||r[1]==="you"||r[1]==="tut"||r[1]==="P");
+    h+='<tr'+(r[1]==="you"?' class="sum"':'')+'><td>'+(strong?'<b>'+r[0]+'</b>':r[0])+'</td>'+cols.map(function(c){
+      var v=c.u[r[1]];
+      if(r[2]===1)return '<td class="n">−'+fmt(v)+'</td>';
+      if(r[2]===2)return '<td class="n" style="color:var(--mut)">'+fmt(v)+'</td>';
+      return '<td class="n'+(v<0?' neg':'')+'">'+(strong?'<b>':'')+baht(v)+(strong?'</b>':'')+'</td>'}).join("")+'</tr>'});
+  $("unit").innerHTML=h;
+  var avg=cols[3].u,fee=o.fee,eq=n("eq"),li=[];
+  li.push(avg.tut>0?"ติวเตอร์ต้องขายอย่างน้อย <b>"+fmt(Math.ceil(fee/avg.tut))+" คอร์ส</b> จึงได้ค่าผลิต "+fmt(fee)+" บาทคืน (ต่อคอร์สเฉลี่ยติวเตอร์ได้ "+fmt(avg.tut)+" บาท)":"ที่ตั้งไว้ ติวเตอร์ไม่ได้กำไรต่อคอร์ส จึงไม่มีทางคืนค่าผลิต ลองลดค่าโฆษณาหรือปรับราคา");
+  li.push(avg.you>0?"ส่วนแบ่งของคุณต่อคอร์สเฉลี่ย <b>"+fmt(avg.you)+" บาท</b> ขายราว <b>"+fmt(Math.ceil(eq/avg.you))+" คอร์ส</b> ส่วนแบ่งก็ครอบคลุมต้นทุนอุปกรณ์ที่คุณออก "+fmt(eq)+" บาท":"ส่วนแบ่งต่อคอร์สไม่เป็นบวก ตรวจราคาและค่าใช้จ่าย");
+  var hours=Math.max(1,n("hours"));
+  li.push(avg.you>0?"จะได้ค่าตอบแทน ๑,๐๐๐ บาทต่อชั่วโมงงาน ("+fmt(hours)+" ชั่วโมง) ต้องมีรายได้รวม "+fmt(1000*hours)+" บาท = ขายราว <b>"+fmt(Math.ceil((1000*hours-fee)/avg.you))+" คอร์ส</b> (หลังหักค่าผลิตที่ได้แน่นอนแล้ว)":"");
+  $("unitBE").innerHTML=li.filter(Boolean).map(function(t){return "<li>"+t+"</li>"}).join("");
+}
 function render(){
+  var pk=packages();
   var o=opts(),r=run(o),R=r.rows,T=r.t,hours=Math.max(1,n("hours")),eq=n("eq");
   $("k_you").textContent=fmt(T.you)+" บาท";
   $("k_tut").textContent=baht(T.tut)+" บาท";
   $("k_hr").textContent=fmt(T.you/hours)+" บาท/ชม.";
   $("k_be").textContent=r.tutorBE?(r.tutorBE===1?"เดือนแรก":"เดือนที่ "+r.tutorBE):"ยังไม่คืนใน ๑๒ เดือน";
+  unitTable(o,pk);
   /* where the money goes */
   var parts=[["แพลตฟอร์ม+ชำระเงิน+คืนเงิน",T.fees+T.ref,"var(--mut)"],["ค่าพิมพ์ส่งเล่ม",T.books,"var(--mark)"],["ค่าโฆษณา",T.ads,"var(--s-tutor)"],
     ["ส่วนของคุณ (ไม่รวมค่าผลิต)",T.you-o.fee,"var(--s-teacher)"],["ส่วนของติวเตอร์ (ก่อนหักค่าผลิต/โฆษณา)",T.tut+o.fee+(o.mode==="shared"?0:T.ads),"var(--ok)"]];
@@ -261,7 +319,7 @@ function render(){
   tb+='<tr class="sum"><td>รวม</td><td></td><td>'+fmt(S.gross)+'</td><td>'+fmt(S.net)+'</td><td>'+fmt(S.you)+'</td><td>'+baht(S.tut)+'</td><td></td><td></td></tr>';
   $("tbl").innerHTML=tb;
 }
-["fee","share","mode","b0","g","avg","pf","rf","ad","bk","hours","eq","shA","shB"].forEach(function(id){$(id).addEventListener("input",render);$(id).addEventListener("change",render)});
+["fee","share","mode","b0","g","pp1","pp2","pp3","ps1","ps2","ps3","pf","rf","ad","bk","hours","eq","shA","shB"].forEach(function(id){$(id).addEventListener("input",render);$(id).addEventListener("change",render)});
 document.querySelectorAll("#sc button").forEach(function(b){b.addEventListener("click",function(){
   $("b0").value=b.dataset.b0;$("g").value=b.dataset.g;
   document.querySelectorAll("#sc button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});render()})});

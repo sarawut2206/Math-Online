@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>แผนผลิตคอร์ส</title>
+<meta name="description" content="คำนวณเวลาผลิตและอัดวิดีโอ ตารางสัปดาห์ และกำหนดการของคอร์สตะลุยข้อสอบ">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css?v=mvb9g114">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>.gantt{display:grid;gap:6px;margin-top:10px}
+.gr{display:grid;grid-template-columns:190px minmax(0,1fr);gap:10px;align-items:center}
+@media(max-width:700px){.gr{grid-template-columns:1fr;gap:2px}}
+.gl{font-size:16px;line-height:1.3}
+.gt{position:relative;height:26px;background:var(--line);border-radius:7px;overflow:hidden}
+.gt i{position:absolute;top:3px;bottom:3px;border-radius:5px;display:block}
+.gh{position:relative;height:20px;margin-left:200px;font-size:13px;color:var(--mut)}
+@media(max-width:700px){.gh{margin-left:0}}
+.gh span{position:absolute;transform:translateX(-50%)}
+.gdate{display:flex;justify-content:space-between;font-size:14px;color:var(--mut);margin-left:200px;margin-top:2px}
+@media(max-width:700px){.gdate{margin-left:0}}
+.stack{display:flex;height:30px;border-radius:8px;overflow:hidden;background:var(--line);margin:10px 0 6px}
+.stack i{display:block;height:100%}
+.ok{color:var(--ok)}.warnc{color:var(--neg)}
+tr.over td{background:var(--mark-soft)}
+.step{counter-reset:none}
+ol.flowlist{margin:0;padding-left:22px}ol.flowlist li{margin:6px 0}</style></head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+<symbol id="sign" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 18c1.5-2 2.5-2 3 0s2 1.5 3-1"/></symbol>
+<symbol id="db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><a href="production.html" aria-current="page"><svg class="i"><use href="#plan"/></svg>แผนผลิตคอร์ส</a><a href="contract.html"><svg class="i"><use href="#sign"/></svg>ร่างสัญญากับติวเตอร์</a><h3>สินค้าและตัวเลข</h3><a href="exam-course.html"><svg class="i"><use href="#target"/></svg>คอร์สตะลุยข้อสอบ</a><a href="model-2.html"><svg class="i"><use href="#calc"/></svg>โมเดลข้อเสนอ 2</a><a href="catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><a class="tbtn dbbtn" id="dbbtn" href="database.html" data-s="nopin"><svg class="i"><use href="#db"/></svg><span>ฐานข้อมูล · ยังไม่เชื่อม</span><i class="dot"></i></a><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner">
+<nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> แผนงาน <span aria-hidden="true">›</span> แผนผลิตคอร์ส</nav>
+<header class="page-head"><h1>แผนผลิตคอร์ส: ใช้เวลากี่วัน ทำอย่างไร</h1><p>คำนวณชั่วโมงงานและจำนวนวันที่ใช้ในการเขียนเฉลย อัด ตัดต่อ และตรวจ ตั้งแต่ก่อนเปิดรุ่นจนปิดรุ่น พร้อมตารางสัปดาห์และวันที่ ปรับตัวเลขตามเวลาที่คุณมีจริง</p><div class="chips"><span class="chip ">คอร์สตะลุยข้อสอบ 18 ชุด · เตรียมสอบเข้า ม.1</span><span class="chip warn">ตัวเลขเป็นสมมติฐาน ปรับได้</span></div></header>
+<div class="callout"><svg class="i"><use href="#info"/></svg><div><b>หลักคิด</b> ไม่ต้องอัดครบ 20 ตอนก่อนขาย ผลิตให้เสร็จเฉพาะ <b>ชุดปรับพื้นฐาน + ชุด 1–4</b> ก่อนเปิดรุ่น แล้วผลิตล่วงหน้าทีละชุดให้ทัน <b>1 ชุดต่อสัปดาห์</b> ระหว่างรุ่นเรียน ผลิตล่วงหน้าไว้ไม่น้อยกว่า 2–3 ชุดเสมอ เพื่อไม่ให้ส่งชุดไม่ทัน</div></div>
+
+<div class="tiles" aria-live="polite" style="margin-top:14px">
+  <div class="tile"><span>ชั่วโมงงานทั้งหมด</span><b id="t_hours">–</b></div>
+  <div class="tile"><span>วันทำงานที่ต้องใช้</span><b id="t_days">–</b></div>
+  <div class="tile"><span>วันที่ต้องอัด</span><b id="t_rec">–</b></div>
+  <div class="tile"><span>เริ่มผลิตภายใน</span><b id="t_start">–</b></div>
+</div>
+<div class="card" style="margin-top:14px" aria-live="polite"><b>ข้อสรุป</b><ul id="ins" style="margin:8px 0 0;padding-left:20px"></ul></div>
+
+<section aria-labelledby="h-set">
+  <h2 class="sec" id="h-set" style="margin-top:22px"><svg class="i"><use href="#calc"/></svg>เวลาที่คุณมี</h2>
+  <div class="grid g3">
+    <fieldset><legend>เวลาทำงาน</legend>
+      <label class="f" for="hw">ชั่วโมงทำคอร์สต่อสัปดาห์<input id="hw" type="number" min="1" value="12"></label>
+      <label class="f" for="dw">วันที่ทำต่อสัปดาห์<input id="dw" type="number" min="1" max="7" value="5"></label>
+      <label class="f" for="rd">ชั่วโมงอัดจริงต่อวันอัด (ไม่รวมเตรียม)<input id="rd" type="number" min="1" step="0.5" value="4.5"></label>
+    </fieldset>
+    <fieldset><legend>กำหนดการ</legend>
+      <label class="f" for="cs">วันเริ่มเรียนรุ่นที่ 1<input id="cs" type="date"></label>
+      <label class="f" for="pre">ชุดที่ต้องพร้อมก่อนเปิดรุ่น (ไม่รวมปรับพื้นฐาน)<input id="pre" type="number" min="0" max="18" value="4"></label>
+      <label class="f" for="buf">สัปดาห์สำรอง (ทดลองกับเด็ก + แก้งาน)<input id="buf" type="number" min="0" value="2"></label>
+    </fieldset>
+    <fieldset><legend>งานนอกเหนือการผลิตคลิป</legend>
+      <label class="f" for="setup">งานตั้งต้น (โครงหลักสูตร เทมเพลต ระบบข้อสอบ) ชั่วโมง<input id="setup" type="number" min="0" value="30"></label>
+      <label class="f" for="live">ไลฟ์ถามตอบ ชั่วโมงต่อสัปดาห์<input id="live" type="number" min="0" step="0.5" value="2"></label>
+      <label class="f" for="adm">ตอบคำถาม/ประสานงาน ชั่วโมงต่อสัปดาห์<input id="adm" type="number" min="0" step="0.5" value="1"></label>
+    </fieldset>
+  </div>
+  <details class="fold card" style="margin-top:14px"><summary>ตัวเลขการผลิตขั้นสูง</summary><div>
+    <div class="grid g3">
+      <fieldset><legend>ข้อและความยาว</legend>
+        <label class="f" for="q">ข้อต่อชุด<input id="q" type="number" min="1" value="40"></label>
+        <label class="f" for="pe">ข้อง่าย / ปานกลาง / ยาก (%)<span style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><input id="pe" type="number" value="30" aria-label="ข้อง่าย"><input id="pm" type="number" value="50" aria-label="ข้อปานกลาง"><input id="ph" type="number" value="20" aria-label="ข้อยาก"></span></label>
+        <label class="f" for="te">นาทีต่อข้อ ง่าย / ปานกลาง / ยาก<span style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><input id="te" type="number" step="0.5" value="1.5" aria-label="นาทีข้อง่าย"><input id="tm" type="number" step="0.5" value="3.5" aria-label="นาทีข้อปานกลาง"><input id="th" type="number" step="0.5" value="6.5" aria-label="นาทีข้อยาก"></span></label>
+      </fieldset>
+      <fieldset><legend>จำนวนข้อ</legend>
+        <label class="f" for="qb">ชุดปรับพื้นฐาน (ข้อ)<input id="qb" type="number" min="0" value="40"></label>
+        <label class="f" for="qs">ชุดพิเศษ (ข้อ)<input id="qs" type="number" min="0" value="60"></label>
+        <label class="f" for="ns">จำนวนชุดตะลุย<input id="ns" type="number" min="1" value="18"></label>
+      </fieldset>
+      <fieldset><legend>เวลาต่อ 1 นาทีวิดีโอ</legend>
+        <label class="f" for="wr">เขียนเฉลย (นาทีต่อข้อ)<input id="wr" type="number" min="0" value="4"></label>
+        <label class="f" for="rc">อัด (เท่าของความยาวคลิป รวมอัดซ้ำ)<input id="rc" type="number" min="0" step="0.1" value="1.4"></label>
+        <label class="f" for="ed">ตัดต่อ (เท่า)<input id="ed" type="number" min="0" step="0.1" value="0.8"></label>
+        <label class="f" for="qc">ตรวจ (เท่า)<input id="qc" type="number" min="0" step="0.1" value="0.3"></label>
+      </fieldset>
+    </div></div></details>
+</section>
+
+<section aria-labelledby="h-unit">
+  <h2 class="sec" id="h-unit" style="margin-top:22px"><svg class="i"><use href="#video"/></svg>งานต่อ 1 ชุด (40 ข้อ)</h2>
+  <div class="card">
+    <div class="stack" id="stack" role="img" aria-label="สัดส่วนเวลาทำงานต่อหนึ่งชุด"></div>
+    <div class="legend" id="stackLeg"></div>
+    <div class="scroll" style="margin-top:10px"><table id="unit" style="min-width:0"></table></div>
+    <p class="note" style="margin:8px 0 0">ตัวอย่าง: ถ้าชุดละประมาณ 8.5 ชั่วโมง ทำสัปดาห์ละ 1 ชุดต้องใช้ราว 1 วันทำงานเต็ม หรือ 2 วันครึ่งวัน</p>
+  </div>
+  <h3 style="margin:18px 0 8px">ขั้นตอนทำ 1 ชุด (ซ้ำทุกสัปดาห์)</h3>
+  <ol class="flowlist">
+    <li><b>เขียนเฉลยและสไลด์</b> ทำทั้งชุดพร้อมกัน เขียนวิธีคิด วิธีลัด และกับดักของข้อปานกลางและข้อยาก</li>
+    <li><b>อัดแบบเป็นชุด</b> ตั้งค่าอุปกรณ์ครั้งเดียว อัดข้อง่ายรวมหลายข้อต่อคลิป ข้อยากแยกคลิปละข้อ</li>
+    <li><b>ตัดต่อ</b> ตัดช่วงว่าง ใส่ชื่อคลิปตามรหัส เช่น S07-Q23 ใส่เทมเพลตหัวท้ายคลิป</li>
+    <li><b>ตรวจเนื้อหาและเสียง</b> ตรวจเฉลยทุกข้อสองรอบ ฟังเสียงตรงช่วงตัวเลข</li>
+    <li><b>อัปโหลดและตั้งค่าระบบข้อสอบ</b> ใส่เฉลยและป้ายหัวข้อ ตั้งเวลาเปิดตามปฏิทิน</li>
+  </ol>
+</section>
+
+<section aria-labelledby="h-gantt">
+  <h2 class="sec" id="h-gantt" style="margin-top:22px"><svg class="i"><use href="#plan"/></svg>ลำดับงานตลอดโครงการ (Gantt)</h2>
+  <p class="sec-note">แกนนอนคือสัปดาห์นับจากวันเริ่มผลิต วันที่คำนวณย้อนจากวันเริ่มเรียนรุ่นที่ 1</p>
+  <div class="card"><div id="gantt"></div><p id="gwarn" class="note" style="margin:10px 0 0"></p></div>
+</section>
+
+<section aria-labelledby="h-rec">
+  <h2 class="sec" id="h-rec" style="margin-top:22px"><svg class="i"><use href="#doc"/></svg>แผนวันอัด</h2>
+  <div class="card"><div class="scroll"><table id="rec"></table></div>
+  <p class="note" style="margin:8px 0 0">อัดเป็นรอบ รอบละ 2 ชุด ใช้เวลาประมาณ 1 วันอัด (ตามค่าที่ตั้ง) เตรียมสไลด์และเฉลยให้ครบก่อนวันอัด จัดห้องและอุปกรณ์ให้พร้อมไว้ทั้งวัน</p></div>
+</section>
+
+<section aria-labelledby="h-wk">
+  <h2 class="sec" id="h-wk" style="margin-top:22px"><svg class="i"><use href="#check"/></svg>ตารางรายสัปดาห์ระหว่างรุ่น (20 สัปดาห์)</h2>
+  <p class="sec-note">แถวที่ไฮไลต์คือสัปดาห์ที่งานเกินเวลาที่คุณมี</p>
+  <div class="scroll"><table id="wk" class="wide"></table></div>
+</section>
+
+<section class="card" aria-labelledby="h-day">
+  <h2 class="sec" id="h-day"><svg class="i"><use href="#timer"/></svg>แบบแผนหนึ่งสัปดาห์ (ตัวอย่างทำสัปดาห์ละ 12 ชั่วโมง)</h2>
+  <div class="scroll"><table style="min-width:0">
+    <tr><th>วัน</th><th>งาน</th><th class="n">ชั่วโมง</th></tr>
+    <tr><td>จันทร์</td><td>เขียนเฉลยและสไลด์ของชุดที่ต้องอัดสัปดาห์นี้ (ส่วนที่ 1)</td><td class="n">2.5</td></tr>
+    <tr><td>อังคาร</td><td>เขียนเฉลยและสไลด์ (ส่วนที่ 2) ตรวจเฉลยรอบแรก</td><td class="n">2</td></tr>
+    <tr><td>พุธ</td><td>วันอัด: อัดทั้งชุด (ทำคู่กับชุดถัดไปได้ถ้าเตรียมครบ)</td><td class="n">3.5</td></tr>
+    <tr><td>พฤหัสบดี</td><td>ตัดต่อ และตรวจเนื้อหา/เสียง</td><td class="n">2.5</td></tr>
+    <tr><td>เสาร์ หรือ อาทิตย์</td><td>ไลฟ์ถามตอบ 1–2 ชั่วโมง + ตอบคำถามที่ค้าง + อัปโหลดชุดถัดไป</td><td class="n">1.5</td></tr>
+  </table></div>
+  <p class="note" style="margin:8px 0 0">ปรับตามเวลาที่ว่างจริง กฎสำคัญคือ ผลิตล่วงหน้าไม่น้อยกว่า 2–3 ชุด ถ้าเหลือน้อยกว่านั้นให้ลดงานอื่นหรือเลื่อนชุดที่ไม่เร่ง</p>
+</section>
+
+<section aria-labelledby="h-risk">
+  <h2 class="sec" id="h-risk" style="margin-top:22px">ความเสี่ยงของตารางเวลา และจุดตัดสินใจ</h2>
+  <div class="scroll"><table>
+    <tr><th>ความเสี่ยง</th><th>สัญญาณ</th><th>วิธีรับมือ</th></tr>
+    <tr><td>งานเฉลยช้ากว่าที่ประเมิน</td><td>ชุดแรกใช้เกิน 10 ชั่วโมง</td><td>วัดเวลาจริงของชุดปรับพื้นฐานและชุด 1 แล้วแก้ค่า "เขียนเฉลย" ในหน้านี้ ปรับตารางใหม่</td></tr>
+    <tr><td>ผลิตล่วงหน้าเหลือน้อยกว่า 2 ชุด</td><td>ตารางสัปดาห์แสดงชุดสำรองต่ำ</td><td>พักอัดข้อยากบางข้อไว้ทีหลัง หรือลดงานไลฟ์ชั่วคราว</td></tr>
+    <tr><td>ผู้จองไม่ถึงเป้าก่อนเปิดรุ่น</td><td>ณ สัปดาห์ที่ 3 ก่อนเปิด ผู้จองน้อยกว่าเป้า</td><td>เลื่อนรุ่นหรือปรับข้อเสนอ ไม่ต้องผลิตต่อจนรู้ผล (จุดตัดสินใจที่ 1)</td></tr>
+    <tr><td>ข้อผิดพลาดในเฉลย</td><td>ผู้เรียนแจ้งผิดหลายข้อ</td><td>ตรวจเฉลยสองรอบ และเปิดช่องรับแจ้งแก้ไข แก้ภายใน 7 วันตามสัญญา</td></tr>
+  </table></div>
+</section>
+</div></main>
+</div>
+<script src="assets/db.js?v=mvb9g114"></script>
+<script src="assets/site.js?v=mvb9g114"></script>
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+function n(id){var x=parseFloat($(id).value);return isFinite(x)?Math.max(0,x):0}
+function f1(x){return (Math.round(x*10)/10).toLocaleString("th-TH")}
+function f0(x){return Math.round(x).toLocaleString("th-TH")}
+function dstr(d){return d.toLocaleDateString("th-TH",{day:"numeric",month:"short",year:"numeric"})}
+function addDays(d,k){var x=new Date(d.getTime());x.setDate(x.getDate()+k);return x}
+
+/* default cohort start: 10 weeks from today (Monday) */
+(function(){var d=addDays(new Date(),70);var dow=d.getDay();d=addDays(d,(8-dow)%7);
+  var m=("0"+(d.getMonth()+1)).slice(-2),dd=("0"+d.getDate()).slice(-2);$("cs").value=d.getFullYear()+"-"+m+"-"+dd})();
+
+function unit(q,perQ,wr,rc,ed,qc,teScale){
+  var vmin=q*perQ*teScale;  /* finished video minutes */
+  var write=q*wr/60,video=vmin/60;
+  return {vmin:vmin,write:write,rec:video*rc,edit:video*ed,qc:video*qc,total:write+video*(rc+ed+qc)};
+}
+function plan(){
+  var p={};
+  var pe=n("pe"),pm=n("pm"),ph=n("ph"),tot=Math.max(1,pe+pm+ph);
+  var perQ=(pe*n("te")+pm*n("tm")+ph*n("th"))/tot;
+  var wr=n("wr"),rc=n("rc"),ed=n("ed"),qc=n("qc");
+  p.set=unit(n("q"),perQ,wr,rc,ed,qc,1);
+  p.base=unit(n("qb"),n("te"),wr,rc,ed,qc,1.6);   /* base set: easy items, longer explanations */
+  p.spec=unit(n("qs"),perQ,wr,rc,ed,qc,1.1);
+  p.ns=Math.max(1,Math.round(n("ns")));
+  p.setup=n("setup");
+  p.totalContent=p.set.total*p.ns+p.base.total+p.spec.total;
+  p.total=p.totalContent+p.setup;
+  p.recTotal=p.set.rec*p.ns+p.base.rec+p.spec.rec;
+  p.videoMin=p.set.vmin*p.ns+p.base.vmin+p.spec.vmin;
+  p.questions=n("q")*p.ns+n("qb")+n("qs");
+  return p;
+}
+var COL={write:"var(--s-teacher)",rec:"var(--s-tutor)",edit:"var(--mark)",qc:"var(--ok)"};
+function render(){
+  var P=plan(),hw=Math.max(1,n("hw")),dw=Math.max(1,n("dw")),hpd=hw/dw,rd=Math.max(1,n("rd"));
+  var live=n("live"),adm=n("adm"),pre=Math.min(P.ns,Math.max(0,Math.round(n("pre")))),buf=n("buf");
+  /* headline numbers */
+  var days=P.total/hpd;
+  $("t_hours").textContent=f0(P.total)+" ชม.";
+  $("t_days").textContent=f0(Math.ceil(days))+" วันทำงาน";
+  var recDays=Math.ceil(P.recTotal/rd);
+  $("t_rec").textContent=f0(recDays)+" วันอัด";
+  /* timeline */
+  var preHours=P.setup+P.base.total+pre*P.set.total;
+  var preWeeks=Math.ceil(preHours/hw),setupWeeks=Math.ceil(P.setup/hw);
+  var C0=preWeeks+buf;                       /* cohort starts C0 weeks after production start */
+  var cs=new Date($("cs").value+"T00:00:00");if(isNaN(cs.getTime()))cs=addDays(new Date(),70);
+  var start=addDays(cs,-7*C0),today=new Date();today.setHours(0,0,0,0);
+  $("t_start").textContent=dstr(start);
+  var late=start<today,earliest=addDays(today,7*C0);
+  /* weekly need during the cohort */
+  var perWeekNeed=P.set.total+live+adm,spare=hw-perWeekNeed;
+  var rolling=Math.max(0,P.ns-pre);            /* weeks of rolling production */
+  var specW=Math.ceil(P.spec.total/Math.max(0.5,hw-live-adm));
+  var totalWeeks=C0+20+2;
+  /* insights */
+  var ins=[];
+  ins.push("งานทั้งหมดประมาณ <b>"+f0(P.total)+" ชั่วโมง</b> (เขียนเฉลย "+f0(P.questions)+" ข้อ → วิดีโอสำเร็จรูป "+f1(P.videoMin/60)+" ชม. → รวมอัด ตัดต่อ ตรวจ) ถ้าทำวันละ "+f1(hpd)+" ชั่วโมง ใช้ <b>"+f0(Math.ceil(days))+" วันทำงาน</b> หรือประมาณ "+f1(P.total/hw)+" สัปดาห์");
+  ins.push("ถ้าลงเวลาเป็นวันเต็ม (นับเฉพาะวันที่ทำคอร์ส): วันละ 4 ชม. = <b>"+f0(Math.ceil(P.total/4))+" วัน</b> · วันละ 6 ชม. = <b>"+f0(Math.ceil(P.total/6))+" วัน</b> · วันละ 8 ชม. = <b>"+f0(Math.ceil(P.total/8))+" วัน</b>");
+  ins.push("<b>วันที่ต้องอัด "+f0(recDays)+" วัน</b> (อัดจริงรวม "+f1(P.recTotal)+" ชม. ที่วันละ "+f1(rd)+" ชม.) อัดรอบละ 2 ชุดได้ประมาณ "+f0(Math.ceil(2*P.set.rec/rd))+" วันอัด ต่อรอบ");
+  ins.push("ก่อนเปิดรุ่นต้องเสร็จ ตั้งต้น + ปรับพื้นฐาน + ชุด 1–"+pre+" = "+f0(preHours)+" ชั่วโมง ใช้ <b>"+preWeeks+" สัปดาห์</b> + สำรอง "+buf+" สัปดาห์ จึงต้องเริ่มผลิตก่อนวันเปิดรุ่น <b>"+C0+" สัปดาห์</b> (เริ่มประมาณ "+dstr(start)+")");
+  ins.push("ระหว่างรุ่นแต่ละสัปดาห์ต้องใช้ "+f1(perWeekNeed)+" ชม. (ผลิต 1 ชุด "+f1(P.set.total)+" + ไลฟ์ "+f1(live)+" + ประสานงาน "+f1(adm)+") เทียบเวลาที่มี "+f1(hw)+" ชม. → "+(spare>=0?"เหลือเวลา "+f1(spare)+" ชม. ต่อสัปดาห์ <span class=\"ok\">ทันตามแผน</span>":"ขาดอีก "+f1(-spare)+" ชม. ต่อสัปดาห์ <span class=\"warnc\">ผลิตไม่ทัน 1 ชุดต่อสัปดาห์</span> เพิ่มชั่วโมงหรือหาผู้ช่วย"));
+  if(late)ins.push("<span class=\"warnc\">ถ้าเปิดรุ่นวันที่เลือก ต้องเริ่มผลิตตั้งแต่ "+dstr(start)+" ซึ่งผ่านมาแล้ว</span> วันเปิดรุ่นที่เร็วที่สุดถ้าเริ่มวันนี้คือ <b>"+dstr(earliest)+"</b>");
+  $("ins").innerHTML=ins.map(function(t){return "<li>"+t+"</li>"}).join("");
+  /* stacked unit */
+  var s=P.set,parts=[["เขียนเฉลย",s.write,COL.write],["อัด",s.rec,COL.rec],["ตัดต่อ",s.edit,COL.edit],["ตรวจ",s.qc,COL.qc]];
+  $("stack").innerHTML=parts.map(function(p){return '<i style="width:'+(100*p[1]/s.total)+'%;background:'+p[2]+'" title="'+p[0]+'"></i>'}).join("");
+  $("stackLeg").innerHTML=parts.map(function(p){return '<span><i class="sw" style="background:'+p[2]+'"></i>'+p[0]+' '+f1(p[1])+' ชม. ('+f0(100*p[1]/s.total)+'%)</span>'}).join("");
+  var ut='<tr><th>รายการ</th><th class="n">เขียนเฉลย</th><th class="n">อัด</th><th class="n">ตัดต่อ</th><th class="n">ตรวจ</th><th class="n">รวม (ชม.)</th><th class="n">วิดีโอ (นาที)</th></tr>';
+  [["ชุดตะลุย 1 ชุด ("+f0(n("q"))+" ข้อ)",P.set,1],["ชุดตะลุยทั้ง "+P.ns+" ชุด",P.set,P.ns],["ชุดปรับพื้นฐาน",P.base,1],["ชุดพิเศษ",P.spec,1]].forEach(function(r){
+    var u=r[1],k=r[2];ut+='<tr><td>'+r[0]+'</td><td class="n">'+f1(u.write*k)+'</td><td class="n">'+f1(u.rec*k)+'</td><td class="n">'+f1(u.edit*k)+'</td><td class="n">'+f1(u.qc*k)+'</td><td class="n"><b>'+f1(u.total*k)+'</b></td><td class="n">'+f0(u.vmin*k)+'</td></tr>'});
+  ut+='<tr><td>งานตั้งต้น</td><td class="n" colspan="4"></td><td class="n"><b>'+f1(P.setup)+'</b></td><td class="n"></td></tr>';
+  ut+='<tr class="sum"><td>รวมทั้งโครงการ</td><td class="n" colspan="4"></td><td class="n">'+f1(P.total)+'</td><td class="n">'+f0(P.videoMin)+'</td></tr>';
+  $("unit").innerHTML=ut;
+  /* gantt */
+  var W=totalWeeks,rows=[
+   ["งานตั้งต้น (โครงหลักสูตร เทมเพลต ระบบข้อสอบ)",0,setupWeeks,"var(--ink)"],
+   ["ผลิตปรับพื้นฐาน + ชุด 1–"+pre,setupWeeks,preWeeks,"var(--s-teacher)"],
+   ["สำรอง: ทดลองกับเด็ก 8–10 คน แก้งาน",preWeeks,C0,"var(--mut)"],
+   ["การตลาดและพรีเซล",Math.max(0,C0-6),C0,"var(--s-tutor)"],
+   ["รุ่นที่ 1 เรียน 20 สัปดาห์",C0,C0+20,"var(--ok)"],
+   ["ผลิตล่วงหน้า ชุด "+(pre+1)+"–"+P.ns+" (ชุดละสัปดาห์)",C0,C0+rolling,"var(--s-teacher)"],
+   ["ผลิตชุดพิเศษ",C0+rolling,C0+rolling+specW,"var(--mark)"],
+   ["ปิดรุ่น สรุปผลก่อน–หลัง จุดตัดสินใจที่ 2",C0+20,C0+22,"var(--ink)"]];
+  var ticks="";for(var w=0;w<=W;w+=4)ticks+='<span style="left:'+(100*w/W)+'%">'+w+'</span>';
+  var g='<div class="gh" aria-hidden="true">'+ticks+'</div><div class="gantt">';
+  rows.forEach(function(r){
+    var l=100*r[1]/W,wd=Math.max(1.2,100*(r[2]-r[1])/W);
+    g+='<div class="gr"><span class="gl">'+r[0]+'</span><div class="gt"><i style="left:'+l+'%;width:'+wd+'%;background:'+r[3]+'" title="สัปดาห์ '+r[1]+'–'+r[2]+'"></i></div></div>'});
+  g+='</div><div class="gdate"><span>เริ่มผลิต '+dstr(start)+'</span><span>เปิดรุ่น '+dstr(cs)+'</span><span>ปิดรุ่น '+dstr(addDays(cs,140))+'</span></div>';
+  $("gantt").innerHTML=g;
+  $("gwarn").innerHTML=late?'<span class="warnc">วันเริ่มผลิตตามกำหนดผ่านมาแล้ว</span> วันเปิดรุ่นที่เร็วที่สุดคือ '+dstr(earliest):'วันเริ่มผลิตตามกำหนดยังไม่ถึง';
+  /* recording plan */
+  var sessions=[["ปรับพื้นฐาน + ชุด 1",P.base.rec+P.set.rec],["ชุด 2–3",2*P.set.rec],["ชุด 4–5",2*P.set.rec]],k=6;
+  while(k<=P.ns){sessions.push(["ชุด "+k+(k+1<=P.ns?"–"+(k+1):""),(k+1<=P.ns?2:1)*P.set.rec]);k+=2}
+  sessions.push(["ชุดพิเศษ",P.spec.rec]);
+  var rt='<tr><th>รอบ</th><th>เนื้อหา</th><th class="n">ชั่วโมงอัด</th><th class="n">วันอัด</th></tr>';
+  sessions.forEach(function(s,i){rt+='<tr><td>'+(i+1)+'</td><td>'+s[0]+'</td><td class="n">'+f1(s[1])+'</td><td class="n">'+f1(s[1]/rd)+'</td></tr>'});
+  rt+='<tr class="sum"><td>รวม</td><td>'+sessions.length+' รอบ</td><td class="n">'+f1(P.recTotal)+'</td><td class="n">'+f1(P.recTotal/rd)+'</td></tr>';
+  $("rec").innerHTML=rt;
+  /* weekly table */
+  var wt='<tr><th>สัปดาห์</th><th>ปล่อยชุด</th><th>กำลังผลิต</th><th class="n">งานที่ต้องทำ (ชม.)</th><th class="n">เวลาที่มี (ชม.)</th><th class="n">ผลิตล่วงหน้า (ชุด)</th><th>วันที่เริ่มสัปดาห์</th></tr>';
+  for(var w=1;w<=20;w++){
+    var rel=w<=P.ns?"ชุด "+w:(w===P.ns+1?"ชุดพิเศษ":"ทบทวน/ข้อสอบจำลอง");
+    var prodSet=pre+w,making=prodSet<=P.ns?"ชุด "+prodSet:(prodSet<=P.ns+specW?"ชุดพิเศษ":"–");
+    var need=(prodSet<=P.ns?P.set.total:(prodSet<=P.ns+specW?P.spec.total/specW:0))+live+adm;
+    var ahead=Math.min(P.ns,pre+w)-Math.min(P.ns,w);
+    var over=need>hw+0.01;
+    wt+='<tr'+(over?' class="over"':'')+'><td>'+w+'</td><td>'+rel+'</td><td>'+making+'</td><td class="n">'+f1(need)+'</td><td class="n">'+f1(hw)+'</td><td class="n">'+Math.max(0,ahead)+'</td><td>'+dstr(addDays(cs,7*(w-1)))+'</td></tr>'}
+  $("wk").innerHTML=wt;
+}
+["hw","dw","rd","cs","pre","buf","setup","live","adm","q","pe","pm","ph","te","tm","th","qb","qs","ns","wr","rc","ed","qc"].forEach(function(id){$(id).addEventListener("input",render);$(id).addEventListener("change",render)});
+render();
+})();
+
+</script>
+</body></html>

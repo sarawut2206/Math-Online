@@ -4,7 +4,7 @@
 <meta name="description" content="เครื่องมือกรอกเงื่อนไขและดูตัวอย่างสัญญาความร่วมมือกับติวเตอร์">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=mv9r9au8">
+<link rel="stylesheet" href="assets/site.css?v=mv9rpyts">
 <script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <style>/* contract model page. Layout: form column + sticky live preview on wide screens; one view at a time on phones. */
 .inner.wide{max-width:1320px}
@@ -124,10 +124,12 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
   <fieldset class="step"><legend><span class="stepno">1</span>ทางเลือกการแบ่งรายได้</legend><p class="hint">เลือกหนึ่งทางเลือก ตัวเลขในสัญญาและตัวอย่างรายได้จะเปลี่ยนตาม</p>
     <div class="opts" role="radiogroup" aria-label="ทางเลือกการแบ่งรายได้">
       <label class="optcard"><input type="radio" name="k_opt" value="A" checked><span><b>ก · ค่าผลิต + ส่วนแบ่ง</b><small>ผู้ผลิตได้ค่าผลิตแน่นอนส่วนหนึ่ง แล้วแบ่งรายได้สุทธิ ความเสี่ยงต่ำกว่าสำหรับผู้ผลิต (แนะนำเริ่มเสนอ)</small></span></label>
+      <label class="optcard"><input type="radio" name="k_opt" value="C"><span><b>ค · แบ่งตามขั้นยอดขายสุทธิรายเดือน</b><small>ไม่มีค่าจ้างก้อนใหญ่ สัดส่วนของผู้ผลิตเพิ่มตามยอดขาย (เช่น ๔๐ → ๔๕ → ๕๐%) และเป็นหุ้นส่วนคอร์สเมื่อทำต่อเนื่องครบกำหนด</small></span></label>
       <label class="optcard"><input type="radio" name="k_opt" value="B"><span><b>ข · คืนทุนก่อนแล้วแบ่งกำไร</b><small>ติวเตอร์ลงเงินโฆษณา ได้คืนก่อน แล้วแบ่งกำไรที่เหลือ ผู้ผลิตไม่ได้ค่าผลิต ถ้าขายน้อยอาจไม่ได้เงิน</small></span></label>
     </div>
     <div data-opt="A"><div class="row2"><label class="f" for="k_fee0">ค่าผลิต (บาท)<input id="k_fee0" type="number" min="0" value="40000" inputmode="numeric" ></label><label class="f" for="k_inst1">งวดแรก (% ของค่าผลิต)<input id="k_inst1" type="number" min="0" value="50" inputmode="numeric" ></label></div><label class="f" for="k_spA">ส่วนแบ่งผู้ผลิตจากรายได้สุทธิ (%)<input id="k_spA" type="number" min="0" value="30" inputmode="numeric" max="100"></label></div>
     <div data-opt="B" hidden><label class="f" for="k_invest">ติวเตอร์ลงเงินโฆษณา/ตัดต่อไม่เกิน (บาท)<input id="k_invest" type="number" min="0" value="40000" inputmode="numeric" ></label><label class="f" for="k_spB">ส่วนแบ่งผู้ผลิตจากกำไรหลังคืนทุน (%)<input id="k_spB" type="number" min="0" value="50" inputmode="numeric" max="100"></label></div>
+    <div data-opt="C" hidden><div class="row2"><label class="f" for="k_ct1">ขั้นที่ ๑ ถึงยอดสุทธิ (บาท/เดือน)<input id="k_ct1" type="number" min="0" value="50000" inputmode="numeric" ></label><label class="f" for="k_cr1">ผู้ผลิตได้ (%)<input id="k_cr1" type="number" min="0" value="40" inputmode="numeric" max="100"></label></div><div class="row2"><label class="f" for="k_ct2">ขั้นที่ ๒ ถึงยอดสุทธิ (บาท/เดือน)<input id="k_ct2" type="number" min="0" value="150000" inputmode="numeric" ></label><label class="f" for="k_cr2">ผู้ผลิตได้ (%)<input id="k_cr2" type="number" min="0" value="45" inputmode="numeric" max="100"></label></div><label class="f" for="k_cr3">ส่วนที่เกินขั้นที่ ๒ ผู้ผลิตได้ (%)<input id="k_cr3" type="number" min="0" value="50" inputmode="numeric" max="100"></label><label class="f" for="k_cmode">วิธีคิดอัตรา<select id="k_cmode" ><option value="marginal">ขั้นบันได (แต่ละช่วงยอด)</option><option value="cliff">ทั้งก้อนตามขั้นที่ถึง</option></select></label><div class="row2"><label class="f" for="k_csw">เป็นหุ้นส่วนเมื่อทำต่อเนื่อง (เดือน)<input id="k_csw" type="number" min="0" value="6" inputmode="numeric" ></label><label class="f" for="k_cswmin">ยอดสุทธิรายเดือนไม่ต่ำกว่า (บาท)<input id="k_cswmin" type="number" min="0" value="50000" inputmode="numeric" ></label></div><div class="row2"><label class="f" for="k_cpr">สัดส่วนผู้ผลิตเมื่อเป็นหุ้นส่วน (%)<input id="k_cpr" type="number" min="0" value="50" inputmode="numeric" max="100"></label><label class="f" for="k_cf1">ค่าผลิตเริ่มต้น (บาท · ๐ ถ้าไม่มี)<input id="k_cf1" type="number" min="0" value="0" inputmode="numeric" ></label></div></div>
     <label class="f" for="k_adcap">เพดานค่าโฆษณาต่อเดือน (บาท)<input id="k_adcap" type="number" min="0" value="10000" inputmode="numeric" ></label></fieldset>
   <fieldset class="step"><legend><span class="stepno">2</span>คู่สัญญาและคอร์ส</legend><p class="hint">เว้นว่างไว้ได้ ช่องที่ยังไม่กรอกจะขึ้นไฮไลต์ในสัญญา · ไม่ต้องกรอกเลขประจำตัวประชาชนที่นี่</p>
     <label class="f" for="k_cname">ชื่อคอร์ส<input id="k_cname" type="text" value="คอร์สตะลุยข้อสอบคณิตศาสตร์ 18 ชุด" placeholder="" ></label>
@@ -197,8 +199,8 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
 <div class="toast" id="toast" role="status" hidden></div>
 </div></main>
 </div>
-<script src="assets/db.js?v=mv9r9au8"></script>
-<script src="assets/site.js?v=mv9r9au8"></script>
+<script src="assets/db.js?v=mv9rpyts"></script>
+<script src="assets/site.js?v=mv9rpyts"></script>
 <script>
 (function(){
 var $=function(id){return document.getElementById(id)};
@@ -211,9 +213,9 @@ function N(k){return F(th(num(k)))}
 var opt=function(){var r=document.querySelector('input[name="k_opt"]:checked');return r?r.value:"A"};
 
 function build(){
-  var A=opt()==="A",C=[];
+  var O=opt(),A=O!=="B",C=[];
   function cl(h,items){C.push({h:h,items:items})}
-  var sp=A?num("spA"):num("spB");
+  var sp=O==="A"?num("spA"):num("spB");
   var qown=val("qowner");
   var qtxt=qown==="partner"?F("พาร์ตเนอร์"):qown==="third"?F(val("qthird"),"ระบุชื่อบุคคลหรือสำนักพิมพ์ที่ให้สิทธิ์")+" ซึ่งพาร์ตเนอร์ได้รับอนุญาตให้ใช้":"ผู้ผลิต (ผู้ผลิตเขียนโจทย์เองทั้งหมด)";
   var brand=val("bmode")==="tutor"?"ชื่อของพาร์ตเนอร์":val("bmode")==="joint"?"ชื่อร่วมของคู่สัญญา":"ชื่อแบรนด์";
@@ -239,8 +241,22 @@ function build(){
      ["(ก)","\"รายได้ขั้นต้น\" คือเงินที่ได้รับจริงจากการจำหน่ายคอร์สทุกแพ็กเกจ ไม่รวมภาษีมูลค่าเพิ่ม (ถ้ามี)"],
      ["(ข)","\"ต้นทุนการขาย\" คือ ค่าธรรมเนียมชำระเงิน ค่าแพลตฟอร์ม/โฮสต์วิดีโอ เงินคืนให้ลูกค้า ส่วนลดที่ให้จริง ค่าจัดพิมพ์และจัดส่งเล่ม (ถ้ามี)"+(A?" และค่าโฆษณาที่จ่ายจริงภายในเพดานตามข้อ 4.4":"")+" โดยต้องมีหลักฐาน"],
      ["(ค)","\"รายได้สุทธิ\" คือ รายได้ขั้นต้น หักต้นทุนการขายตาม (ข)"]]]];
-  if(A){
+  if(O==="A"){
     money.push(["4.2","ค่าผลิตและส่วนแบ่ง: พาร์ตเนอร์จ่ายค่าผลิต "+N("fee0")+" บาท แบ่งเป็นสองงวด งวดที่หนึ่ง "+N("inst1")+"% เมื่อส่งโครงคอร์สและบทต้นแบบ งวดที่สองเมื่อส่งมอบตามเอกสารแนบ 1 ครบ และให้แบ่งรายได้สุทธิ ผู้ผลิต "+F(String(sp))+"% พาร์ตเนอร์ "+F(String(100-sp))+"%"]);
+  }else if(O==="C"){
+    var cliff=val("cmode")==="cliff",r1=num("cr1"),r2=num("cr2"),r3=num("cr3"),sw=num("cpr");
+    var sub=cliff?[
+      ["(ก)","รายได้สุทธิของเดือนนั้นไม่เกิน "+N("ct1")+" บาท ผู้ผลิตได้ "+F(String(r1))+"% ของรายได้สุทธิทั้งเดือน"],
+      ["(ข)","รายได้สุทธิของเดือนนั้นเกิน "+N("ct1")+" บาทแต่ไม่เกิน "+N("ct2")+" บาท ผู้ผลิตได้ "+F(String(r2))+"% ของรายได้สุทธิทั้งเดือน"],
+      ["(ค)","รายได้สุทธิของเดือนนั้นเกิน "+N("ct2")+" บาท ผู้ผลิตได้ "+F(String(r3))+"% ของรายได้สุทธิทั้งเดือน"]
+    ]:[
+      ["(ก)","ส่วนของรายได้สุทธิรายเดือนที่ไม่เกิน "+N("ct1")+" บาท ผู้ผลิตได้ "+F(String(r1))+"%"],
+      ["(ข)","ส่วนที่เกิน "+N("ct1")+" บาทแต่ไม่เกิน "+N("ct2")+" บาท ผู้ผลิตได้ "+F(String(r2))+"%"],
+      ["(ค)","ส่วนที่เกิน "+N("ct2")+" บาท ผู้ผลิตได้ "+F(String(r3))+"%"]
+    ];
+    sub.push(["(ง)","รายได้สุทธิส่วนที่เหลือเป็นของพาร์ตเนอร์ ผู้ผลิตไม่ได้รับค่าจ้างเป็นเงินก้อน"+(num("cf1")>0?" เว้นแต่ค่าผลิตเริ่มต้น "+N("cf1")+" บาท ซึ่งพาร์ตเนอร์จ่ายเมื่อส่งมอบตามเอกสารแนบ 1 ครบ":"")]);
+    sub.push(["(จ)","เมื่อรายได้สุทธิรายเดือนไม่ต่ำกว่า "+N("cswmin")+" บาท ติดต่อกันครบ "+N("csw")+" เดือน ให้คู่สัญญาเปลี่ยนสถานะเป็นหุ้นส่วนคอร์ส ตั้งแต่เดือนถัดไปให้แบ่งรายได้สุทธิทั้งจำนวน ผู้ผลิต "+F(String(sw))+"% พาร์ตเนอร์ "+F(String(100-sw))+"% และให้ทำข้อตกลงหุ้นส่วนเป็นลายลักษณ์อักษรเพิ่มเติม"]);
+    money.push(["4.2","แบ่งตามขั้นยอดขายสุทธิรายเดือน: ให้คิดการแบ่งรายได้สุทธิเป็นรายเดือนปฏิทิน ดังนี้",sub]);
   }else{
     money.push(["4.2","คืนทุนก่อนแล้วแบ่งกำไร: พาร์ตเนอร์ลงเงินค่าโฆษณาและค่าตัดต่อไม่เกิน "+N("invest")+" บาท จากรายได้ขั้นต้นหักต้นทุนการขาย (ไม่รวมค่าโฆษณา) ให้คืนเงินที่พาร์ตเนอร์ลงจริงก่อน (ไม่เกินจำนวนที่ลงจริง และไม่เกินรายได้ที่มี) ส่วนที่เหลือแบ่งผู้ผลิต "+F(String(sp))+"% พาร์ตเนอร์ "+F(String(100-sp))+"% หากรายได้ไม่พอคืนทุน พาร์ตเนอร์รับความเสี่ยงส่วนที่เหลือ ผู้ผลิตไม่ต้องจ่ายเงินสด"]);
   }
@@ -299,15 +315,32 @@ function mk(s){return esc(s).replace(/\u0001([^\u0002]*)\u0002/g,'<span class="f
 function plain(s){return s.replace(/\u0001([^\u0002]*)\u0002/g,"$1").replace(/\u0003([^\u0004]*)\u0004/g,"[$1]")}
 
 var lastText="";
-function annex(A){
+function tierShare(net,t1,t2,r1,r2,r3,cliff){
+  if(net<=0)return 0;
+  if(cliff)return net*(net<=t1?r1:net<=t2?r2:r3)/100;
+  var a=Math.min(net,t1)*r1/100;
+  if(net>t1)a+=(Math.min(net,t2)-t1)*r2/100;
+  if(net>t2)a+=(net-t2)*r3/100;
+  return a;
+}
+function annex(O){
   var n=num("buyers"),avg=num("avg"),fee=num("cFee"),pl=num("cPlat"),ad=num("cAds"),rf=num("cRef");
   var rows=[[40,"ต่ำ"],[120,"กลาง"],[300,"สูง"]];
   if(n&&rows.every(function(r){return r[0]!==n}))rows.splice(1,0,[n,"กำหนดเอง"]);
-  var spv=A?num("spA"):num("spB"),out=[];
+  var out=[];
   rows.forEach(function(r){
     var gross=r[0]*avg,p,t;
-    if(A){var vc=gross*(fee+pl+ad+rf)/100,net=gross-vc;p=num("fee0")+net*spv/100;t=net*(100-spv)/100-num("fee0")}
-    else{var m=gross-gross*(fee+pl+rf)/100,inv=num("invest"),rep=Math.min(Math.max(m,0),inv),prf=Math.max(m-rep,0);p=prf*spv/100;t=rep+prf*(100-spv)/100-inv}
+    if(O==="A"){var spv=num("spA"),net=gross*(1-(fee+pl+ad+rf)/100);p=num("fee0")+net*spv/100;t=net*(100-spv)/100-num("fee0")}
+    else if(O==="B"){var spb=num("spB"),m=gross-gross*(fee+pl+rf)/100,inv=num("invest"),rep=Math.min(Math.max(m,0),inv),prf=Math.max(m-rep,0);p=prf*spb/100;t=rep+prf*(100-spb)/100-inv}
+    else{
+      var netm=gross/12*(1-(fee+pl+ad+rf)/100),swN=Math.max(1,Math.round(num("csw"))),swMin=num("cswmin"),cliff=val("cmode")==="cliff";
+      var streak=0,partner=false,sum=0;
+      for(var mo=1;mo<=12;mo++){
+        sum+=partner?netm*num("cpr")/100:tierShare(netm,num("ct1"),num("ct2"),num("cr1"),num("cr2"),num("cr3"),cliff);
+        if(!partner){if(swMin>0&&netm>=swMin)streak++;else streak=0;if(streak>=swN)partner=true}
+      }
+      p=sum+num("cf1");t=netm*12-sum-num("cf1");
+    }
     out.push({n:r[0],label:r[1],gross:gross,p:p,t:t});
   });
   return out;
@@ -340,7 +373,7 @@ function chart(rows){
   return '<svg class="bchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="กราฟแท่งเปรียบเทียบรายได้ของผู้ผลิตและพาร์ตเนอร์ในแต่ละสถานการณ์">'+s+'</svg>';
 }
 function render(){
-  var A=opt()==="A",C=build(),h="",tx=[];
+  var O=opt(),LBL={A:"ก",B:"ข",C:"ค"},C=build(),h="",tx=[];
   var head=[
    "บันทึกข้อตกลงความร่วมมือ",
    "ในการผลิตและจำหน่ายคอร์สออนไลน์"];
@@ -364,18 +397,18 @@ function render(){
   h+='<div class="sigs">'+sig.map(function(s){return '<div><span>ลงชื่อ ………………………………</span><span>( '+esc(s[0])+' )</span><span>'+s[1]+'</span></div>'}).join("")+'</div>';
   sig.forEach(function(s){tx.push("ลงชื่อ ……………………………… ( "+s[0]+" ) "+s[1])});
   /* annex 2 */
-  var rows=annex(A),svg=chart(rows);
+  var rows=annex(O),svg=chart(rows);
   $("chartbox").innerHTML=svg;
-  h+='<h3 class="pb" id="annex">เอกสารแนบ 2  ตัวอย่างการคำนวณ (ตัวเลขสมมติ ทางเลือก '+(A?"ก":"ข")+')</h3><div class="chartwrap">'+svg+'</div><div class="scroll"><table><tr><th>สถานการณ์</th><th class="n">ผู้ซื้อ (คน)</th><th class="n">รายได้ขั้นต้น</th><th class="n">ผู้ผลิตได้</th><th class="n">พาร์ตเนอร์ได้สุทธิ</th></tr>'+
+  h+='<h3 class="pb" id="annex">เอกสารแนบ 2  ตัวอย่างการคำนวณ (ตัวเลขสมมติ ทางเลือก '+LBL[O]+')</h3><div class="chartwrap">'+svg+'</div><div class="scroll"><table><tr><th>สถานการณ์</th><th class="n">ผู้ซื้อ (คน)</th><th class="n">รายได้ขั้นต้น</th><th class="n">ผู้ผลิตได้</th><th class="n">พาร์ตเนอร์ได้สุทธิ</th></tr>'+
    rows.map(function(r){return '<tr><td>'+r.label+'</td><td class="n">'+th(r.n)+'</td><td class="n">'+th(r.gross)+'</td><td class="n">'+th(r.p)+'</td><td class="n'+(r.t<0?' neg':'')+'">'+th(r.t)+'</td></tr>'}).join("")+'</table></div>'+
-   '<p class="note">'+(A?"ผู้ผลิตได้ = ค่าผลิต + ส่วนแบ่งรายได้สุทธิ · พาร์ตเนอร์ได้สุทธิ = ส่วนแบ่งของพาร์ตเนอร์ หักค่าผลิตที่จ่าย":"ผู้ผลิตได้ = ส่วนแบ่งกำไรหลังคืนทุน · พาร์ตเนอร์ได้สุทธิ = เงินคืนทุน + ส่วนแบ่งกำไร หักเงินที่ลงจริง")+' ยังไม่หักภาษี</p>';
-  tx.push("","เอกสารแนบ 2 ตัวอย่างการคำนวณ (สมมติ) ทางเลือก "+(A?"ก":"ข"));
+   '<p class="note">'+({A:"ผู้ผลิตได้ = ค่าผลิต + ส่วนแบ่งรายได้สุทธิ · พาร์ตเนอร์ได้สุทธิ = ส่วนแบ่งของพาร์ตเนอร์ หักค่าผลิตที่จ่าย",B:"ผู้ผลิตได้ = ส่วนแบ่งกำไรหลังคืนทุน · พาร์ตเนอร์ได้สุทธิ = เงินคืนทุน + ส่วนแบ่งกำไร หักเงินที่ลงจริง",C:"สมมติยอดขายเท่ากันทุกเดือน คำนวณอัตราตามขั้นรายเดือนและเงื่อนไขหุ้นส่วนแล้วรวม ๑๒ เดือน · พาร์ตเนอร์ได้สุทธิ = รายได้สุทธิส่วนที่เหลือ หักค่าผลิตเริ่มต้น (ถ้ามี)"}[O])+' ยังไม่หักภาษี</p>';
+  tx.push("","เอกสารแนบ 2 ตัวอย่างการคำนวณ (สมมติ) ทางเลือก "+LBL[O]);
   rows.forEach(function(r){tx.push(r.label+" · ผู้ซื้อ "+th(r.n)+" · รายได้ขั้นต้น "+th(r.gross)+" · ผู้ผลิตได้ "+th(r.p)+" · พาร์ตเนอร์ได้สุทธิ "+th(r.t))});
   $("paper").innerHTML=h;lastText=tx.join("\n");
   /* summary tiles */
   var mid=rows.filter(function(r){return r.label!=="ต่ำ"&&r.label!=="สูง"})[0]||rows[1];
   $("s_p").textContent=th(mid.p)+" บาท";$("s_t").textContent=(mid.t<0?"ขาดทุน ":"")+th(Math.abs(mid.t))+" บาท";$("s_n").textContent=th(mid.n)+" คน";
-  var low=rows[0];$("s_low").textContent=(opt()==="A"?"ผู้ผลิตได้ค่าผลิตแน่นอนก่อน ":"ผู้ผลิตได้เมื่อรายได้เกินเงินลงทุนของติวเตอร์เท่านั้น ")+"· ถ้าขายได้ "+th(low.n)+" คน ผู้ผลิตได้ "+th(low.p)+" บาท พาร์ตเนอร์ได้สุทธิ "+th(low.t)+" บาท";
+  var low=rows[0];$("s_low").textContent=({A:"ผู้ผลิตได้ค่าผลิตแน่นอนก่อน ",B:"ผู้ผลิตได้เมื่อรายได้เกินเงินลงทุนของติวเตอร์เท่านั้น ",C:"ผู้ผลิตได้ตามขั้นยอดขายรายเดือน ยอดสูงขึ้นสัดส่วนเพิ่ม "}[O])+"· ถ้าขายได้ "+th(low.n)+" คน ผู้ผลิตได้ "+th(low.p)+" บาท พาร์ตเนอร์ได้สุทธิ "+th(low.t)+" บาท";
   /* show only the fields for the chosen option */
   document.querySelectorAll("[data-opt]").forEach(function(e){e.hidden=e.dataset.opt!==opt()});
   $("k_qthird_wrap").hidden=val("qowner")!=="third";
@@ -383,7 +416,7 @@ function render(){
 }
 var timer=null,pending=null;
 var MAP={place:"intro0",date:"intro0",pn:"intro2",pa:"intro2",tn:"intro3",ta:"intro3",cname:"c1_1",qowner:"c3_1",qthird:"c3_1",license:"c3_2",bmode:"c3_3",bname:"c3_3",
- opt:"c4_2",fee0:"c4_2",inst1:"c4_2",spA:"c4_2",spB:"c4_2",invest:"c4_2",adcap:"c4_4",acct:"c4_5",acctOwner:"c4_5",reportDay:"c4_5",payDays:"c4_5",auditDays:"c4_6",variance:"c4_6",discPct:"c4_7",
+ opt:"c4_2",fee0:"c4_2",inst1:"c4_2",spA:"c4_2",spB:"c4_2",invest:"c4_2",ct1:"c4_2",ct2:"c4_2",cr1:"c4_2",cr2:"c4_2",cr3:"c4_2",cmode:"c4_2",csw:"c4_2",cswmin:"c4_2",cpr:"c4_2",cf1:"c4_2",adcap:"c4_4",acct:"c4_5",acctOwner:"c4_5",reportDay:"c4_5",payDays:"c4_5",auditDays:"c4_6",variance:"c4_6",discPct:"c4_7",
  exist:"c5_3",exDisc:"c5_3",exCount:"c5_3",sched:"c5_4",adReview:"c5_2",trial:"c6_1",gate:"c6_2",gateMin:"c6_2",renew:"c6_4",conf:"c7_1",fixDays:"c9_2",reviewDays:"c2_3",cure:"c11_1",stop:"c11_2",
  pc:"c13_1",tc:"c13_1",court:"c14_1",c16:"c16_1",buyers:"annex",avg:"annex",cFee:"annex",cPlat:"annex",cAds:"annex",cRef:"annex"};
 function showEdit(){

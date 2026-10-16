@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>โมเดลข้อเสนอ ๒</title>
+<meta name="description" content="แดชบอร์ดโมเดลค่าผลิตก้อนเดียว บวกแบ่งยอดสุทธิคงที่">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css?v=mvb3773p">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>.split{display:flex;height:26px;border-radius:8px;overflow:hidden;background:var(--line);margin-top:10px}
+.split i{display:block;height:100%}
+table.heat td.h{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.heat td.cur{outline:2px solid var(--ink);outline-offset:-2px;font-weight:700}
+.pick{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.stat2{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.row2d{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}@media(max-width:560px){.row2d{grid-template-columns:minmax(0,1fr)}}</style></head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+<symbol id="sign" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 18c1.5-2 2.5-2 3 0s2 1.5 3-1"/></symbol>
+<symbol id="db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><a href="contract.html"><svg class="i"><use href="#sign"/></svg>ร่างสัญญากับติวเตอร์</a><h3>สินค้าและตัวเลข</h3><a href="exam-course.html"><svg class="i"><use href="#target"/></svg>คอร์สตะลุยข้อสอบ</a><a href="model-2.html" aria-current="page"><svg class="i"><use href="#calc"/></svg>โมเดลข้อเสนอ ๒</a><a href="catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><a class="tbtn dbbtn" id="dbbtn" href="database.html" data-s="nopin"><svg class="i"><use href="#db"/></svg><span>ฐานข้อมูล · ยังไม่เชื่อม</span><i class="dot"></i></a><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner">
+<nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> สินค้าและตัวเลข <span aria-hidden="true">›</span> โมเดลข้อเสนอ ๒</nav>
+<header class="page-head"><h1>โมเดลข้อเสนอ ๒</h1><p>ค่าผลิตก้อนเดียว + แบ่งยอดสุทธิคงที่ ดูว่าคุณและติวเตอร์ได้เท่าไร คุ้มกว่าข้อเสนออื่นแค่ไหน และควรต่อรองอะไร</p><div class="chips"><span class="chip ">ค่าผลิต ๒๐,๐๐๐–๓๐,๐๐๐ บาท</span><span class="chip warn">แบ่ง ๕๐:๕๐ ต่อรองถึง ๔๐:๖๐</span></div></header>
+<div class="callout"><svg class="i"><use href="#info"/></svg><div>
+  <b>ข้อเสนอ ๒ คืออะไร</b> ติวเตอร์จ่าย <b>ค่าผลิตก้อนเดียว</b> ให้คุณเป็นค่าวางแผน อัดวิดีโอ ตรวจเนื้อหา และส่งมอบไฟล์ แล้ว<b>แบ่งยอดขายสุทธิเป็นเปอร์เซ็นต์คงที่</b> ตลอดสัญญา ไม่มีขั้นยอดขาย ยอดสุทธิหักเฉพาะค่าใช้จ่ายโดยตรงที่มีหลักฐาน (แพลตฟอร์ม/ชำระเงิน เงินคืนลูกค้า ค่าพิมพ์ส่งเล่ม และค่าโฆษณาที่ตกลงกัน)
+</div></div>
+
+<div class="seg" role="group" aria-label="เลือกสถานการณ์ยอดขาย" id="sc" style="margin:14px 0">
+  <button type="button" data-b0="6" data-g="5" aria-pressed="false">ขายช้า · เดือนแรก ๖ คน</button>
+  <button type="button" data-b0="15" data-g="8" aria-pressed="true">ปานกลาง · เดือนแรก ๑๕ คน</button>
+  <button type="button" data-b0="35" data-g="10" aria-pressed="false">ขายดี · เดือนแรก ๓๕ คน</button>
+</div>
+
+<div class="tiles" aria-live="polite">
+  <div class="tile"><span><i class="sw t"></i>คุณได้รวม ๑๒ เดือน</span><b id="k_you">–</b></div>
+  <div class="tile"><span><i class="sw u"></i>ติวเตอร์ได้สุทธิรวม</span><b id="k_tut">–</b></div>
+  <div class="tile"><span>คุณได้ต่อชั่วโมงงาน</span><b id="k_hr">–</b></div>
+  <div class="tile"><span>ติวเตอร์คืนทุนเดือนที่</span><b id="k_be">–</b></div>
+</div>
+
+<div class="card" style="margin-top:14px" aria-live="polite"><b>ข้อสรุป</b><ul id="ins" style="margin:8px 0 0;padding-left:20px"></ul></div>
+
+<div class="grid g2" style="margin-top:14px">
+  <div class="card"><b>เงิน ๑๐๐ บาทที่ลูกค้าจ่าย ไปที่ไหน (รวม ๑๒ เดือน)</b>
+    <div class="split" id="stack" role="img" aria-label="สัดส่วนยอดขายแยกตามผู้รับ"></div>
+    <div class="legend" id="stackLeg" style="margin-top:8px"></div></div>
+  <div class="card"><b>รายได้สะสม ณ สิ้นเดือนที่ ๓ · ๖ · ๙ · ๑๒ (บาท)</b>
+    <div class="legend" style="margin:6px 0"><span><i class="sw" style="background:var(--s-teacher)"></i>คุณ</span><span><i class="sw" style="background:var(--s-tutor)"></i>ติวเตอร์ (สุทธิ)</span></div>
+    <div id="chA"></div></div>
+</div>
+<div class="card" style="margin-top:14px"><b>รายได้รายเดือน (บาท)</b>
+  <div class="legend" style="margin:6px 0"><span><i class="sw" style="background:var(--s-teacher)"></i>คุณ (เดือนแรกรวมค่าผลิต)</span><span><i class="sw" style="background:var(--s-tutor)"></i>ติวเตอร์ (สุทธิ)</span></div>
+  <div id="chB"></div></div>
+
+<section aria-labelledby="h-ads">
+  <h2 class="sec" id="h-ads" style="margin-top:22px"><svg class="i"><use href="#coin"/></svg>ค่าโฆษณา: หักก่อนแบ่ง หรือติวเตอร์ออกเอง</h2>
+  <p class="sec-note">ข้อเสนอบอกว่า ถ้าติวเตอร์ออกค่าโฆษณาเองจะยอมลดเหลือ ๔๐:๖๐ ได้ ตารางนี้บอกว่าแบบไหนคุ้มกว่าสำหรับคุณ</p>
+  <div class="grid g2">
+    <div class="card">
+      <div class="row2d">
+        <label class="f" for="shA">แบบ ก: หักค่าโฆษณาก่อนแบ่ง คุณได้ (%)<input id="shA" type="number" min="0" max="100" value="50"></label>
+        <label class="f" for="shB">แบบ ข: ติวเตอร์ออกโฆษณาเอง คุณได้ (%)<input id="shB" type="number" min="0" max="100" value="40"></label>
+      </div>
+      <div class="scroll"><table style="min-width:0"><tr><th></th><th class="n">แบบ ก</th><th class="n">แบบ ข</th></tr>
+        <tr><td>คุณได้ (๑๒ เดือน ไม่รวมค่าผลิต)</td><td class="n" id="ads_a">–</td><td class="n" id="ads_b">–</td></tr>
+        <tr><td>ติวเตอร์ได้สุทธิ (หลังโฆษณาที่เขาออก)</td><td class="n" id="ads_ta">–</td><td class="n" id="ads_tb">–</td></tr>
+        <tr><td>ใครรับความเสี่ยงโฆษณา</td><td class="n">ร่วมกัน</td><td class="n">ติวเตอร์</td></tr>
+      </table></div>
+    </div>
+    <div class="card"><b>จุดที่แบบ ข คุ้มเท่าแบบ ก</b>
+      <p style="margin:6px 0 0" id="ads_be">–</p>
+      <p class="note" style="margin:8px 0 0">ถ้าค่าโฆษณาจริงสูงกว่าจุดนี้ แบบ ข (ติวเตอร์ออกเอง) ให้คุณมากกว่า ถ้าต่ำกว่า ให้ใช้แบบ ก</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="h-sens">
+  <h2 class="sec" id="h-sens" style="margin-top:22px"><svg class="i"><use href="#bars"/></svg>ตารางความไว: ผู้ซื้อต่อเดือน × ส่วนแบ่งของคุณ</h2>
+  <p class="sec-note">รายได้ ๑๒ เดือนของคุณ (รวมค่าผลิต) เมื่อผู้ซื้อต่อเดือนคงที่ ใช้ราคาเฉลี่ยและค่าใช้จ่ายตามที่ตั้งด้านล่าง กรอบหนาคือค่าที่เลือกอยู่</p>
+  <div class="scroll"><table class="heat" id="heat"></table></div>
+</section>
+
+<section aria-labelledby="h-in">
+  <h2 class="sec" id="h-in" style="margin-top:22px"><svg class="i"><use href="#calc"/></svg>ตัวเลขที่ปรับได้</h2>
+  <div class="grid g3">
+    <fieldset><legend>ข้อเสนอ ๒</legend>
+      <label class="f" for="fee">ค่าผลิตก้อนเดียว (บาท)<input id="fee" type="number" min="0" value="25000"></label>
+      <label class="f" for="share">ส่วนแบ่งของคุณจากยอดสุทธิ (%)<input id="share" type="number" min="0" max="100" value="50"></label>
+      <div class="pick" id="pick" role="group" aria-label="เลือกสัดส่วนที่ใช้บ่อย"><button type="button" class="btn alt" data-v="50" style="padding:4px 12px">๕๐:๕๐</button><button type="button" class="btn alt" data-v="45" style="padding:4px 12px">๔๕:๕๕</button><button type="button" class="btn alt" data-v="40" style="padding:4px 12px">๔๐:๖๐</button></div>
+      <label class="f" for="mode" style="margin-top:10px">ค่าโฆษณา<select id="mode"><option value="shared">หักก่อนแบ่ง (ร่วมกัน)</option><option value="tutor">ติวเตอร์ออกเอง ไม่หักก่อนแบ่ง</option></select></label>
+    </fieldset>
+    <fieldset><legend>ยอดขายคอร์ส</legend>
+      <label class="f" for="b0">ผู้ซื้อใหม่เดือนแรก (คน)<input id="b0" type="number" min="0" value="15"></label>
+      <label class="f" for="g">ผู้ซื้อโตต่อเดือน (%)<input id="g" type="number" step="0.5" value="8"></label>
+      <label class="f" for="avg">ราคาเฉลี่ยต่อคน (บาท)<input id="avg" type="number" min="0" value="3731"></label>
+    </fieldset>
+    <fieldset><legend>ค่าใช้จ่ายโดยตรง</legend>
+      <label class="f" for="pf">แพลตฟอร์ม + ชำระเงิน (% ของยอดขาย)<input id="pf" type="number" min="0" step="0.5" value="5"></label>
+      <label class="f" for="rf">คืนเงิน/ส่วนลด (%)<input id="rf" type="number" min="0" step="0.5" value="0"></label>
+      <label class="f" for="ad">ค่าโฆษณา (%)<input id="ad" type="number" min="0" step="0.5" value="15"></label>
+      <label class="f" for="bk">ค่าพิมพ์และส่งเล่ม (บาท/คน)<input id="bk" type="number" min="0" value="150"></label>
+    </fieldset>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <label class="f card" for="hours" style="margin:0">ชั่วโมงงานทั้งหมดของคุณ (ผลิต + ดูแลผู้เรียน)<input id="hours" type="number" min="1" value="250"></label>
+    <label class="f card" for="eq" style="margin:0">ต้นทุนที่คุณออกเอง เช่น อุปกรณ์ (บาท)<input id="eq" type="number" min="0" value="30000"></label>
+  </div>
+</section>
+
+<section aria-labelledby="h-tbl">
+  <h2 class="sec" id="h-tbl" style="margin-top:22px">ตารางรายเดือน</h2>
+  <div class="scroll"><table id="tbl" class="wide"></table></div>
+  <p class="note">ยอดสุทธิ = ยอดขาย หักแพลตฟอร์ม/ชำระเงิน เงินคืน ค่าพิมพ์เล่ม และค่าโฆษณา (ถ้าเลือกหักก่อนแบ่ง) ยังไม่หักภาษี ไม่รวมการขายซ้ำหรือคอร์สอื่น</p>
+</section>
+
+<section class="card" aria-labelledby="h-ck">
+  <h2 class="sec" id="h-ck"><svg class="i"><use href="#sign"/></svg>สิ่งที่ต้องเขียนในสัญญาสำหรับโมเดลนี้</h2>
+  <ul style="margin:0;padding-left:20px">
+    <li>นิยาม "ยอดขายสุทธิ" และรายการที่หักได้ ทุกรายการต้องมีหลักฐาน ไม่หักเงินเดือนพนักงานหรือค่าใช้จ่ายทั่วไปของติวเตอร์</li>
+    <li>ค่าผลิตก้อนเดียว จ่ายเป็นกี่งวด (แนะนำ ๒ งวด: ส่งโครงและบทต้นแบบ / ส่งมอบครบ) และจ่ายแม้ขายไม่ได้</li>
+    <li>เพดานค่าโฆษณาต่อเดือน และใครเป็นผู้ออกค่าโฆษณา (กำหนดแบบ ก หรือแบบ ข)</li>
+    <li>รายงานยอดขายรายเดือน สิทธิตรวจสอบข้อมูลจากระบบชำระเงินจริง และกำหนดโอนส่วนแบ่ง</li>
+    <li>ผู้ซื้อเดิมหลังเลิกสัญญายังเรียนต่อได้ และคุณยังได้ส่วนแบ่งจากรายได้นั้น</li>
+    <li>กรรมสิทธิ์เฉลยและวิดีโอที่คุณสร้าง กับสิทธิ์ใช้โจทย์ของติวเตอร์</li>
+  </ul>
+  <p style="margin:12px 0 0"><a class="btn" href="contract.html"><svg class="i"><use href="#sign"/></svg>ไปที่ร่างสัญญา เลือกทางเลือก ก</a></p>
+</section>
+</div></main>
+</div>
+<script src="assets/db.js?v=mvb3773p"></script>
+<script src="assets/site.js?v=mvb3773p"></script>
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+function n(id){var x=parseFloat($(id).value);return isFinite(x)?Math.max(0,x):0}
+function fmt(x){return Math.round(x).toLocaleString("th-TH")}
+function pct(x){return (Math.round(x*10)/10).toLocaleString("th-TH")+"%"}
+function baht(x){return (x<0?"−":"")+fmt(Math.abs(x))}
+
+/* core: one run of the model for given inputs */
+function run(o){
+  var rows=[],cy=0,ct=0,cg=0,tutorBE=null,totals={gross:0,fees:0,ref:0,books:0,ads:0,net:0,you:0,tut:0};
+  for(var m=1;m<=12;m++){
+    var buyers=o.flat?o.b0:Math.round(o.b0*Math.pow(1+o.g,m-1));
+    var gross=buyers*o.avg,fees=gross*o.pf,ref=gross*o.rf,books=buyers*o.bk,ads=gross*o.ad;
+    var netPre=gross-fees-ref-books;
+    var shared=o.mode==="shared";
+    var base=shared?netPre-ads:netPre;               /* amount that is split */
+    var split=Math.max(base,0);
+    var you=split*o.share/100+(m===1?o.fee:0);
+    var tutShare=split*(100-o.share)/100;
+    var tut=tutShare-(shared?0:ads)-(m===1?o.fee:0);   /* tutor pays fee, and ads himself in "tutor" mode */
+    cy+=you;ct+=tut;cg+=gross;
+    if(tutorBE===null&&ct>=0)tutorBE=m;
+    totals.gross+=gross;totals.fees+=fees;totals.ref+=ref;totals.books+=books;totals.ads+=ads;totals.net+=base;totals.you+=you;totals.tut+=tut;
+    rows.push({m:m,buyers:buyers,gross:gross,net:base,you:you,tut:tut,cy:cy,ct:ct});
+  }
+  return {rows:rows,t:totals,tutorBE:tutorBE};
+}
+function opts(over){
+  var o={b0:n("b0"),g:n("g")/100,avg:n("avg"),pf:n("pf")/100,rf:n("rf")/100,ad:n("ad")/100,bk:n("bk"),
+    fee:n("fee"),share:n("share"),mode:$("mode").value,flat:false};
+  for(var k in over)o[k]=over[k];
+  return o;
+}
+
+/* charts */
+function niceStep(span){var raw=span/4,p=Math.pow(10,Math.floor(Math.log10(raw||1))),q=raw/p;return (q<=1?1:q<=2?2:q<=5?5:10)*p}
+function gchart(cats,series,labels){
+  var W=640,H=300,L=62,R=12,T=14,B=44,vals=[];
+  series.forEach(function(s){s.v.forEach(function(x){vals.push(x)})});
+  var lo=Math.min(0,Math.min.apply(null,vals)),hi=Math.max(1,Math.max.apply(null,vals));
+  var st=niceStep(hi-lo);lo=Math.floor(lo/st)*st;hi=Math.ceil(hi/st)*st;
+  var y=function(v){return T+(hi-v)/(hi-lo)*(H-T-B)};
+  var gw=(W-L-R)/cats.length,k=series.length,bw=Math.min(labels?46:18,(gw-12)/k),s="";
+  for(var t=lo;t<=hi+1e-9;t+=st){var yy=y(t);
+    s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--grid)"/>';
+    s+='<text x="'+(L-8)+'" y="'+(yy+4)+'" text-anchor="end" class="ax">'+(Math.abs(t)>=1000?(t/1000).toLocaleString("th-TH")+"k":t)+'</text>'}
+  s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="var(--mut)" stroke-width="1.3"/>';
+  cats.forEach(function(c,i){
+    var cx=L+i*gw+gw/2,x0=cx-(k*bw+(k-1)*3)/2;
+    series.forEach(function(se,j){
+      var v=se.v[i],y0=y(0),y1=y(v),h=Math.max(Math.abs(y1-y0),1.5),top=v>=0?y0-h:y0,x=x0+j*(bw+3);
+      s+='<rect x="'+x+'" y="'+top+'" width="'+bw+'" height="'+h+'" rx="4" fill="'+se.c+'"/>';
+      if(labels)s+='<text x="'+(x+bw/2)+'" y="'+(v>=0?top-5:top+h+14)+'" text-anchor="middle" class="vl'+(v<0?' ng':'')+'">'+(Math.abs(v)>=1000?(v<0?"−":"")+(Math.round(Math.abs(v)/100)/10).toLocaleString("th-TH")+"k":Math.round(v))+'</text>';
+    });
+    s+='<text x="'+cx+'" y="'+(H-14)+'" text-anchor="middle" class="cat">'+c+'</text>';
+  });
+  return '<svg class="bchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="กราฟแท่งรายได้ของคุณและติวเตอร์">'+s+'</svg>';
+}
+
+function render(){
+  var o=opts(),r=run(o),R=r.rows,T=r.t,hours=Math.max(1,n("hours")),eq=n("eq");
+  $("k_you").textContent=fmt(T.you)+" บาท";
+  $("k_tut").textContent=baht(T.tut)+" บาท";
+  $("k_hr").textContent=fmt(T.you/hours)+" บาท/ชม.";
+  $("k_be").textContent=r.tutorBE?(r.tutorBE===1?"เดือนแรก":"เดือนที่ "+r.tutorBE):"ยังไม่คืนใน ๑๒ เดือน";
+  /* where the money goes */
+  var parts=[["แพลตฟอร์ม+ชำระเงิน+คืนเงิน",T.fees+T.ref,"var(--mut)"],["ค่าพิมพ์ส่งเล่ม",T.books,"var(--mark)"],["ค่าโฆษณา",T.ads,"var(--s-tutor)"],
+    ["ส่วนของคุณ (ไม่รวมค่าผลิต)",T.you-o.fee,"var(--s-teacher)"],["ส่วนของติวเตอร์ (ก่อนหักค่าผลิต/โฆษณา)",T.tut+o.fee+(o.mode==="shared"?0:T.ads),"var(--ok)"]];
+  var sum=parts.reduce(function(a,p){return a+Math.max(p[1],0)},0)||1,h="",lg="";
+  parts.forEach(function(p){var pc=100*Math.max(p[1],0)/sum;if(pc>0.2)h+='<i style="width:'+pc+'%;background:'+p[2]+'"></i>';
+    lg+='<span><i class="sw" style="background:'+p[2]+'"></i>'+p[0]+' '+pc.toFixed(0)+'%</span>'});
+  $("stack").innerHTML=h;$("stackLeg").innerHTML=lg;
+  /* charts */
+  var ix=[2,5,8,11];
+  $("chA").innerHTML=gchart(["เดือน ๓","เดือน ๖","เดือน ๙","เดือน ๑๒"],[{c:"var(--s-teacher)",v:ix.map(function(i){return R[i].cy})},{c:"var(--s-tutor)",v:ix.map(function(i){return R[i].ct})}],true);
+  $("chB").innerHTML=gchart(R.map(function(x){return String(x.m)}),[{c:"var(--s-teacher)",v:R.map(function(x){return x.you})},{c:"var(--s-tutor)",v:R.map(function(x){return x.tut})}],false);
+  /* ads comparison (always uses the same sales, two share/ad treatments) */
+  var A=run(opts({mode:"shared",share:n("shA")})),B=run(opts({mode:"tutor",share:n("shB")}));
+  var yA=A.t.you-o.fee,yB=B.t.you-o.fee;
+  $("ads_a").textContent=fmt(yA);$("ads_b").textContent=fmt(yB);
+  $("ads_ta").textContent=baht(A.t.tut+o.fee);$("ads_tb").textContent=baht(B.t.tut+o.fee);
+  var ratio=T.gross>0?(T.gross-T.fees-T.ref-T.books)/T.gross:0;               /* net before ads as share of sales */
+  var shA=n("shA"),shB=n("shB"),be=shA>0?ratio*(1-shB/shA)*100:null;
+  $("ads_be").innerHTML=be===null?"–":"ค่าโฆษณาประมาณ <b>"+pct(be)+"</b> ของยอดขาย ค่าโฆษณาที่ตั้งไว้ตอนนี้คือ <b>"+pct(n("ad"))+"</b> → "+(n("ad")>be?"แบบ ข (ติวเตอร์ออกเอง "+pct(shB)+") ให้คุณมากกว่า":"แบบ ก (หักก่อนแบ่ง "+pct(shA)+") ให้คุณมากกว่า")+" ต่างกันราว "+fmt(Math.abs(yA-yB))+" บาทใน ๑๒ เดือน";
+  /* insights */
+  var ins=[];
+  ins.push("คุณได้รวม "+fmt(T.you)+" บาท ซึ่งเท่ากับ "+pct(T.gross>0?T.you/T.gross*100:0)+" ของยอดขายทั้งหมด ("+fmt(T.gross)+" บาท) และ "+pct(T.net>0?T.you/T.net*100:0)+" ของยอดที่นำมาแบ่ง");
+  ins.push("ค่าผลิตก้อนเดียว "+fmt(o.fee)+" บาท เป็นเงินที่ได้แน่นอนแม้ขายไม่ดี คิดเป็น "+pct(T.you>0?o.fee/T.you*100:0)+" ของรายได้รวมของคุณ");
+  var lowRun=run(opts({b0:6,g:0.05})),hiShare=run(opts({share:Math.min(100,n("share")+10)}));
+  ins.push("ถ้าขายช้า (เดือนแรก ๖ คน โต ๕%) คุณยังได้ "+fmt(lowRun.t.you)+" บาท ใน ๑๒ เดือน ส่วนใหญ่มาจากค่าผลิตและส่วนแบ่งช่วงแรก");
+  ins.push("ทุก ๑๐ จุดของส่วนแบ่งที่เพิ่ม ("+pct(n("share"))+" → "+pct(Math.min(100,n("share")+10))+") เพิ่มรายได้คุณประมาณ "+fmt(hiShare.t.you-T.you)+" บาทใน ๑๒ เดือน");
+  var after=T.you-eq;
+  ins.push("หลังหักต้นทุนที่คุณออกเอง "+fmt(eq)+" บาท เหลือ "+baht(after)+" บาท หรือ "+fmt(after/hours)+" บาทต่อชั่วโมงงาน");
+  $("ins").innerHTML=ins.map(function(t){return "<li>"+t+"</li>"}).join("");
+  /* sensitivity */
+  var sh=[40,45,50,55,60],bs=[5,10,15,20,30,40],mx=0,cells=[];
+  bs.forEach(function(b){var row=[];sh.forEach(function(s){var v=run(opts({b0:b,flat:true,share:s})).t.you;row.push(v);if(v>mx)mx=v});cells.push(row)});
+  var ht='<tr><th>ผู้ซื้อต่อเดือน (คน)</th>'+sh.map(function(s){return '<th class="n">คุณได้ '+s+'%</th>'}).join("")+'</tr>';
+  bs.forEach(function(b,i){ht+='<tr><td>'+b+'</td>';sh.forEach(function(s,j){
+    var a=mx>0?cells[i][j]/mx:0,cur=(s===n("share"))?" cur":"";
+    ht+='<td class="h'+cur+'" style="background:rgba(42,120,214,'+(0.08+0.4*a).toFixed(2)+')">'+fmt(cells[i][j])+'</td>'});ht+='</tr>'});
+  $("heat").innerHTML=ht;
+  /* monthly table */
+  var tb='<tr><th>เดือน</th><th>ผู้ซื้อ</th><th>ยอดขาย</th><th>ยอดที่นำมาแบ่ง</th><th>คุณได้</th><th>ติวเตอร์ได้สุทธิ</th><th>คุณสะสม</th><th>ติวเตอร์สะสม</th></tr>',S={gross:0,net:0,you:0,tut:0};
+  R.forEach(function(x){S.gross+=x.gross;S.net+=x.net;S.you+=x.you;S.tut+=x.tut;
+    tb+='<tr><td>'+x.m+'</td><td>'+fmt(x.buyers)+'</td><td>'+fmt(x.gross)+'</td><td>'+fmt(x.net)+'</td><td>'+fmt(x.you)+'</td><td class="'+(x.tut<0?"neg":"")+'">'+baht(x.tut)+'</td><td>'+fmt(x.cy)+'</td><td class="'+(x.ct<0?"neg":"")+'">'+baht(x.ct)+'</td></tr>'});
+  tb+='<tr class="sum"><td>รวม</td><td></td><td>'+fmt(S.gross)+'</td><td>'+fmt(S.net)+'</td><td>'+fmt(S.you)+'</td><td>'+baht(S.tut)+'</td><td></td><td></td></tr>';
+  $("tbl").innerHTML=tb;
+}
+["fee","share","mode","b0","g","avg","pf","rf","ad","bk","hours","eq","shA","shB"].forEach(function(id){$(id).addEventListener("input",render);$(id).addEventListener("change",render)});
+document.querySelectorAll("#sc button").forEach(function(b){b.addEventListener("click",function(){
+  $("b0").value=b.dataset.b0;$("g").value=b.dataset.g;
+  document.querySelectorAll("#sc button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});render()})});
+document.querySelectorAll("#pick button").forEach(function(b){b.addEventListener("click",function(){$("share").value=b.dataset.v;render()})});
+render();
+})();
+
+</script>
+</body></html>

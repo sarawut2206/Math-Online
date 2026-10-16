@@ -4,7 +4,7 @@
 <meta name="description" content="เครื่องมือกรอกเงื่อนไขและดูตัวอย่างสัญญาความร่วมมือกับติวเตอร์">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=mvb9g114">
+<link rel="stylesheet" href="assets/site.css?v=mvba9fy9">
 <script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <style>/* contract model page. Layout: form column + sticky live preview on wide screens; one view at a time on phones. */
 .inner.wide{max-width:1320px}
@@ -162,7 +162,7 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
     <div class="row2"><label class="f" for="k_trial">ช่วงทดลอง (เดือน)<input id="k_trial" type="number" min="0" value="6" inputmode="numeric" ></label><label class="f" for="k_renew">ต่ออายุครั้งละ (เดือน)<input id="k_renew" type="number" min="0" value="12" inputmode="numeric" ></label></div>
     <div class="row2"><label class="f" for="k_gate">จุดตัดสินใจที่ (เดือน)<input id="k_gate" type="number" min="0" value="3" inputmode="numeric" ></label><label class="f" for="k_gateMin">ผู้จองขั้นต่ำ (คน)<input id="k_gateMin" type="number" min="0" value="20" inputmode="numeric" ></label></div>
     <div class="row2"><label class="f" for="k_cure">เวลาแก้ไขเมื่อผิดสัญญา (วัน)<input id="k_cure" type="number" min="0" value="30" inputmode="numeric" ></label><label class="f" for="k_stop">หยุดขายหลังเลิก (วัน)<input id="k_stop" type="number" min="0" value="30" inputmode="numeric" ></label></div>
-    <div class="row2"><label class="f" for="k_conf">รักษาความลับหลังสิ้นสุด (ปี)<input id="k_conf" type="number" min="0" value="2" inputmode="numeric" ></label><label class="f" for="k_reviewDays">ตรวจรับงานภายใน (วัน)<input id="k_reviewDays" type="number" min="0" value="7" inputmode="numeric" ></label></div>
+    <div class="row2"><label class="f" for="k_conf">รักษาความลับหลังสิ้นสุด (ปี)<input id="k_conf" type="number" min="0" value="2" inputmode="numeric" ></label><label class="f" for="k_reviewDays">ตรวจรับงานภายใน (วัน)<input id="k_reviewDays" type="number" min="0" value="7" inputmode="numeric" ></label><label class="f" for="k_editDays">ทีมตัดต่อส่งงานภายใน (วัน)<input id="k_editDays" type="number" min="0" value="5" inputmode="numeric" ></label></div>
     <label class="f" for="k_qdays">ผู้ผลิตตอบคำถามเนื้อหาภายใน (วันทำการ)<input id="k_qdays" type="number" min="0" value="2" inputmode="numeric" ></label>
     <label class="f" for="k_cohort">กำหนดเปิดรับสมัคร/เริ่มเรียนรุ่นที่ 1<input id="k_cohort" type="text" value="" placeholder="เช่น เปิดรับ ... เริ่มเรียน ..." ></label>
     <div class="row2"><label class="f" for="k_fixDays">แก้ข้อผิดพลาดภายใน (วัน)<input id="k_fixDays" type="number" min="0" value="7" inputmode="numeric" ></label><label class="f" for="k_adReview">ตรวจข้อความโฆษณา (วันทำการ)<input id="k_adReview" type="number" min="0" value="3" inputmode="numeric" ></label></div>
@@ -208,8 +208,8 @@ input[type=text]:focus,select:focus{border-color:var(--ink)}
 <div class="toast" id="toast" role="status" hidden></div>
 </div></main>
 </div>
-<script src="assets/db.js?v=mvb9g114"></script>
-<script src="assets/site.js?v=mvb9g114"></script>
+<script src="assets/db.js?v=mvba9fy9"></script>
+<script src="assets/site.js?v=mvba9fy9"></script>
 <script>
 /* Contract text engine shared by the web page (browser) and the Word generator (node).
    buildContract(g) -> {intro, clauses, annexes}. g = {val(k), num(k), opt(), c16()}.
@@ -218,7 +218,7 @@ var CONTRACT_DEFAULTS={pn:"",tn:"",pa:"",ta:"",pc:"",tc:"",place:"",date:"",cnam
  qowner:"partner",qthird:"",license:"sole",bmode:"tutor",bname:"",exist:"disc",exDisc:20,exCount:"count",sched:"",cohort:"",
  fee0:25000,inst1:50,spA:50,spB:50,invest:40000,adcap:10000,adpre:5000,acct:"",acctOwner:"partner",reportDay:10,payDays:7,auditDays:15,variance:5,
  bookcost:150,bookdays:5,qdays:2,discPct:20,price1:2490,price2:4490,price3:6900,
- trial:6,renew:12,gate:3,gateMin:20,cure:30,stop:30,conf:2,reviewDays:7,fixDays:7,adReview:3,court:"",c16:true,
+ trial:6,renew:12,gate:3,gateMin:20,cure:30,stop:30,conf:2,reviewDays:7,editDays:5,fixDays:7,adReview:3,court:"",c16:true,
  ct1:50000,ct2:150000,cr1:40,cr2:45,cr3:50,cmode:"marginal",csw:6,cswmin:50000,cpr:50,cf1:0,
  buyers:120,avg:3731,cFee:3.5,cPlat:8,cAds:20,cRef:4,opt:"A"};
 
@@ -283,15 +283,16 @@ function buildContract(g){
    ["2.1","ผู้ผลิตมีหน้าที่",[
      ["(ก)","คิดโครงการ ออกแบบหลักสูตร และตารางเรียน"],
      ["(ข)","เขียนเฉลยละเอียดและอธิบายวิธีคิดทุกข้อ"],
-     ["(ค)","ถ่ายทำและตัดต่อวิดีโอด้วยตนเอง โดยพาร์ตเนอร์ไม่ต้องจ้างตัดต่อเพิ่ม"],
+     ["(ค)","สอนและอัดวิดีโอบทเรียนด้วยตนเอง (ส่วนที่ผู้ผลิตปรากฏตัวหรือบรรยาย) ตามตารางอัดที่ตกลงกัน โดยไม่ต้องถ่ายทำหรือตัดต่อเอง"],
      ["(ง)","จัดทำใบงานและระบบข้อสอบจับเวลา"],
      ["(จ)","สอนและไลฟ์ถามตอบตามกำหนดการ และส่งมอบงานตามกำหนดในเอกสารแนบ 1"]]],
    ["2.2","พาร์ตเนอร์มีหน้าที่",[
      ["(ก)","จัดหาโจทย์ และรับรองสิทธิ์ในโจทย์ตามข้อ 3.1"],
      ["(ข)","ออกแบบเอกสาร จัดพิมพ์ และจัดส่งเล่มถึงผู้ซื้อ ตามข้อ 5.5"],
-     ["(ค)","ทำการตลาดและโฆษณา ติดต่อและดูแลผู้ปกครอง ตอบแชต ปิดการขาย และรับชำระเงิน"],
-     ["(ง)","ออกเงินทุนค่าใช้จ่ายของส่วนที่เป็นหน้าที่ของตนตามข้อ 4"],
-     ["(จ)","จัดทำรายงานและหลักฐานตามข้อ 4.5"]]],
+     ["(ค)","จัดหาทีมงานและอุปกรณ์ถ่ายทำและตัดต่อวิดีโอ ทั้งวิดีโอบทเรียนความยาวเต็มและคลิปสั้นสำหรับโปรโมต ตัดต่อให้เสร็จและส่งให้ผู้ผลิตตรวจภายใน "+N("editDays")+" วันนับแต่ได้รับไฟล์ต้นฉบับ แก้ไขตามที่ผู้ผลิตแจ้งได้ไม่เกิน 2 รอบต่อหนึ่งชุด ค่าจ้างทีมงานและอุปกรณ์เป็นค่าใช้จ่ายของพาร์ตเนอร์ ไม่นำมาหักตามข้อ 4"],
+     ["(ง)","ทำการตลาดและโฆษณา ติดต่อและดูแลผู้ปกครอง ตอบแชต ปิดการขาย และรับชำระเงิน"],
+     ["(จ)","ออกเงินทุนค่าใช้จ่ายของส่วนที่เป็นหน้าที่ของตนตามข้อ 4"],
+     ["(ฉ)","จัดทำรายงานและหลักฐานตามข้อ 4.5"]]],
    ["2.3","พาร์ตเนอร์ตรวจรับงานแต่ละส่วนภายใน "+N("reviewDays")+" วันนับแต่ได้รับ หากไม่แจ้งเป็นลายลักษณ์อักษรภายในกำหนดให้ถือว่ารับงานแล้ว ขอแก้ไขได้ไม่เกิน 2 รอบต่อหนึ่งชุด"],
    ["2.4","คู่สัญญาประชุมสรุปผลการดำเนินงานอย่างน้อยเดือนละ 1 ครั้ง"]]);
 
@@ -299,7 +300,7 @@ function buildContract(g){
    ["3.1","โจทย์ที่ใช้ในคอร์ส เป็นของ "+qtxt+(qown==="self"?"":" พาร์ตเนอร์รับรองว่ามีสิทธิ์ใช้โจทย์ดังกล่าวและอนุญาตให้ผู้ผลิตใช้ในการเขียนเฉลย ผลิตวิดีโอ และเผยแพร่ในคอร์สตลอดอายุสัญญา หากมีผู้อ้างว่าละเมิดสิทธิ์ในโจทย์ พาร์ตเนอร์เป็นผู้รับผิดชอบ")],
    ["3.2","งานที่ผู้ผลิตสร้างขึ้น ได้แก่ เฉลย วิดีโอ ใบงาน สไลด์ และโปรแกรมข้อสอบ ลิขสิทธิ์เป็นของผู้ผลิต ผู้ผลิตให้สิทธิ์พาร์ตเนอร์นำไปเผยแพร่และจำหน่ายในช่องทางตามบันทึกข้อตกลงนี้ตลอดอายุสัญญา โดยเป็นสิทธิ์"+(val("license")==="sole"?"แต่เพียงผู้เดียว":"ไม่เป็นการเฉพาะ")+" และไม่สามารถโอนหรือให้ช่วงสิทธิ์ต่อได้เว้นแต่ผู้ผลิตยินยอม"],
    ["3.3","เล่มเอกสารที่พาร์ตเนอร์จัดพิมพ์ ส่วนที่เป็นโจทย์เป็นของพาร์ตเนอร์ การนำเฉลย ภาพ หรือเนื้อหาอื่นที่ผู้ผลิตสร้างขึ้นไปพิมพ์ในเล่ม ต้องได้รับความยินยอมจากผู้ผลิตเป็นลายลักษณ์อักษร"],
-   ["3.4","ผู้ผลิตมีสิทธิ์ตรวจและอนุมัติวิดีโอก่อนเผยแพร่ และการนำวิดีโอหรือส่วนของวิดีโอไปใช้ทำโฆษณาหรือคอร์สอื่น ต้องได้รับอนุญาตจากผู้ผลิตเป็นลายลักษณ์อักษรก่อน"],
+   ["3.4","ผู้ผลิตมีสิทธิ์ตรวจและอนุมัติวิดีโอและคลิปสั้นทุกชิ้นที่ทีมงานของพาร์ตเนอร์ตัดต่อก่อนเผยแพร่ พาร์ตเนอร์รับรองว่าทีมงานไม่มีสิทธิ์เรียกร้องในงานดังกล่าว และไม่ตัดต่อจนเปลี่ยนความหมายทางวิชาการ และการนำวิดีโอหรือส่วนของวิดีโอไปใช้ทำโฆษณาหรือคอร์สอื่น ต้องได้รับอนุญาตจากผู้ผลิตเป็นลายลักษณ์อักษรก่อน"],
    ["3.5","ชื่อและแบรนด์ของคอร์สใช้"+brand+(val("bname")?" คือ "+F(val("bname")):" "+F("","ระบุชื่อ"))+" และต้องระบุเครดิตผู้ผลิตว่า \"ออกแบบและสอนโดย "+F(val("pn"),"ชื่อผู้ผลิต")+"\" ในหน้าขายและในวิดีโอ"],
    ["3.6","คู่สัญญาแต่ละฝ่ายต้องไม่คัดลอก ดัดแปลง หรือนำงานของอีกฝ่ายไปใช้นอกขอบเขตที่ตกลง"],
    ["3.7","ข้อมูลผู้ซื้อที่ได้จากช่องทางของพาร์ตเนอร์เป็นของพาร์ตเนอร์ ผู้ผลิตเข้าถึงได้เท่าที่จำเป็นเพื่อดูแลผู้เรียนและวิเคราะห์ผลการเรียน และต้องไม่นำไปใช้เพื่อประโยชน์อื่น"]]);
@@ -518,7 +519,7 @@ function render(){
 var timer=null,pending=null;
 var MAP={place:"intro0",date:"intro0",pn:"intro2",pa:"intro2",tn:"intro3",ta:"intro3",cname:"c1_1",qowner:"c3_1",qthird:"c3_1",license:"c3_2",bmode:"c3_5",bname:"c3_5",adpre:"c4_4",bookdays:"c5_5",qdays:"c5_6",cohort:"c6_5",price1:"annex3",price2:"annex3",price3:"annex3",
  opt:"c4_2",bookcost:"c5_5",fee0:"c4_2",inst1:"c4_2",spA:"c4_2",spB:"c4_2",invest:"c4_2",ct1:"c4_2",ct2:"c4_2",cr1:"c4_2",cr2:"c4_2",cr3:"c4_2",cmode:"c4_2",csw:"c4_2",cswmin:"c4_2",cpr:"c4_2",cf1:"c4_2",adcap:"c4_4",acct:"c4_5",acctOwner:"c4_5",reportDay:"c4_5",payDays:"c4_5",auditDays:"c4_6",variance:"c4_6",discPct:"c4_7",
- exist:"c5_3",exDisc:"c5_3",exCount:"c5_3",sched:"c5_4",adReview:"c5_2",trial:"c6_1",gate:"c6_2",gateMin:"c6_2",renew:"c6_4",conf:"c7_1",fixDays:"c9_2",reviewDays:"c2_3",cure:"c11_1",stop:"c11_2",
+ exist:"c5_3",exDisc:"c5_3",exCount:"c5_3",sched:"c5_4",adReview:"c5_2",trial:"c6_1",gate:"c6_2",gateMin:"c6_2",renew:"c6_4",conf:"c7_1",fixDays:"c9_2",reviewDays:"c2_3",editDays:"c2_2",cure:"c11_1",stop:"c11_2",
  pc:"c13_1",tc:"c13_1",court:"c14_1",c16:"c16_1",buyers:"annex",avg:"annex",cFee:"annex",cPlat:"annex",cAds:"annex",cRef:"annex"};
 function showEdit(){
   var k=pending;pending=null;if(!k||!MAP[k])return;

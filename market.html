@@ -4,9 +4,53 @@
 <meta name="description" content="ข้อมูลตลาด คู่แข่ง ราคา และลำดับที่ควรอัดก่อน สำหรับคอร์สคณิตศาสตร์ออนไลน์แบบเรียนเอง ป.1–ม.3">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=mvdqn1z7">
+<link rel="stylesheet" href="assets/site.css?v=mvdsh7qt">
 <script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<style>ol.flowlist{margin:0;padding-left:22px}ol.flowlist li{margin:6px 0}.muted{color:var(--mut)}</style></head><body>
+<style>.mk-hero{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:6px}
+@media(max-width:760px){.mk-hero{grid-template-columns:minmax(0,1fr)}}
+.mk-hero>div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow)}
+.mk-hero .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--on-ink);font-weight:700;margin-bottom:8px}
+.mk-hero b{display:block;font:700 22px/1.3 var(--display)}
+.mk-hero span{display:block;color:var(--mut);margin-top:4px;font-size:18px}
+.mk-jump{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.mk-jump a{padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--fg);text-decoration:none;font-weight:600;font-size:17px}
+.mk-jump a:hover{border-color:var(--ink)}
+.mk-sec{margin-top:34px;scroll-margin-top:16px}
+.mk-sec>h2{display:flex;align-items:center;gap:10px;font:700 26px/1.3 var(--display);margin:0 0 4px}
+.mk-sub{color:var(--mut);margin:0 0 14px}
+.mk-bars{display:grid;gap:12px;margin:4px 0}
+.mk-bar{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;align-items:center}
+.mk-bar i{display:block;height:34px;border-radius:8px;background:var(--ink);position:relative;min-width:6px}
+.mk-bar i b{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--on-ink);font-size:17px;white-space:nowrap}
+.mk-bar.alt i{background:var(--ok)}
+.mk-price{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:760px){.mk-price{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.mk-price{grid-template-columns:minmax(0,1fr)}}
+.mk-price>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.mk-price small{display:block;color:var(--mut);font-size:16px}
+.mk-price strong{display:block;font:700 22px/1.3 var(--display);margin:2px 0}
+.mk-price em{font-style:normal;color:var(--mut);font-size:16px}
+.mk-steps{display:grid;gap:12px}
+.mk-step{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;align-items:start}
+.mk-step .k{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--ink);color:var(--on-ink);font:700 22px var(--display)}
+.mk-step.t .k{background:var(--mark)}
+.mk-step b{font:700 21px/1.35 var(--display)}
+.mk-step p{margin:4px 0 0}
+.mk-step .when{display:inline-block;margin-top:6px;font-size:16px;font-weight:600;padding:2px 10px;border-radius:99px;background:var(--ok-soft);color:var(--ok)}
+.mk-cases{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:640px){.mk-cases{grid-template-columns:minmax(0,1fr)}}
+.mk-cases>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.mk-cases b{display:block;font:700 19px/1.3 var(--display)}
+.mk-cases p{margin:4px 0 0}
+.mk-cases .nf{color:var(--mut);font-size:16px}
+.mk-check{display:grid;gap:8px}
+.mk-check label{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+.mk-check input{width:22px;height:22px;margin-top:3px;flex:none}
+.mk-check input:checked+span{color:var(--mut);text-decoration:line-through}
+details.fold{margin-top:12px}
+details.fold ul{margin:0;padding-left:20px}
+details.fold li{margin:6px 0}
+ol.flowlist{margin:0;padding-left:22px}ol.flowlist li{margin:6px 0}</style></head><body>
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
@@ -37,163 +81,151 @@
 </aside>
 <main class="content" id="main"><div class="inner">
 <nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> แผนงาน <span aria-hidden="true">›</span> วิจัยตลาดคอร์ส ป.1–ม.3</nav>
-<header class="page-head"><h1>วิจัยตลาดคอร์สออนไลน์ ป.1–ม.3</h1><p>ข้อมูลตลาด คู่แข่ง ราคา รูปแบบคลิป และลำดับที่ควรอัดก่อน สำหรับคอร์สคณิตศาสตร์แบบเรียนเอง</p><div class="chips"><span class="chip ">ค้นเมื่อ 18 ต.ค. 2569</span><span class="chip warn">บางส่วนเป็นข้อสันนิษฐาน</span></div></header>
-<div class="callout"><svg class="i"><use href="#info"/></svg><div><b>คำตอบสั้น</b> อัด <b>เตรียมสอบเข้า ม.1 (ป.6)</b> และ <b>ปรับพื้นฐาน ม.ต้น</b> ก่อน เพราะมีหลักฐานชัดที่สุดเรื่องจำนวนผู้เรียน แรงกดดันการสอบ และราคาตลาดที่เทียบได้ ส่วน <b>ป.1–3</b> ให้ทดสอบด้วยคลิปฟรีก่อน เพราะยังไม่มีหลักฐานว่ามีคนซื้อ</div></div>
-<div class="callout" style="margin-top:12px"><svg class="i"><use href="#info"/></svg><div><b>ข้อจำกัดสำคัญ</b> ข้อมูลว่า "หัวข้อไหนคนค้นหามากที่สุด" ดึงไม่ได้ (Google Trends, ยอดวิว YouTube, Pantip, Facebook) ลำดับหัวข้อจึงเป็นการอนุมานจากปฏิทินสอบและโครงสร้างคู่แข่ง ควรตรวจตามรายการท้ายหน้าก่อนอัดชุดใหญ่ ป้าย <b>หลักฐาน</b> = มีแหล่งอ้างอิง, <b>อนุมาน</b> = ข้อสรุปของผู้เขียน, <b>ไม่พบ</b> = ค้นแล้วไม่ได้</div></div>
-
-<div class="tiles" style="margin-top:14px">
-  <div class="tile"><span>ผู้สมัครเข้า ม.1 ปี 2569</span><b>388,239</b></div>
-  <div class="tile"><span>ผู้สมัครเข้า ม.4 ปี 2569</span><b>219,278</b></div>
-  <div class="tile"><span>O-NET 2567 ป.6 คณิต</span><b>29.21</b></div>
-  <div class="tile"><span>O-NET 2567 ม.3 คณิต</span><b>26.53</b></div>
+<header class="page-head"><h1>วิจัยตลาดคอร์สออนไลน์ ป.1–ม.3</h1><p>สรุปให้อ่านง่าย: ควรอัดอะไรก่อน ตลาดใหญ่แค่ไหน คู่แข่งขายเท่าไร</p><div class="chips"><span class="chip ">ค้นเมื่อ 18 ต.ค. 2569</span><span class="chip warn">บางส่วนเป็นข้อสันนิษฐาน</span></div></header>
+<div class="mk-hero">
+  <div><span class="n">1</span><b>อัด ป.6 สอบเข้า ม.1 กับ ม.ต้นก่อน</b><span>มีหลักฐานผู้เรียนและราคาตลาดชัดที่สุด</span></div>
+  <div><span class="n">2</span><b>ราคาตลาด 2,000–3,500 บาทต่อคอร์ส</b><span>หรือสมาชิกรายเดือน 500–1,290 บาท</span></div>
+  <div><span class="n">3</span><b>ป.1–3 ลองคลิปฟรีก่อน</b><span>ยังไม่มีหลักฐานว่ามีคนซื้อ</span></div>
 </div>
+<div class="callout" style="margin-top:14px"><svg class="i"><use href="#info"/></svg><div><b>ข้อจำกัด</b> ข้อมูลว่า "หัวข้อไหนคนค้นหามากที่สุด" ดึงไม่ได้ (Google Trends, YouTube, Facebook) ลำดับหัวข้อจึงเป็นการประมาณ ดูรายการที่ต้องตรวจเองท้ายหน้า</div></div>
+<nav class="mk-jump" aria-label="ไปยังหัวข้อ"><a href="#s-order">ลำดับที่ควรอัด</a><a href="#s-market">ตลาด</a><a href="#s-price">คู่แข่งและราคา</a><a href="#s-cases">กรณีอ้างอิง</a><a href="#s-more">รูปแบบคลิป ช่องทางขาย</a><a href="#s-check">ต้องตรวจเอง</a></nav>
 
-<section aria-labelledby="m0">
-  <h2 class="sec" id="m0" style="margin-top:22px"><svg class="i"><use href="#chart"/></svg>มูลค่าตลาด</h2>
+<section class="mk-sec" id="s-order">
+  <h2><svg class="i"><use href="#plan"/></svg>ควรอัดอะไรก่อน</h2>
+  <p class="mk-sub">เรียงตามความคุ้ม จากหลักฐานมากไปน้อย</p>
+  <div class="mk-steps">
+    <div class="mk-step"><span class="k">1</span><div><b>ป.6 เตรียมสอบเข้า ม.1</b><p>เศษส่วน/ทศนิยม · อัตราส่วน/ร้อยละ · โจทย์ปัญหา · พื้นที่/ปริมาตร · ค.ร.น./ห.ร.ม.</p><span class="when">ชุดแรกพร้อม ธ.ค.–ม.ค.</span></div></div>
+    <div class="mk-step"><span class="k">2</span><div><b>ม.3 ทบทวนสอบเข้า ม.4 และ O-NET</b><p>สมการ · เลขยกกำลัง · พีทาโกรัส</p><span class="when">ก่อนสอบเข้า ม.4</span></div></div>
+    <div class="mk-step"><span class="k">3</span><div><b>ม.1–ม.2 ปรับพื้นฐานรายเทอม</b><p>ตลาดรายเทอมมีแล้วราว 2,000 บาท ช่องว่างคือราคาต่ำกว่าและเฉลยละเอียด</p><span class="when">ก่อนเปิดเทอม พ.ค.</span></div></div>
+    <div class="mk-step"><span class="k">4</span><div><b>ป.4–ป.5 ปูพื้นฐาน</b><p>เศษส่วน · คูณหาร · ทศนิยม คู่แข่งรายใหญ่ยังไม่ครอบคลุม</p><span class="when">ปิดเทอม มี.ค.–พ.ค.</span></div></div>
+    <div class="mk-step t"><span class="k">5</span><div><b>ป.1–ป.3 ลองคลิปฟรี 3–5 คลิปก่อน</b><p>ไม่พบคู่แข่ง แต่ก็ไม่มีหลักฐานความต้องการ ดูยอดวิวและคำถามก่อนทำชุดขาย</p><span class="when">หลังชุดแรกเสร็จ</span></div></div>
+  </div>
+  <p class="mk-sub" style="margin-top:10px">ถ้าครูสอนชั้นไหนอยู่จริง ให้เลื่อนชั้นนั้นขึ้นก่อน ถ้า Google Trends พบว่า "สอบเข้า ม.4" ค้นหามากกว่า "สอบเข้า ม.1" ให้สลับข้อ 1 กับ 2</p>
+</section>
+
+<section class="mk-sec" id="s-market">
+  <h2><svg class="i"><use href="#chart"/></svg>ตลาดใหญ่แค่ไหน</h2>
+  <p class="mk-sub">ตัวเลขใหญ่ ๆ ที่นำไปอ้างได้ (ทุกตัวเลขมีแหล่งอ้างอิงในตารางด้านล่าง)</p>
   <div class="tiles">
-    <div class="tile"><span>รายได้สถาบันกวดวิชาไทย ปี 2568 (คาดการณ์)</span><b>3,300 ล้านบาท</b></div>
-    <div class="tile"><span>ตลาดการศึกษาออนไลน์ไทย ปี 2568</span><b>692 ล้านดอลลาร์</b></div>
-    <div class="tile"><span>คาดปี 2573 (โต 22.55% ต่อปี)</span><b>1.9 พันล้านดอลลาร์</b></div>
-    <div class="tile"><span>ติวออนไลน์ทั่วโลก คาดปี 2573</span><b>23.7 พันล้านดอลลาร์</b></div>
+    <div class="tile"><span>ผู้สมัครเข้า ม.1 ปี 2569</span><b>388,239 คน</b></div>
+    <div class="tile"><span>ผู้สมัครเข้า ม.4 ปี 2569</span><b>219,278 คน</b></div>
+    <div class="tile"><span>กวดวิชาไทย 2568 (คาดการณ์)</span><b>3,300 ล้านบาท</b></div>
+    <div class="tile"><span>O-NET 2567 ป.6 / ม.3 คณิต</span><b>29.21 / 26.53</b></div>
   </div>
-  <div class="scroll" style="margin-top:12px"><table class="wide">
-    <tr><th>ตัวเลข</th><th>ปี</th><th>ประเภท</th><th>แหล่งที่มา</th></tr>
-    <tr><td>รายได้ธุรกิจกวดวิชาไทย 3,300 ล้านบาท (+9.2% จากปีก่อน) กรุงเทพฯ โตเฉลี่ย 4.2% ต่อปี ต่างจังหวัดโต 23.8% ต่อปี (2564–2568) สัดส่วนกรุงเทพฯ ลดจาก 83.2% เหลือ 71.3%</td><td>2568</td><td>คาดการณ์</td><td><a href="https://www.kasikornresearch.com/en/analysis/k-social-media/Pages/Inter-School-IAO120-FB-27-02-25.aspx" target="_blank" rel="noopener">Kasikorn Research</a></td></tr>
-    <tr><td>รายได้สถาบันกวดวิชาราว 10,000 ล้านบาท นักเรียนราว 535,000 คน (14% ของนักเรียนทั้งหมด)</td><td>ราว 2558 (ไม่ระบุปีชัด)</td><td>ประมาณการ</td><td><a href="https://www.scbeic.com/en/detail/product/1260" target="_blank" rel="noopener">SCB EIC</a></td></tr>
-    <tr><td>ตลาดกวดวิชาราว 8,000 ล้านบาท โต 5–10% ต่อปี</td><td>2558</td><td>ประมาณการ</td><td><a href="https://brandinside.asia/course-square-and-online-tutor" target="_blank" rel="noopener">Brand Inside</a></td></tr>
-    <tr><td>รายได้นิติบุคคลกวดวิชาที่จดทะเบียน 351.55 ล้านบาท (133 ราย) เป็น 2,691.44 ล้านบาท (265 ราย)</td><td>2556 → 2560</td><td>ข้อมูล DBD</td><td><a href="https://www.thairath.co.th/scoop/1430236" target="_blank" rel="noopener">Thairath</a></td></tr>
-    <tr><td>ตลาดการศึกษาออนไลน์ไทย 691.7 ล้านดอลลาร์ เป็น 1.9 พันล้านดอลลาร์ ภายในปี 2573</td><td>2568 → 2573</td><td>คาดการณ์</td><td><a href="https://www.imarcgroup.com/thailand-online-education-market" target="_blank" rel="noopener">IMARC</a></td></tr>
-    <tr><td>ตลาดติวออนไลน์ทั่วโลก 23.73 พันล้านดอลลาร์ ภายในปี 2573 (โต 14.9% ต่อปี)</td><td>2573</td><td>คาดการณ์</td><td>Grand View Research</td></tr>
-    <tr><td>ติวออนไลน์เอเชียแปซิฟิก 3.85 พันล้านดอลลาร์ เป็น 10.4 พันล้านดอลลาร์ (โตราว 18.1% ต่อปี)</td><td>2567 → 2573</td><td>คาดการณ์ (แหล่งเดียว)</td><td>Ken Research</td></tr>
-  </table></div>
   <div class="card" style="margin-top:12px">
-    <p><b>ข้อควรระวังเมื่อนำไปอ้าง</b></p>
-    <ul>
-      <li><b>อย่านำตัวเลขไทยมาต่อเป็นกราฟเส้นเดียวกัน</b> ตัวเลข 8,000–10,000 ล้านบาท (ราว 2558) กับ 3,300 ล้านบาท (2568) นิยามขอบเขตต่างกัน (ตัวแทนวิจัยประเมินว่าน่าจะเป็นเรื่องขอบเขต) ไม่ได้แปลว่าตลาดหดตัวหรือโตตามส่วนต่าง</li>
-      <li>ตัวเลขปี 2573 ทั้งหมดเป็นคาดการณ์ของบริษัทวิจัยตลาด ซึ่งแต่ละฉบับให้ตัวเลขไม่ตรงกัน (IMARC เคยให้ 555.74 ล้านดอลลาร์สำหรับปี 2567) ควรเขียนว่า "คาดการณ์โดย ... " ทุกครั้ง</li>
-      <li><b>ภาพที่ตรงข้ามกัน</b> รายงาน The Nation (19 ก.พ. 2568) ระบุว่าสถาบันกวดวิชาไทยโดยรวมหดตัวลงหลังโควิด และ OnDemand โตเพียง 5–6% ในปี 2567 ขณะที่ฝั่งออนไลน์และต่างจังหวัดโตเร็วกว่า การนำเสนอควรวางตำแหน่งเป็นการย้ายไปออนไลน์ ไม่ใช่ตลาดโตทั้งก้อน</li>
-      <li><b>ไม่พบ</b> ตัวเลขค่าใช้จ่ายกวดวิชาต่อเด็กต่อปี ตัวเลขเฉพาะวิชาคณิตศาสตร์ และสัดส่วนออนไลน์ของตลาดกวดวิชาไทยที่ยืนยันได้ (SCB EIC ระบุครอบครัวไทยใช้จ่ายด้านกวดวิชา 2–3% ของรายจ่าย เทียบกับเกาหลีใต้ 16% แต่เป็นข้อมูลเก่าราว 2558)</li>
-      <li>ตัวเลขบางรายการอ่านจากบทสรุปการค้นหา ไม่ได้เปิดหน้าต้นทางทุกหน้า ควรเปิดตรวจก่อนใส่ในเอกสารที่ส่งให้คนนอก</li>
+    <b>การศึกษาออนไลน์ในไทย (ล้านดอลลาร์ คาดการณ์ IMARC)</b>
+    <div class="mk-bars" style="margin-top:10px">
+      <div class="mk-bar"><span>ปี 2568</span><i style="width:36%"><b>692</b></i></div>
+      <div class="mk-bar alt"><span>ปี 2573</span><i style="width:100%"><b>1,900 (โต 22.55% ต่อปี)</b></i></div>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:12px"><svg class="i"><use href="#info"/></svg><div><b>ระวังเวลาอ้าง</b> กวดวิชาไทยโดยรวมหดตัวหลังโควิด (The Nation, ก.พ. 2568) ส่วนที่โตคือ <b>ออนไลน์</b> และ <b>ต่างจังหวัด</b> ให้พูดว่า "ตลาดย้ายมาออนไลน์" ไม่ใช่ "ตลาดโตทั้งก้อน" และตัวเลขปี 2573 เป็นคาดการณ์เสมอ</div></div>
+  <details class="card fold"><summary>ดูตัวเลขและแหล่งอ้างอิงทั้งหมด</summary><div>
+    <div class="scroll"><table class="wide">
+      <tr><th>ตัวเลข</th><th>ปี</th><th>ประเภท</th><th>แหล่งที่มา</th></tr>
+      <tr><td>รายได้กวดวิชาไทย 3,300 ล้านบาท (+9.2%) กรุงเทพฯ โต 4.2% ต่อปี ต่างจังหวัด 23.8% ต่อปี (2564–2568)</td><td>2568</td><td>คาดการณ์</td><td><a href="https://www.kasikornresearch.com/en/analysis/k-social-media/Pages/Inter-School-IAO120-FB-27-02-25.aspx" target="_blank" rel="noopener">Kasikorn Research</a></td></tr>
+      <tr><td>รายได้สถาบันกวดวิชา ราว 10,000 ล้านบาท นักเรียนราว 535,000 คน</td><td>ราว 2558</td><td>ประมาณการ</td><td><a href="https://www.scbeic.com/en/detail/product/1260" target="_blank" rel="noopener">SCB EIC</a></td></tr>
+      <tr><td>ตลาดกวดวิชาราว 8,000 ล้านบาท โต 5–10% ต่อปี</td><td>2558</td><td>ประมาณการ</td><td><a href="https://brandinside.asia/course-square-and-online-tutor" target="_blank" rel="noopener">Brand Inside</a></td></tr>
+      <tr><td>รายได้นิติบุคคลกวดวิชา 351.55 ล้านบาท (133 ราย) เป็น 2,691.44 ล้านบาท (265 ราย)</td><td>2556 → 2560</td><td>ข้อมูล DBD</td><td><a href="https://www.thairath.co.th/scoop/1430236" target="_blank" rel="noopener">Thairath</a></td></tr>
+      <tr><td>การศึกษาออนไลน์ไทย 691.7 ล้านดอลลาร์ เป็น 1.9 พันล้านดอลลาร์</td><td>2568 → 2573</td><td>คาดการณ์</td><td><a href="https://www.imarcgroup.com/thailand-online-education-market" target="_blank" rel="noopener">IMARC</a></td></tr>
+      <tr><td>ติวออนไลน์ทั่วโลก 23.73 พันล้านดอลลาร์ (โต 14.9% ต่อปี)</td><td>2573</td><td>คาดการณ์</td><td>Grand View Research</td></tr>
+      <tr><td>ติวออนไลน์เอเชียแปซิฟิก 3.85 เป็น 10.4 พันล้านดอลลาร์ (โตราว 18.1% ต่อปี)</td><td>2567 → 2573</td><td>คาดการณ์ (แหล่งเดียว)</td><td>Ken Research</td></tr>
+      <tr><td>ผู้สมัคร ม.1 388,239 คน ม.4 219,278 คน</td><td>2569</td><td>ข้อมูลรับสมัคร</td><td><a href="https://www.thansettakij.com/general-news/655064" target="_blank" rel="noopener">Thansettakij</a></td></tr>
+      <tr><td>อัตราแข่งขัน ม.1 สวนกุหลาบฯ 1:5.82 ม.4 สตรีวิทยา 1:13.87</td><td>2569</td><td>ข้อมูลรับสมัคร</td><td><a href="https://www.thairath.co.th/news/society/2922458" target="_blank" rel="noopener">Thairath</a></td></tr>
+      <tr><td>PISA คณิตศาสตร์ไทย 394 (ลด 25 จากปี 2561) ค่าเฉลี่ย OECD 472</td><td>2565</td><td>ข้อมูลจริง</td><td><a href="https://policywatch.thaipbs.or.th/article/education-40" target="_blank" rel="noopener">Thai PBS</a></td></tr>
+    </table></div>
+    <ul style="margin-top:10px">
+      <li>ตัวเลข 8,000–10,000 ล้านบาท (ราว 2558) กับ 3,300 ล้านบาท (2568) นิยามขอบเขตต่างกัน อย่านำมาต่อเป็นกราฟเส้นเดียว</li>
+      <li>ไม่พบ: ค่าใช้จ่ายกวดวิชาต่อเด็กต่อปี ตัวเลขเฉพาะวิชาคณิตศาสตร์ และสัดส่วนออนไลน์ที่ยืนยันได้</li>
+      <li>บางรายการอ่านจากบทสรุปการค้นหา ควรเปิดลิงก์ตรวจก่อนใส่ในเอกสารที่ส่งให้คนนอก</li>
     </ul>
-  </div>
+  </div></details>
 </section>
 
-<section aria-labelledby="m1">
-  <h2 class="sec" id="m1" style="margin-top:22px"><svg class="i"><use href="#target"/></svg>ตลาดและแรงกดดันการสอบ</h2>
-  <div class="card">
-    <p><b>หลักฐาน</b> ม.1 ปีการศึกษา 2569 มีผู้สมัคร 388,239 คน ที่นั่ง 427,024 ม.4 มี 219,278 คน (<a href="https://www.thansettakij.com/general-news/655064" target="_blank" rel="noopener">Thansettakij</a>) ที่ สพม.กรุงเทพ เขต 1 ม.1 สวนกุหลาบฯ แข่งขัน 1:5.82 เทพศิรินทร์ 1:4.28 ส่วน ม.4 สตรีวิทยา 1:13.87 สามเสนฯ 1:10.13 (<a href="https://www.thairath.co.th/news/society/2922458" target="_blank" rel="noopener">Thairath</a>)</p>
-    <p><b>หลักฐาน</b> PISA 2022 คณิตศาสตร์ไทย 394 คะแนน ลดลง 25 จากปี 2018 ค่าเฉลี่ย OECD 472 (<a href="https://policywatch.thaipbs.or.th/article/education-40" target="_blank" rel="noopener">Thai PBS</a>) O-NET 2567 คณิตศาสตร์เป็นวิชาที่ต่ำสุด</p>
-    <p><b>อนุมาน</b> ม.4 น่าจะติวหนักกว่า ม.1 ตามอัตราแข่งขัน แต่ผู้ซื้อคอร์สติวเข้มจริงน่าจะเป็นผู้สมัครโรงเรียนดัง สาธิต และห้องเรียนพิเศษ เท่านั้น <b>ไม่พบ</b> การจัดอันดับจุดประสงค์ของผู้เรียน และคะแนนรายสาระ O-NET/NT ล่าสุด</p>
+<section class="mk-sec" id="s-price">
+  <h2><svg class="i"><use href="#calc"/></svg>คู่แข่งขายเท่าไร</h2>
+  <p class="mk-sub">ดู ณ 18 ต.ค. 2569 ราคาควรเปิดหน้าจริงยืนยันก่อนอ้างถึง</p>
+  <div class="mk-price">
+    <div><small>DekTalent ม.1–ม.3</small><strong>2,000 บาท / เทอม</strong><em>ทั้งปี 3,500 · เบสิกฟรี 7 ชม.</em></div>
+    <div><small>CU Tutor Online สอบเข้า ม.1</small><strong>2,450 บาท</strong><em>เดิม 3,900</em></div>
+    <div><small>OnDemand สอบเข้า ม.1</small><strong>500 หรือ 5,000 บาท</strong><em>สองหน้าเขียนไม่ตรงกัน · 50 ชม.</em></div>
+    <div><small>MonkeyEveryday</small><strong>1,290 บาท / เดือน</strong><em>เรียนได้ทุกคอร์ส ทดลอง 3 วัน</em></div>
+    <div><small>StartDee แอป ป.4–ม.6</small><strong>ราว 500 บาท / เดือน</strong><em>ข้อมูลปี 2565</em></div>
+    <div><small>ติวสดตัวต่อตัวออนไลน์</small><strong>125–400 บาท / ชม.</strong><em>Fastwork, BestKru, CU Tutor</em></div>
   </div>
+  <div class="callout" style="margin-top:12px"><svg class="i"><use href="#info"/></svg><div><b>เทียบง่าย ๆ</b> วิดีโอสำเร็จรูปตกชั่วโมงละ <b>60–100 บาท</b> ถูกกว่าติวสดมาก และเกือบทุกเจ้ามี <b>ของฟรี</b> ให้ลองก่อน (ผู้ขายที่ไม่มีของฟรีจะเสียเปรียบ) ช่องว่างที่เห็น: ป.1–ป.5 ยังไม่พบคอร์สวิดีโอขายแยก และไม่พบเจ้าไหนโฆษณา <b>ข้อสอบจับเวลา</b> หรือ <b>รายงานจุดอ่อน</b> ซึ่งคอร์ส 18 ชุดของเรามี</div></div>
+  <details class="card fold"><summary>ผู้ขายอื่นและข้อมูลที่ไม่พบ</summary><div><ul>
+    <li><b>พ่อบ้านติวคณิต</b> ม.1–ม.3 รายเทอม ซื้อ 3 บทลด 25% สิทธิ์ 1 ปี (ไม่พบราคา)</li>
+    <li><b>TruePlookpanya</b> มีคอร์สฟรีคณิต ม.ต้น 21 คลิป และสอบเข้า ม.1</li>
+    <li><b>ไม่พบ</b> รีวิวจริงของผู้ซื้อ ยอดขาย และข้อมูล Facebook/LINE ของผู้ขายรายเล็ก</li>
+  </ul></div></details>
 </section>
 
-<section aria-labelledby="m2">
-  <h2 class="sec" id="m2" style="margin-top:22px"><svg class="i"><use href="#calc"/></svg>คู่แข่งและราคา (ดู ณ 18 ต.ค. 2569)</h2>
-  <div class="scroll"><table class="wide">
-    <tr><th>ผู้ขาย</th><th>สิ่งที่ขาย</th><th>ราคา / เงื่อนไข</th></tr>
-    <tr><td>OnDemand (พี่ป่าน)</td><td>ติวเข้มสอบเข้า ม.1 วิดีโอ 50 ชม. โจทย์ 700+ ข้อ</td><td>หน้าคอร์สเขียนเริ่ม 500 บาท อีกหน้าเขียน 5,000 บาท (ยังยืนยันไม่ได้) สิทธิ์ 12 เดือน</td></tr>
-    <tr><td>DekTalent</td><td>ม.1–ม.3 รายเทอม และเพิ่มเกรดทั้งปี</td><td>เทอมละ 2,000 บาท ทั้งปี 3,500 บาท เบสิกฟรี 7 ชม. ไม่มี ป.4–ป.6</td></tr>
-    <tr><td>CU Tutor Online</td><td>ติวสอบเข้า ม.1</td><td>2,450 บาท (เดิม 3,900) แพ็กหลายวิชา 3,900–6,450</td></tr>
-    <tr><td>Monkey Everyday</td><td>ป.6 สอบเข้า ม.1 และ ม.ต้น</td><td>สมาชิก 1–12 เดือน ทดลอง 3 วัน แพ็กเดียว 1,290 บาทต่อเดือนตามรายงานที่พบ (ไม่ระบุวันที่)</td></tr>
-    <tr><td>พ่อบ้านติวคณิต</td><td>ม.1–ม.3 รายเทอม</td><td>ซื้อ 3 บทลด 25% สิทธิ์ 1 ปี (ไม่พบราคา)</td></tr>
-    <tr><td>StartDee</td><td>แอปสมาชิก ป.4–ม.6</td><td>เริ่มราว 500 บาทต่อเดือน (ข้อมูลปี 2565)</td></tr>
-    <tr><td>TruePlookpanya</td><td>คอร์สฟรี ม.ต้น และสอบเข้า ม.1</td><td>ฟรี</td></tr>
-    <tr><td>ติวตัวต่อตัวออนไลน์</td><td>Fastwork, BestKru, CU Tutor</td><td>ราว 125–400 บาทต่อชั่วโมง</td></tr>
-  </table></div>
-  <div class="card" style="margin-top:12px">
-    <p><b>อนุมาน</b> ราคาต่อชั่วโมงวิดีโอราว <b>60–100 บาท</b> (3,500/57 ≈ 61, 2,000/25 = 80) ถูกกว่าติวสดมาก ผู้เล่นใหญ่แทบทุกรายมีของฟรีหรือให้ทดลองเรียน การขายโดยไม่มีของฟรีจึงเสียเปรียบ</p>
-    <p><b>ช่องว่างที่เห็น</b> ไม่พบคอร์สวิดีโอขายแยกสำหรับ ป.1–ป.3 และ DekTalent/StartDee ไม่ครอบคลุม ป.4–ป.6 ข้อจำกัด: ไม่รู้ว่า "ยังไม่มีใครทำ" หรือ "ตลาดไม่ซื้อ" และหน้าที่ตรวจไม่พบ <b>ข้อสอบจับเวลา</b> หรือ <b>รายงานจุดอ่อนรายบุคคล</b> ซึ่งเป็นสิ่งที่คอร์ส 18 ชุดของเรามี อาจเป็นจุดต่าง แต่ยืนยันไม่ได้</p>
-    <p>ราคาอ่านจากหน้าเว็บผ่านตัวสรุปอัตโนมัติ ควรเปิดหน้าจริงยืนยันก่อนอ้างถึง</p>
+<section class="mk-sec" id="s-cases">
+  <h2><svg class="i"><use href="#target"/></svg>กวดวิชาออนไลน์ที่ดัง (ใช้อ้างอิง)</h2>
+  <p class="mk-sub">เก็บเท่าที่ตรวจสอบได้ ช่องที่เขียนว่า "ไม่พบ" คือยังไม่มีตัวเลขยืนยัน</p>
+  <div class="mk-cases">
+    <div><b>OnDemand (LEARN)</b><p>กวดวิชาออนไลน์รายใหญ่ของไทย ปี 2567 โต 5–6% (The Nation, ก.พ. 2568)</p><p class="nf">ไม่พบ: รายได้ จำนวนนักเรียน</p></div>
+    <div><b>MonkeyEveryday</b><p>เริ่มจากสอนเด็ก ม.1 หนึ่งคน ตอนนี้สมาชิกรายเดือน 1,290 บาท มีหนังสือและคลังข้อสอบ เปิดพื้นที่เรียนจริง มี.ค. 2565</p><p class="nf">ไม่พบ: รายได้ จำนวนสมาชิก</p></div>
+    <div><b>StartDee</b><p>แอป ม.ต้น–ม.ปลาย เปิดตัว 200–300 บาทต่อเดือน (Bangkok Post, 2563) เครือเดียวกับ Ruangguru อินโดนีเซีย</p><p class="nf">ไม่พบ: จำนวนผู้ใช้ รอบระดมทุน</p></div>
+    <div><b>Khan Academy (สหรัฐฯ)</b><p>ผู้ลงทะเบียน 189.6 ล้านคน ใช้งานรายปี 104.9 ล้านคน ปี 2567–68 ต้นแบบคลิปสั้นเขียนบนแท็บเล็ต</p></div>
+    <div><b>Megastudy (เกาหลีใต้)</b><p>ยอดขายปี 2564 703.8 พันล้านวอน กำไร 99 พันล้านวอน (KED Global) โมเดล ครูดัง + หนังสือแบบฝึกหัด</p></div>
+    <div><b>Byju's (อินเดีย) บทเตือนใจ</b><p>มูลค่าสูงสุด 22 พันล้านดอลลาร์ แล้วล้มละลายปี 2567 เพราะซื้อกิจการและขยายเร็วเกินรายได้ (แหล่งรอง)</p></div>
   </div>
+  <div class="callout" style="margin-top:12px"><svg class="i"><use href="#info"/></svg><div><b>นำไปอ้างได้ว่า</b> โมเดล "ครูดัง + หนังสือ + คลังข้อสอบ" มีคนทำสำเร็จจริง (Megastudy, MonkeyEveryday) ตลาดไทยรับทั้งราคาต่อคอร์สและสมาชิกรายเดือน และอย่าขยายเกินกำลังเงินทุน</div></div>
 </section>
 
-<section aria-labelledby="mc">
-  <h2 class="sec" id="mc" style="margin-top:22px"><svg class="i"><use href="#target"/></svg>กรณีอ้างอิง: กวดวิชาออนไลน์ที่ดัง</h2>
-  <p class="muted">เก็บเท่าที่ตรวจสอบได้ ช่องที่เขียนว่า "ไม่พบ" คือค้นแล้วไม่ได้ตัวเลขที่ยืนยัน ห้ามประมาณเอง</p>
-  <div class="grid g3" style="margin-top:8px">
-    <div class="card"><b>OnDemand (LEARN Corporation)</b><p>กวดวิชาออนไลน์รายใหญ่ของไทย ขายคอร์สวิดีโอและหนังสือ ปี 2567 รายได้โต 5–6% (The Nation, 19 ก.พ. 2568) ซึ่งสอดคล้องกับภาพรวมกวดวิชาไทยที่หดตัวหลังโควิด</p><p class="muted">ไม่พบ: รายได้ จำนวนนักเรียน ยอดผู้ติดตาม</p></div>
-    <div class="card"><b>MonkeyEveryday</b><p>เริ่มจากสอนนักเรียน ม.1 หนึ่งคน ปัจจุบันขายแบบสมาชิกรายเดือนราคาเดียว 1,290 บาท เรียนได้ทุกคอร์ส มีหนังสือและคลังข้อสอบ เปิดพื้นที่เรียนจริงเมื่อมีนาคม 2565</p><p class="muted">ไม่พบ: รายได้ จำนวนสมาชิก</p></div>
-    <div class="card"><b>StartDee</b><p>แอปเรียนออนไลน์ ม.ต้น–ม.ปลาย เปิดตัวที่ 200–300 บาทต่อเดือน (Bangkok Post, 2563) เป็นเครือเดียวกับ Ruangguru ของอินโดนีเซีย</p><p class="muted">ไม่พบ: จำนวนผู้ใช้ รอบระดมทุน</p></div>
-    <div class="card"><b>Khan Academy (ต่างประเทศ)</b><p>องค์กรไม่แสวงกำไร ปีการศึกษา 2567–68 มีผู้ลงทะเบียน 189.6 ล้านคน ผู้เรียนที่ใช้งานรายปี 104.9 ล้านคน (รายงานประจำปีของ Khan Academy) เป็นต้นแบบคลิปสั้นเขียนบนแท็บเล็ต</p></div>
-    <div class="card"><b>Megastudy (เกาหลีใต้)</b><p>ยอดขายปี 2564 703.8 พันล้านวอน กำไรจากการดำเนินงาน 99 พันล้านวอน (KED Global, 2565) โมเดลคือครูดังบวกหนังสือแบบฝึกหัด มีกองทุน MBK Partners เจรจาเข้าถือหุ้นที่มูลค่าราว 1.8–2 ล้านล้านวอน</p></div>
-    <div class="card"><b>Byju's (อินเดีย) บทเรียนเตือนใจ</b><p>มูลค่าสูงสุด 22 พันล้านดอลลาร์ (มี.ค. 2565) แต่ขาดทุนปีงบ 2565 ราว 82,450 ล้านรูปี (8,245 crore) ใช้เงินซื้อกิจการหลายแห่งเกิน 2.8 พันล้านดอลลาร์ แล้วเข้าสู่กระบวนการล้มละลายปี 2567 (ข้อมูลจากสารานุกรม ถือเป็นแหล่งรอง) ข้อสรุป: ขยายเร็วเกินรายได้อันตราย</p></div>
-  </div>
-  <div class="card" style="margin-top:12px">
-    <p><b>ใช้อ้างอิงได้อย่างไร</b></p>
-    <ul>
-      <li>โมเดล "ครูดัง + หนังสือ + คลังข้อสอบ" ที่ Megastudy และ MonkeyEveryday ใช้ ตรงกับคอร์ส 18 ชุดของเรา (เล่มโจทย์โดยติวเตอร์ เฉลยวิดีโอโดยครู)</li>
-      <li>รายใหญ่ของไทยขายทั้งราคาต่อคอร์ส (DekTalent 2,000–3,500 บาท) และสมาชิกรายเดือน (MonkeyEveryday 1,290 บาท StartDee เริ่ม 200–500 บาท) ตลาดรับได้ทั้งสองแบบ</li>
-      <li>Khan Academy พิสูจน์ว่าคลิปสั้นเขียนบนแท็บเล็ตขยายขนาดได้ ส่วน Byju's เตือนว่าอย่าเติบโตเกินกำลังเงินทุน</li>
-      <li><b>ไม่พบ</b> ข้อมูลที่ยืนยันได้ของ DekTalent, SkillLane, Skooldio, CU Tutor, พ่อบ้านติวคณิต, Gifted Math, Dek-D และช่องยูทูบติวเตอร์ ควรเปิดหน้า About ของช่อง และข้อมูลงบการเงินจาก DBD (ต้องเสียค่าบริการบางส่วน) เพื่อเติมก่อนนำไปนำเสนอ</li>
-    </ul>
-  </div>
+<section class="mk-sec" id="s-more">
+  <h2><svg class="i"><use href="#video"/></svg>รูปแบบคลิป ช่องทางขาย ภาษี</h2>
+  <p class="mk-sub">กดเปิดอ่านเมื่อต้องใช้</p>
+  <details class="card fold"><summary>คลิปควรเป็นแบบไหน</summary><div><ul>
+    <li><b>หนึ่งคลิปต่อหนึ่งแนวคิด</b> ราว 4–8 นาที (ป.1–ป.4) และ 6–10 นาที (ป.5–ม.3) ไม่มีงานวิจัยกำหนดนาทีสำหรับเด็ก นี่คือข้อเสนอ</li>
+    <li>โครงคงที่: เกริ่น 20–30 วินาที → ตัวอย่างทีละขั้น → ให้หยุดคลิปลองทำเอง → สรุป</li>
+    <li>หลังคลิปมีโจทย์ 3–5 ข้อ เฉลยอธิบายวิธีคิดและจุดผิดที่พบบ่อย และแทรกโจทย์ทบทวนเรื่องเก่า</li>
+    <li><b>หลักฐาน:</b> คลิปสั้นแบบเขียนบนแท็บเล็ตดึงความสนใจกว่าบรรยายตัดมา (edX 6.9 ล้านเซสชัน ผู้เรียนมหาวิทยาลัย) การทำแบบทดสอบดีกว่าอ่านซ้ำ (d = 0.50) การทบทวนเว้นระยะมีผล (d ≈ 0.60)</li>
+    <li><b>เรียนไม่จบเป็นปัญหาใหญ่:</b> คอร์สออนไลน์เปิดกว้างเรียนจบมัธยฐาน 12.6% คอร์สมีกำหนดเวลารักษาผู้เรียนได้ 45% เทียบ 13% ข้อความแจ้งผู้ปกครองลดการสอบตก 38% (โรงเรียน) จึงควรมีแผนรายสัปดาห์ รายงานถึงผู้ปกครอง และไลฟ์ถามตอบเป็นครั้งคราว</li>
+    <li>อุปกรณ์ขั้นต่ำ: แท็บเล็ตกับปากกา โปรแกรมอัดหน้าจอ ไมค์ที่เสียงชัด</li>
+  </ul></div></details>
+  <details class="card fold"><summary>ขายที่ไหน ค่าธรรมเนียมเท่าไร</summary><div>
+    <p><b>ช่องทางเข้าถึง (DataReportal 2026):</b> Facebook 51.5 ล้าน · YouTube 47.2 ล้าน · TikTok 56.6 ล้าน · LINE 56 ล้าน (ไม่พบแบบสำรวจว่าผู้ปกครองซื้อติวผ่านช่องทางไหน) <b>ข้อเสนอ:</b> ให้คนพบที่ YouTube/TikTok/Facebook แล้วปิดการขายและส่งงานที่ LINE OA</p>
+    <div class="scroll"><table class="wide">
+      <tr><th>ทางเลือก</th><th>ค่าธรรมเนียมที่พบ</th><th>หมายเหตุ</th></tr>
+      <tr><td>เว็บตัวเอง + Omise</td><td>PromptPay 1.65% บัตร 3.65% + VAT 7%</td><td>ไม่ระบุวันที่ ควรตรวจหน้าจริง</td></tr>
+      <tr><td>Teachable</td><td>ราว 39 ดอลลาร์/เดือน + 7.5% ต่อรายการ</td><td>แหล่งต่าง ๆ ราคาไม่ตรงกัน</td></tr>
+      <tr><td>Hotmart</td><td>ราว 9.9% + 0.50 ดอลลาร์ต่อรายการ</td><td>แหล่งบุคคลที่สาม</td></tr>
+      <tr><td>Bunny Stream (โฮสต์วิดีโอ)</td><td>0.01 ดอลลาร์/GB · DRM 99 ดอลลาร์/เดือน</td><td>เริ่มด้วยลายน้ำและจำกัดโดเมนก่อน</td></tr>
+      <tr><td>LINE OA</td><td>Basic 1,200 / Pro 1,500 บาทต่อเดือน</td><td>โควตาฟรีมีรายงานขัดกัน</td></tr>
+    </table></div></div></details>
+  <details class="card fold"><summary>ภาษีและกฎหมาย (ไม่ใช่คำแนะนำทางกฎหมาย)</summary><div><ul>
+    <li>จดทะเบียน VAT เมื่อรายได้เกิน 1.8 ล้านบาทต่อปี</li>
+    <li>บุคคลธรรมดารายงานรายได้ตามมาตรา 40(8) ยื่น ภ.ง.ด.94 ช่วงกลางปี</li>
+    <li>ยังไม่ได้ข้อสรุปว่าคอร์สติวออนไลน์ได้รับยกเว้น VAT หรือไม่</li>
+    <li>PDPA ต้องได้รับความยินยอมจากผู้ปกครองสำหรับผู้เยาว์อายุไม่เกิน 10 ปี</li>
+    <li>ควรปรึกษานักบัญชีก่อนเปิดขาย</li>
+  </ul></div></details>
 </section>
 
-<section aria-labelledby="m3">
-  <h2 class="sec" id="m3" style="margin-top:22px"><svg class="i"><use href="#video"/></svg>รูปแบบคลิปและคอร์ส</h2>
-  <div class="card">
-    <p><b>หลักฐาน</b> คลิปสั้น แบบเขียนบนแท็บเล็ต หรือพูดแบบไม่เป็นทางการ ดึงความสนใจได้ดีกว่าการบรรยายตัดมา (Guo และคณะ 2014 วิเคราะห์ 6.9 ล้านเซสชันของ edX แต่เป็นผู้เรียนมหาวิทยาลัย) การทดสอบดึงความจำดีกว่าอ่านซ้ำ (d = 0.50) การเว้นระยะทบทวนมีผลเฉลี่ย d ≈ 0.60 และ feedback เป็นวิธีต้นทุนต่ำผลสูงแต่แปรปรวน</p>
-    <p><b>หลักฐาน</b> คอร์สออนไลน์เปิดกว้างมีอัตราเรียนจบมัธยฐาน 12.6% ส่วนคอร์สที่มีกำหนดเวลารักษาผู้เรียนได้ 45% เทียบกับ 13% ของแบบเรียนเอง ข้อความแจ้งผู้ปกครองอัตโนมัติลดการสอบตก 38% (ทดลองสุ่ม 1,137 คน ในโรงเรียน)</p>
-    <p><b>อนุมาน (ข้อเสนอออกแบบ ไม่ใช่ผลทดสอบกับเด็ก)</b></p>
-    <ul>
-      <li>หนึ่งคลิปต่อหนึ่งแนวคิด ราว 4–8 นาที (ป.1–ป.4) และ 6–10 นาที (ป.5–ม.3) ไม่มีงานวิจัยระบุนาทีที่เหมาะสมสำหรับเด็ก 7–15 ปี</li>
-      <li>โครงคงที่: เกริ่น 20–30 วินาที ตัวอย่างทีละขั้น ช่วงหยุดคลิปให้ลองทำ สรุป</li>
-      <li>หลังคลิปมีโจทย์ 3–5 ข้อพร้อมเฉลยที่อธิบายวิธีคิดและจุดผิดที่พบบ่อย และแทรกโจทย์ทบทวนเรื่องเก่า</li>
-      <li>ต้องมีโครงช่วยพยุง: แผนรายสัปดาห์ รายงานถึงผู้ปกครอง และไลฟ์ถามตอบเป็นครั้งคราว</li>
-      <li>อุปกรณ์ขั้นต่ำ: แท็บเล็ตกับปากกา โปรแกรมอัดหน้าจอ ไมค์ที่เสียงชัด (ความเห็นเชิงปฏิบัติ ไม่มีแหล่งอ้างอิง)</li>
-    </ul>
+<section class="mk-sec" id="s-check">
+  <h2><svg class="i"><use href="#info"/></svg>รายการที่ต้องตรวจเอง</h2>
+  <p class="mk-sub">ติ๊กเมื่อทำแล้ว (จำไว้ในเครื่องนี้) ใช้เวลารวมราว 1–2 ชั่วโมง</p>
+  <div class="mk-check" id="chk">
+    <label><input type="checkbox" data-k="1"><span><b>Google Trends (ไทย 5 ปี)</b> เทียบ สอบเข้า ม.1, สอบเข้า ม.4, ติวเลข ป.6, เศษส่วน, ร้อยละ, สมการ</span></label>
+    <label><input type="checkbox" data-k="2"><span><b>ช่องค้นหา YouTube/Google</b> จดคำที่เสนอขึ้นมาเมื่อพิมพ์ "คณิต ป.6 ", "สอบเข้า ม.1 คณิต"</span></label>
+    <label><input type="checkbox" data-k="3"><span><b>ยอดวิวช่องติวคณิตไทย</b> ดูหัวข้อที่ยอดสูงสุดและหัวข้อที่ยังไม่มีใครอธิบายดี</span></label>
+    <label><input type="checkbox" data-k="4"><span><b>Pantip และกลุ่มผู้ปกครอง</b> ค้น ติวเลข, ลูกไม่เก่งเลข, คอร์สออนไลน์ คณิต ปี 2024–2026</span></label>
+    <label><input type="checkbox" data-k="5"><span><b>ราคาคู่แข่งจริง</b> OnDemand (500 หรือ 5,000?), Monkey, พ่อบ้านติวคณิต, StartDee</span></label>
+    <label><input type="checkbox" data-k="6"><span><b>ผู้ขายรายเล็กใน Facebook/LINE</b> ตรวจว่าช่องว่าง ป.1–3 มีจริงไหม</span></label>
+    <label><input type="checkbox" data-k="7"><span><b>ผลสอบรายสาระ</b> จาก niets.or.th และกำหนดสอบเข้าปีการศึกษา 2570 ของโรงเรียนเป้าหมาย</span></label>
+    <label><input type="checkbox" data-k="8"><span><b>ภาษี ค่าธรรมเนียม หลักสูตรใหม่</b> ถามนักบัญชีเรื่อง VAT ตรวจหน้าราคาแพลตฟอร์มล่าสุด</span></label>
   </div>
-</section>
-
-<section aria-labelledby="m4">
-  <h2 class="sec" id="m4" style="margin-top:22px"><svg class="i"><use href="#chart"/></svg>ช่องทางขายและแพลตฟอร์ม</h2>
-  <div class="card">
-    <p><b>หลักฐาน</b> ผู้ใช้อินเทอร์เน็ตไทย 67.8 ล้านคน การเข้าถึงโฆษณา: Facebook 51.5 ล้าน YouTube 47.2 ล้าน TikTok 56.6 ล้าน (ผู้ใหญ่) LINE 56 ล้าน (<a href="https://datareportal.com/reports/digital-2026-thailand" target="_blank" rel="noopener">DataReportal</a>) <b>ไม่พบ</b> แบบสำรวจว่าผู้ปกครองไทยซื้อคอร์สติวผ่านช่องทางใด</p>
-    <p><b>อนุมาน</b> ใช้ YouTube / TikTok / Facebook ให้คนพบ (คลิปสั้น ตัวอย่างบทฟรี) และใช้ LINE OA ปิดการขายและส่งงาน เครือข่ายผู้ปกครองของครูเองน่าจะไว้วางใจสูงสุดแต่ไม่ได้วัด</p>
-  </div>
-  <div class="scroll" style="margin-top:12px"><table class="wide">
-    <tr><th>ทางเลือก</th><th>ค่าธรรมเนียมที่พบ</th><th>หมายเหตุ</th></tr>
-    <tr><td>เว็บตัวเอง + Omise</td><td>PromptPay 1.65% บัตร 3.65% + VAT 7%</td><td>ไม่ระบุวันที่มีผล ควรตรวจหน้าจริง</td></tr>
-    <tr><td>Teachable</td><td>แผนเริ่มต้น ราว 39 ดอลลาร์ต่อเดือน + 7.5% ต่อรายการ</td><td>แหล่งต่าง ๆ ราคาไม่ตรงกัน</td></tr>
-    <tr><td>Hotmart</td><td>ราว 9.9% + 0.50 ดอลลาร์ต่อรายการ</td><td>แหล่งบุคคลที่สาม ไม่ระบุวันที่</td></tr>
-    <tr><td>Bunny Stream (โฮสต์วิดีโอ)</td><td>เก็บ 0.01 ดอลลาร์ต่อ GB, DRM 99 ดอลลาร์ต่อเดือน</td><td>DRM เต็มรูปแบบไม่คุ้มจนกว่ายอดขายจะมาก ใช้ลายน้ำและจำกัดโดเมนก่อน</td></tr>
-    <tr><td>LINE OA</td><td>Basic 1,200 / Pro 1,500 บาทต่อเดือน</td><td>โควตาฟรีมีรายงานขัดกัน (500 หรือ 1,000 ข้อความ)</td></tr>
-  </table></div>
-  <div class="card" style="margin-top:12px">
-    <p><b>ภาษีและกฎหมาย (ไม่ใช่คำแนะนำทางกฎหมาย)</b> จดทะเบียน VAT เมื่อรายได้เกิน 1.8 ล้านบาทต่อปี บุคคลธรรมดารายงานรายได้ตามมาตรา 40(8) ยื่น ภ.ง.ด.94 ช่วงกลางปี ยังไม่ได้ข้อสรุปว่าคอร์สติวออนไลน์ได้รับยกเว้น VAT หรือไม่ PDPA ต้องได้รับความยินยอมจากผู้ปกครองสำหรับผู้เยาว์อายุไม่เกิน 10 ปี ควรปรึกษานักบัญชีก่อนเปิดขาย</p>
-  </div>
-</section>
-
-<section aria-labelledby="m5">
-  <h2 class="sec" id="m5" style="margin-top:22px"><svg class="i"><use href="#plan"/></svg>ลำดับที่แนะนำให้อัด</h2>
-  <div class="scroll"><table class="wide">
-    <tr><th>ลำดับ</th><th>ระดับ / หัวข้อ</th><th>เหตุผล</th><th>เป้าหมายเวลา</th></tr>
-    <tr><td>1</td><td><b>ป.6 แกนสอบเข้า ม.1</b> เศษส่วนและทศนิยม, อัตราส่วนและร้อยละ, โจทย์ปัญหาซื้อขายกำไรขาดทุน, พื้นที่และปริมาตร, ค.ร.น./ห.ร.ม. และสมการเบื้องต้น</td><td>เป็นแกนข้อสอบตามเว็บเตรียมสอบ (รายการเนื้อหา ไม่ใช่ความถี่การค้นหา) คู่แข่งหนาแน่น ต้องใช้จุดต่าง: เฉลยอธิบายวิธีคิด ข้อสอบจับเวลา</td><td>ชุดแรก ธ.ค.–ม.ค.</td></tr>
-    <tr><td>2</td><td><b>ม.3 ทบทวนสอบเข้า ม.4 และ O-NET</b> สมการและระบบสมการ เลขยกกำลัง พีทาโกรัส</td><td>ม.4 แข่งขันสูงกว่า ม.1 O-NET ม.3 ต่ำสุด 26.53 (หัวข้อเป็นสมมติฐาน)</td><td>ก่อนสอบเข้า ม.4</td></tr>
-    <tr><td>3</td><td><b>ม.1–ม.2 ปรับพื้นฐานรายเทอม</b></td><td>ตลาดรายเทอมราว 2,000 บาทมีอยู่แล้ว ช่องว่างอาจเป็นราคาต่ำกว่าและอธิบายละเอียด</td><td>ก่อนเปิดเทอม พ.ค.</td></tr>
-    <tr><td>4</td><td><b>ป.4–ป.5 ปูพื้นฐาน</b> เศษส่วน คูณหาร ทศนิยม</td><td>DekTalent ไม่มีระดับนี้ StartDee เริ่ม ป.4 ช่องว่างตามที่คาด</td><td>ปิดเทอม มี.ค.–พ.ค.</td></tr>
-    <tr><td>5</td><td><b>ป.1–ป.3 ทดสอบด้วยคลิปฟรี</b> 3–5 คลิป</td><td>ไม่พบคู่แข่ง แต่ไม่มีหลักฐานความต้องการ ดูยอดวิวและคำถามก่อนทำชุดขาย</td><td>หลังชุดแรกเสร็จ</td></tr>
-  </table></div>
-  <p class="muted" style="margin-top:8px">ถ้าครูสอนชั้นใดอยู่จริง ให้เลื่อนชั้นนั้นขึ้นก่อน เพราะมีโจทย์และตัวอย่างข้อผิดพลาดอยู่ในมือ ถ้า Google Trends พบว่า "สอบเข้า ม.4" หรือ "ติวเลข ม.ต้น" สูงกว่า "สอบเข้า ม.1" ให้สลับลำดับ 1 กับ 2</p>
-</section>
-
-<section aria-labelledby="m6">
-  <h2 class="sec" id="m6" style="margin-top:22px"><svg class="i"><use href="#info"/></svg>รายการที่ต้องตรวจเอง</h2>
-  <div class="card"><ol class="flowlist">
-    <li><b>Google Trends (ไทย 5 ปี)</b> เทียบ สอบเข้า ม.1, สอบเข้า ม.4, ติวเลข ป.6, เศษส่วน, ร้อยละ, อัตราส่วน, สมการ, พีทาโกรัส, เลขยกกำลัง</li>
-    <li><b>ช่องค้นหา YouTube และ Google</b> จดคำที่เสนอขึ้นมาเมื่อพิมพ์ "คณิต ป.6 ", "สอบเข้า ม.1 คณิต", "สมการ ม.1"</li>
-    <li><b>ยอดวิวช่องติวคณิตไทย</b> ดูหัวข้อและระดับชั้นที่ยอดสูงสุด และหัวข้อที่ยังไม่มีใครอธิบายดี</li>
-    <li><b>Pantip และกลุ่มผู้ปกครอง</b> ค้น ติวเลข, ลูกไม่เก่งเลข, คอร์สออนไลน์ คณิต ปี 2024–2026</li>
-    <li><b>ราคาจริงของคู่แข่ง</b> OnDemand (500 หรือ 5,000), Monkey, พ่อบ้านติวคณิต, StartDee ล่าสุด</li>
-    <li><b>ผู้ขายรายเล็กใน Facebook/LINE</b> ตรวจว่าช่องว่าง ป.1–3 เป็นจริงหรือไม่</li>
-    <li><b>ผลสอบรายสาระ</b> จาก niets.or.th และประกาศรับสมัคร/กำหนดสอบปีการศึกษา 2570 ของโรงเรียนเป้าหมาย</li>
-    <li><b>ภาษี ค่าธรรมเนียมล่าสุด และหลักสูตร</b> ถามนักบัญชีเรื่อง VAT ตรวจหน้าราคา Omise/Teachable/Hotmart/LINE OA และตรวจว่ามีหลักสูตรฉบับปรับปรุงใหม่หรือไม่</li>
-  </ol>
-  <p style="margin-top:10px"><b>ทดลองตลาดเล็ก ๆ ก่อน</b> โพสต์คลิปฟรี 2–3 คลิปในหัวข้อที่เลือก ชวนผู้ปกครองเข้า LINE OA รับใบงาน แล้วดูว่าคนลงทะเบียนและถามต่อเท่าไร ตัวเลขเปรียบเทียบจากต่างประเทศ (ลงทะเบียนเป็นลีด 8–14% จากทราฟฟิกใหม่) มาจากบล็อกของผู้ขายซอฟต์แวร์ ใช้เป็นเพดานอ้างอิงเท่านั้น ไม่พบตัวเลขของไทย</p></div>
+  <div class="card" style="margin-top:12px"><b>ทดลองตลาดเล็ก ๆ ก่อนอัดทั้งชุด</b><p style="margin:6px 0 0">โพสต์คลิปฟรี 2–3 คลิป ชวนผู้ปกครองเข้า LINE OA รับใบงาน แล้วดูว่ามีคนลงทะเบียนและถามต่อเท่าไร (ตัวเลขต่างประเทศ ลงทะเบียน 8–14% จากทราฟฟิกใหม่ เป็นเพดานอ้างอิงจากบล็อกผู้ขายซอฟต์แวร์ ไม่พบตัวเลขของไทย)</p></div>
 </section>
 </div></main>
 </div>
-<script src="assets/db.js?v=mvdqn1z7"></script>
-<script src="assets/site.js?v=mvdqn1z7"></script>
-
+<script src="assets/db.js?v=mvdsh7qt"></script>
+<script src="assets/site.js?v=mvdsh7qt"></script>
+<script>
+(function(){var K='mo-market-chk';var s={};try{s=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
+document.querySelectorAll('#chk input').forEach(function(i){i.checked=!!s[i.dataset.k];i.addEventListener('change',function(){s[i.dataset.k]=i.checked;try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}})})})();
+</script>
 </body></html>

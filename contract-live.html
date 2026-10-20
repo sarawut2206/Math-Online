@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>ร่างสัญญา โมเดลสอนสด</title>
+<meta name="description" content="ร่างสัญญาและเครื่องคำนวณส่วนแบ่ง โมเดลเรียนสด วิดีโอทบทวน หนังสือส่งบ้าน และแบบทดสอบวัดระดับ">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css?v=mvgdiaxx">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>/* contract model page. Layout: form column + sticky live preview on wide screens; one view at a time on phones. */
+.inner.wide{max-width:1320px}
+select{font:18px var(--body);padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%}
+input[type=text]{font:18px var(--body);padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%}
+input[type=text]:focus,select:focus{border-color:var(--ink)}
+.cview{display:grid;gap:18px;align-items:start}
+.form-col,.prev-col,.nego{display:none;min-width:0}
+.cview[data-v="form"] .form-col,.cview[data-v="preview"] .prev-col,.cview[data-v="nego"] .nego{display:block}
+.mo-only{display:inline-block}.dk-only{display:none}
+@media(min-width:1100px){
+  .mo-only{display:none}.dk-only{display:inline-block}
+  .cview:not([data-v="nego"]){grid-template-columns:minmax(360px,5fr) minmax(0,7fr)}
+  .cview:not([data-v="nego"]) .form-col,.cview:not([data-v="nego"]) .prev-col{display:block}
+  .prev-col{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;padding-right:4px}
+}
+.step{border:1px solid var(--line);border-radius:16px;padding:14px 16px 6px;margin:0 0 14px;background:var(--surface);min-width:0}
+.step legend{display:flex;align-items:center;gap:10px;font:700 19px var(--display);color:var(--fg);padding:0 8px}
+.stepno{width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--on-ink);display:grid;place-items:center;font:600 16px var(--body)}
+.hint{margin:-2px 0 10px;color:var(--mut);font-size:16px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+@media(max-width:520px){.row2{grid-template-columns:minmax(0,1fr)}}
+.opts{display:grid;gap:10px;margin-bottom:12px}
+.optcard{display:flex;gap:12px;align-items:flex-start;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;background:var(--bg)}
+.optcard:has(input:checked){border-color:var(--ink);background:var(--ink-soft)}
+.optcard input{margin-top:5px;accent-color:var(--ink);width:18px;height:18px;flex:none}
+.optcard b{display:block}.optcard small{display:block;color:var(--mut);font-size:16px;line-height:1.5}
+.chk2{display:flex;gap:10px;align-items:flex-start;font-size:16px;margin:4px 0 10px}
+.chk2 input{margin-top:5px;accent-color:var(--ok);width:18px;height:18px}
+.form-actions{display:flex;justify-content:flex-end;margin:0 0 20px}
+.sumbox{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+@media(max-width:560px){.sumbox{grid-template-columns:minmax(0,1fr)}}
+.sumbox .tile b{font-size:20px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.paper{background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);padding:clamp(18px,4vw,44px);font-family:"TH Sarabun New","Sarabun",serif;font-size:21px;line-height:1.6}
+.paper .ptitle{font:600 21px/1.5 "TH Sarabun New","Sarabun",serif;text-align:center;margin:0 0 4px}
+.paper .draft{text-align:center;color:#b42318;font-size:16px;margin:0 0 18px}
+.paper h3{font:700 19px "TH Sarabun New","Sarabun",serif;margin:20px 0 6px}
+.paper p{margin:0 0 6px;text-align:left}
+.paper .it{padding-left:2.2em;text-indent:-2.2em}
+.paper .it2{padding-left:4.4em;text-indent:-2.2em}
+.paper mark{background:#fff176;color:#3a3000;border-radius:4px;padding:0 3px}
+.paper .fv{border-bottom:1.5px solid var(--ink);font-weight:600}
+.paper .sigs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 20px;margin-top:30px;text-align:center}
+.paper .sigs span{display:block}
+.paper .pb{margin-top:34px;padding-top:20px;border-top:2px dashed var(--line)}
+.paper table{min-width:420px;font-size:16px}
+.paper .note{margin-top:8px}
+.mh{margin:0 0 6px;font-size:19px}
+.ol{margin:0;padding-left:22px}.ol li{margin:4px 0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--on-ink);padding:10px 18px;border-radius:99px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:30}
+@media print{
+  .side,.page-head,.crumb,#vbar,.form-col,.nego,.sumbox,.actions,.prev-col>.note,footer,.toast{display:none!important}
+  .app{display:block}.content{padding:0}.inner,.inner.wide{max-width:none}
+  .cview,.cview[data-v]{display:block!important}
+  .prev-col{display:block!important;position:static;max-height:none;overflow:visible}
+  body{background:#fff}
+  :root{--surface:#fff;--fg:#000;--line:#999;--ink:#000}
+  .paper{border:0;box-shadow:none;padding:0;color:#000}
+  .paper .pb{page-break-before:always;border-top:0}
+}
+.chartcard{margin-bottom:12px}
+.bchart{display:block;width:100%;height:auto}
+.bchart text{font-family:"IBM Plex Sans Thai","Sarabun",sans-serif}
+.bchart .lg1{font-size:16px;fill:var(--fg)}
+.bchart .ax{font-size:14px;fill:var(--mut)}
+.bchart .cat{font-size:16px;font-weight:600;fill:var(--fg)}
+.bchart .vl{font-size:16px;font-weight:700;fill:var(--fg);font-variant-numeric:tabular-nums}
+.bchart .vl.ng{fill:var(--neg)}
+.chartwrap{margin:6px 0 12px}
+@media print{.chartcard{display:none!important}.bchart text{fill:#000!important}}
+
+.paper .flash{animation:flashbg 2s ease-out;border-radius:4px}
+@keyframes flashbg{0%,35%{background:#fff176;box-shadow:0 0 0 4px #fff176}100%{background:transparent;box-shadow:0 0 0 4px transparent}}
+@media(prefers-reduced-motion:reduce){.paper .flash{animation:none;background:#fff176}}
+
+.paper h4.ah{font:700 16px "TH Sarabun New","Sarabun",serif;margin:14px 0 4px}
+.paper ul.al{margin:4px 0 8px;padding-left:22px}
+.paper table td,.paper table th{font-size:15px}
+
+.clprod{margin-bottom:14px}.clprod .card{padding:12px 14px}.clprod .note{margin:4px 0 0}
+.hint2{display:block;color:var(--mut);font-size:15px;margin-top:2px}
+.cltab{width:100%;border-collapse:collapse;min-width:980px}.cltab th,.cltab td{padding:6px 8px;border-top:1px solid var(--line);text-align:left;vertical-align:middle}
+.cltab thead th{font-size:15px;color:var(--mut);border-top:0;border-bottom:2px solid var(--line)}
+.cltab td.n,.cltab th.n{text-align:right;font-variant-numeric:tabular-nums}.cltab th[scope=row]{font-weight:600}.cltab th small{display:block;font-weight:400;color:var(--mut);font-size:14px}
+.cltab input[type=number]{width:86px;font:17px var(--body);padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+.cltab input[type=checkbox]{width:20px;height:20px;accent-color:var(--ink)}.cltab tr.off{opacity:.45}.neg{color:var(--neg)}
+.lbar{display:flex;height:22px;border-radius:99px;overflow:hidden;margin:8px 0}.lbar i{display:block;height:100%}
+.lleg{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px 12px;font-size:15px}.lleg li i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px}
+.cview[data-v="form"] .prev-col{display:block}
+@media(max-width:1099px){.cview[data-v="form"] .prev-col{display:none}.cview[data-v="preview"] .form-col{display:none}}</style></head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+<symbol id="sign" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 18c1.5-2 2.5-2 3 0s2 1.5 3-1"/></symbol>
+<symbol id="db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><a href="production.html"><svg class="i"><use href="#plan"/></svg>แผนผลิตคอร์ส</a><a href="market.html"><svg class="i"><use href="#bars"/></svg>วิจัยตลาดคอร์ส ป.1–ม.3</a><a href="content.html"><svg class="i"><use href="#plan"/></svg>ผังเนื้อหา ป.1–ม.3</a><a href="recording.html"><svg class="i"><use href="#video"/></svg>แผนคลิปทุกเนื้อหา</a><a href="contract.html"><svg class="i"><use href="#sign"/></svg>ร่างสัญญากับติวเตอร์</a><a href="contract-live.html" aria-current="page"><svg class="i"><use href="#sign"/></svg>สัญญาโมเดลสอนสด</a><h3>สินค้าและตัวเลข</h3><a href="exam-course.html"><svg class="i"><use href="#target"/></svg>คอร์สตะลุยข้อสอบ</a><a href="model-2.html"><svg class="i"><use href="#calc"/></svg>โมเดลข้อเสนอ 2</a><a href="catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><a class="tbtn dbbtn" id="dbbtn" href="database.html" data-s="nopin"><svg class="i"><use href="#db"/></svg><span>ฐานข้อมูล · ยังไม่เชื่อม</span><i class="dot"></i></a><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner wide">
+<nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> แผนงาน <span aria-hidden="true">›</span> ร่างสัญญา โมเดลสอนสด</nav>
+<header class="page-head"><h1>ร่างสัญญา · โมเดลสอนสด</h1><p>เรียนสด + วิดีโอทบทวน + หนังสือส่งบ้าน + แบบทดสอบวัดระดับ ครูแซมสอนสดเอง พาร์ตเนอร์ดูแลการตลาดและลงทุน กรอกตัวเลข แล้วดูสัญญาและการแบ่งเงินทันที</p></header>
+<div class="seg" id="vbar" role="group" aria-label="เลือกมุมมอง">
+  <button type="button" data-v="form" aria-pressed="true">ตั้งค่าและราคา</button>
+  <button type="button" data-v="preview" aria-pressed="false">ตัวอย่างสัญญา</button>
+</div>
+<div class="grid g4 clprod">
+  <div class="card"><b>1 เรียนสด</b><p class="note">ตามจำนวนชั่วโมงรวมของคลิปในเนื้อหานั้น หรือรอบเรียน 1–2 วันเท่านั้น</p></div>
+  <div class="card"><b>2 วิดีโอทบทวน</b><p class="note">คลิปละ 15 นาที ดูซ้ำได้ตามจำนวนวันที่ตกลง</p></div>
+  <div class="card"><b>3 หนังสือส่งบ้าน</b><p class="note">แบบฝึกแบบการ์ดพร้อมเฉลย พิมพ์และจัดส่งถึงบ้าน</p></div>
+  <div class="card"><b>4 แบบทดสอบวัดระดับ</b><p class="note">ผ่าน/ไม่ผ่านรายส่วน (70%) ไม่ผ่านรับชุดซ่อมรายทักษะ</p></div>
+</div>
+<div class="cview" id="cview" data-v="form">
+<form class="form-col" id="form" onsubmit="return false" autocomplete="off">
+<fieldset class="step"><legend><span class="stepno">1</span>โมเดลแบ่งเงิน</legend><p class="hint">เลือกหนึ่งทาง ตัวเลขทั้งหน้าและสัญญาเปลี่ยนตามทันที ค่าตั้งต้นเป็นข้อเสนอเริ่มต้น ปรับได้</p>
+  <div class="opts" role="radiogroup" aria-label="โมเดลแบ่งเงิน">
+    <label class="optcard"><input type="radio" name="c_opt" value="A"><span><b>ก · แบ่งกำไรสุทธิ (แนะนำ)</b><small>พาร์ตเนอร์ออกเงินก่อน หักค่าใช้จ่ายจากรายได้ ที่เหลือแบ่งกัน ถ้าไม่มีกำไรครูแซมไม่ร่วมขาดทุน</small></span></label>
+    <label class="optcard"><input type="radio" name="c_opt" value="B"><span><b>ข · ค่าสอนสด + แบ่งกำไร</b><small>ครูแซมได้ค่าสอนต่อชั่วโมงสอนสดแน่นอน แล้วแบ่งกำไรส่วนที่เหลือ เหมาะถ้าอยากได้เงินแน่นอน</small></span></label>
+    <label class="optcard"><input type="radio" name="c_opt" value="C"><span><b>ค · แบ่งรายได้หลังหักค่าธรรมเนียม</b><small>ครูแซมได้ % ของรายได้ พาร์ตเนอร์รับค่าใช้จ่ายที่เหลือเองทั้งหมด ง่ายที่สุด แต่พาร์ตเนอร์เสี่ยงมาก</small></span></label>
+  </div>
+  <div data-opt="A"><label class="f" for="c_spA">ครูแซมได้กี่ % ของกำไรสุทธิ<input id="c_spA" type="number" min="0" inputmode="decimal" max="100"></label></div>
+  <div data-opt="B" hidden><div class="row2"><label class="f" for="c_feeH">ค่าสอนสด (บาทต่อชั่วโมง)<input id="c_feeH" type="number" min="0" inputmode="decimal" ></label><label class="f" for="c_spB">ครูแซมได้ % ของกำไร<input id="c_spB" type="number" min="0" inputmode="decimal" max="100"></label></div></div>
+  <div data-opt="C" hidden><label class="f" for="c_spC">ครูแซมได้กี่ % ของรายได้หลังหักค่าธรรมเนียม<input id="c_spC" type="number" min="0" inputmode="decimal" max="100"></label></div></fieldset>
+<fieldset class="step"><legend><span class="stepno">2</span>ค่าใช้จ่าย</legend><p class="hint">พาร์ตเนอร์ออกเงินก่อนทุกรายการ แล้วหักคืนตามโมเดลที่เลือก (โมเดล ค พาร์ตเนอร์รับเอง)</p>
+  <div class="row2"><label class="f" for="c_plat">ค่าแพลตฟอร์ม (% ของรายได้)<input id="c_plat" type="number" min="0" inputmode="decimal" step="0.1"></label><label class="f" for="c_pay">ค่าชำระเงิน (%)<input id="c_pay" type="number" min="0" inputmode="decimal" step="0.1"></label></div>
+  <div class="row2"><label class="f" for="c_ref">คืนเงิน/ส่วนลด (%)<input id="c_ref" type="number" min="0" inputmode="decimal" step="0.1"></label><label class="f" for="c_ad">โฆษณาและการตลาด (% ของรายได้)<input id="c_ad" type="number" min="0" inputmode="decimal" step="0.1"></label></div>
+  <div class="row2"><label class="f" for="c_print">พิมพ์แบบฝึก+เฉลย+แบบทดสอบ (บาทต่อชุด)<input id="c_print" type="number" min="0" inputmode="decimal" ></label><label class="f" for="c_ship">จัดส่งหนังสือ (บาทต่อชุด)<input id="c_ship" type="number" min="0" inputmode="decimal" ></label></div>
+  <div class="row2"><label class="f" for="c_edit">ตัดต่อวิดีโอทบทวนและทีมงาน (บาทต่อชั่วโมงวิดีโอ)<input id="c_edit" type="number" min="0" inputmode="decimal" ><small class="hint2">ครั้งเดียวต่อเนื้อหา</small></label><label class="f" for="c_asst">ผู้ช่วยสอน/ห้องเรียนออนไลน์ (บาทต่อรอบ)<input id="c_asst" type="number" min="0" inputmode="decimal" ></label></div></fieldset>
+<fieldset class="step"><legend><span class="stepno">3</span>รอบเรียนสดและเงื่อนไข</legend>
+  <div class="row2"><label class="f" for="c_qmin">ผู้สมัครขั้นต่ำเพื่อเปิดรอบ (คน)<input id="c_qmin" type="number" min="0" inputmode="decimal" ></label><label class="f" for="c_seats">รับสูงสุดต่อรอบ (คน)<input id="c_seats" type="number" min="0" inputmode="decimal" ></label></div>
+  <div class="row2"><label class="f" for="c_maxh">เรียนสดไม่เกินกี่ชั่วโมงต่อวัน<input id="c_maxh" type="number" min="0" inputmode="decimal" ><small class="hint2">เกินกว่านี้แบ่งเป็น 2 วัน</small></label><label class="f" for="c_reviewDays">ดูวิดีโอทบทวนได้ (วัน)<input id="c_reviewDays" type="number" min="0" inputmode="decimal" ></label></div>
+  <div class="row2"><label class="f" for="c_bookDays">ส่งหนังสือภายใน (วันทำการ)<input id="c_bookDays" type="number" min="0" inputmode="decimal" ></label><label class="f" for="c_repairDays">ส่งชุดซ่อมภายใน (วันทำการ)<input id="c_repairDays" type="number" min="0" inputmode="decimal" ></label></div>
+  <div class="row2"><label class="f" for="c_qdays">ตอบคำถามเนื้อหาภายใน (วันทำการ)<input id="c_qdays" type="number" min="0" inputmode="decimal" ></label><label class="f" for="c_reportDay">พาร์ตเนอร์ส่งรายงานวันที่<input id="c_reportDay" type="number" min="0" inputmode="decimal" ></label></div>
+  <div class="row2"><label class="f" for="c_payDays">โอนส่วนแบ่งภายใน (วัน)<input id="c_payDays" type="number" min="0" inputmode="decimal" ></label><label class="f" for="c_auditDays">ขอดูข้อมูลได้ภายใน (วัน)<input id="c_auditDays" type="number" min="0" inputmode="decimal" ></label></div>
+  <div class="row2"><label class="f" for="c_trial">ช่วงทดลอง (เดือน)<input id="c_trial" type="number" min="0" inputmode="decimal" ></label><label class="f" for="c_gate">จุดตัดสินใจที่ (เดือน)<input id="c_gate" type="number" min="0" inputmode="decimal" ></label></div>
+  <div class="row2"><label class="f" for="c_cure">เวลาแก้ไขเมื่อผิดสัญญา (วัน)<input id="c_cure" type="number" min="0" inputmode="decimal" ></label><label class="f" for="c_stop">หยุดขายหลังเลิก (วัน)<input id="c_stop" type="number" min="0" inputmode="decimal" ></label></div>
+  <label class="f" for="c_conf">รักษาความลับหลังสิ้นสุด (ปี)<input id="c_conf" type="number" min="0" inputmode="decimal" ></label>
+  <label class="chk2"><input type="checkbox" id="c_c16"> ใส่ข้อคำรับรองด้านระเบียบต้นสังกัด (ถ้าเป็นข้าราชการครู)</label></fieldset>
+<fieldset class="step"><legend><span class="stepno">4</span>คู่สัญญา</legend><p class="hint">เว้นว่างได้ ช่องที่ยังไม่กรอกจะไฮไลต์ในสัญญา ไม่ต้องกรอกเลขประจำตัวประชาชน</p>
+  <div class="row2"><label class="f" for="c_pn">ชื่อครูแซม (ผู้ผลิตและผู้สอน)<input id="c_pn" type="text" placeholder="ชื่อ-สกุล"></label><label class="f" for="c_tn">ชื่อพาร์ตเนอร์<input id="c_tn" type="text" placeholder="ชื่อ-สกุล/นิติบุคคล"></label></div>
+  <div class="row2"><label class="f" for="c_pa">ที่อยู่ครูแซม<input id="c_pa" type="text" placeholder=""></label><label class="f" for="c_ta">ที่อยู่พาร์ตเนอร์<input id="c_ta" type="text" placeholder=""></label></div>
+  <div class="row2"><label class="f" for="c_pc">ติดต่อครูแซม<input id="c_pc" type="text" placeholder="อีเมล/LINE"></label><label class="f" for="c_tc">ติดต่อพาร์ตเนอร์<input id="c_tc" type="text" placeholder="อีเมล/LINE"></label></div>
+  <div class="row2"><label class="f" for="c_place">ทำที่<input id="c_place" type="text" placeholder=""></label><label class="f" for="c_date">วันที่<input id="c_date" type="text" placeholder="วัน เดือน พ.ศ."></label></div>
+  <div class="row2"><label class="f" for="c_acct">บัญชีรับเงิน<input id="c_acct" type="text" placeholder="ธนาคาร/ชื่อบัญชี"></label><label class="f" for="c_court">ศาลที่มีเขตอำนาจ<input id="c_court" type="text" placeholder=""></label></div></fieldset>
+</form>
+<div class="prev-col">
+  <div class="sumbox" aria-live="polite">
+    <div class="tile"><span>ครูแซมได้ต่อปี</span><b id="s_s">–</b></div>
+    <div class="tile"><span>พาร์ตเนอร์ได้สุทธิ</span><b id="s_p">–</b></div>
+    <div class="tile"><span>รายได้รวมต่อปี</span><b id="s_g">–</b></div>
+    <p class="note" id="s_n" style="grid-column:1/-1;margin:0"></p>
+  </div>
+  <div class="card chartcard"><b>เงินแต่ละบาทไปที่ไหน</b><div id="lb"></div></div>
+  <div class="actions"><button type="button" class="btn" id="b_copy"><svg class="i"><use href="#doc"/></svg>คัดลอกข้อความ</button><button type="button" class="btn alt" id="b_print"><svg class="i"><use href="#ext"/></svg>พิมพ์ / บันทึก PDF</button><button type="button" class="btn alt" id="b_reset">ล้างข้อมูล</button></div>
+  <article class="paper" id="paper" aria-label="ตัวอย่างสัญญา"></article>
+  <p class="note">ไฮไลต์เหลือง = ช่องที่ยังไม่กรอก · ข้อมูลเก็บในเบราว์เซอร์เครื่องนี้เท่านั้น · ตัวเลขทั้งหมดเป็นค่าตั้งต้นที่ผู้ช่วยเสนอ ไม่ใช่ที่ตกลงกันแล้ว · ควรให้ทนายความและนักบัญชีตรวจก่อนลงนาม</p>
+</div>
+</div>
+<h2 class="sec" style="margin-top:22px">ราคาและรอบเรียนรายเนื้อหา</h2>
+<p class="note" style="margin:0 0 8px">ชั่วโมงเรียนสด = จำนวนคลิป × 15 นาที ราคาตั้งต้นคำนวณจากชั่วโมง (590 + 240 บาทต่อชั่วโมง ปัดเป็นเลขลงท้าย 90) ปรับเองได้ ติ๊กออกถ้าไม่เปิดขายเนื้อหานั้น</p>
+<div class="scroll"><table class="cltab"><thead><tr><th>ขาย</th><th>เนื้อหา</th><th class="n">ชม.สด</th><th class="n">วัน</th><th>ราคา</th><th>คน/รอบ</th><th>รอบ/ปี</th><th class="n">รายได้/ปี</th><th class="n">ครูแซม</th><th class="n">พาร์ตเนอร์</th><th class="n">คุ้มทุน (คน/ปี)</th></tr></thead><tbody id="tbody"></tbody></table></div>
+<div class="toast" id="toast" role="status" hidden></div>
+</div></main>
+</div>
+<script src="assets/db.js?v=mvgdiaxx"></script>
+<script src="assets/site.js?v=mvgdiaxx"></script>
+<script>
+(function(){
+var CAT=[{"id":"C","name":"ตัวประกอบ จำนวนเฉพาะ ห.ร.ม. ค.ร.น.","span":"ป.6","clips":5},{"id":"D","name":"เศษส่วน","span":"ป.3–ป.6","clips":17},{"id":"E","name":"ทศนิยม","span":"ป.4–ป.6","clips":20},{"id":"F","name":"อัตราส่วน สัดส่วน ร้อยละ","span":"ป.5–ม.1","clips":14},{"id":"K2","name":"มุม ความยาวรอบรูป และพื้นที่ของรูปเรขาคณิต","span":"ป.4–ป.6","clips":24},{"id":"B","name":"การบวก ลบ คูณ หาร จำนวนนับ และโจทย์ปัญหา","span":"ป.1–ป.5","clips":32},{"id":"L","name":"พื้นที่ผิวและปริมาตร","span":"ป.5–ม.3","clips":25},{"id":"H","name":"จำนวนเต็ม จำนวนตรรกยะ จำนวนจริง เลขยกกำลัง","span":"ม.1–ม.2","clips":30},{"id":"I","name":"สมการ อสมการ พหุนาม และฟังก์ชัน","span":"ม.1–ม.3","clips":34},{"id":"K1","name":"รูปเรขาคณิต สมบัติ การสร้าง การแปลง และเรขาคณิตขั้นสูง","span":"ป.1–ม.3","clips":25},{"id":"M","name":"สถิติและการนำเสนอข้อมูล","span":"ป.1–ม.3","clips":14},{"id":"N","name":"ความน่าจะเป็น","span":"ม.3","clips":4},{"id":"J1","name":"การวัด: ความยาว น้ำหนัก ปริมาตรและความจุ","span":"ป.1–ป.5","clips":17},{"id":"J2","name":"เวลาและเงิน","span":"ป.2–ป.4","clips":11},{"id":"A","name":"จำนวนนับและค่าประจำหลัก","span":"ป.1–ป.4","clips":11},{"id":"G","name":"แบบรูป","span":"ป.1–ป.6","clips":4}];
+var KEY="mo_contract_live_v1";
+var $=function(id){return document.getElementById(id)};
+var th=function(n){return Math.round(n).toLocaleString("en-US")};
+var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")};
+var DEF={opt:"A",spA:55,feeH:1200,spB:40,spC:40,plat:8,pay:3.5,ref:4,ad:20,print:120,ship:60,edit:1500,asst:500,
+ qmin:8,seats:30,maxh:6,reviewDays:90,bookDays:7,repairDays:3,qdays:2,reportDay:10,payDays:7,auditDays:15,trial:6,gate:3,cure:30,stop:30,conf:2,
+ pn:"",tn:"",pa:"",ta:"",pc:"",tc:"",place:"",date:"",acct:"",court:"",c16:true,rows:{}};
+var S;
+try{S=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){S=null}
+S=Object.assign({},DEF,S||{});S.rows=S.rows||{};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function hrs(c){return c.clips*0.25}
+function defPrice(c){return Math.max(590,Math.round((590+240*hrs(c))/100)*100-10)}
+function row(c){var r=S.rows[c.id]||{};return {on:r.on===undefined?c.id!=="A":r.on,price:r.price===undefined?defPrice(c):r.price,n:r.n===undefined?15:r.n,runs:r.runs===undefined?2:r.runs}}
+function calc(c){
+  var r=row(c),h=hrs(c),m={c:c,r:r,h:h,days:h<=S.maxh?1:2};
+  m.gross=r.on?r.price*r.n*r.runs:0;
+  m.refund=m.gross*S.ref/100;m.fee=m.gross*(S.plat+S.pay)/100;m.netRev=m.gross-m.refund-m.fee;
+  m.ads=m.gross*S.ad/100;m.books=r.on?r.n*r.runs*(S.print+S.ship):0;m.edit=r.on?h*S.edit:0;m.asst=r.on?S.asst*r.runs:0;
+  m.teach=(S.opt==="B"&&r.on)?h*S.feeH*r.runs:0;
+  if(S.opt==="C"){m.sam=m.netRev*S.spC/100;m.profit=m.netRev-m.sam-m.ads-m.books-m.edit-m.asst;m.par=m.profit}
+  else{m.profit=m.netRev-m.ads-m.books-m.edit-m.asst-m.teach;var sp=S.opt==="A"?S.spA:S.spB;m.sam=m.teach+Math.max(m.profit,0)*sp/100;m.par=m.profit-Math.max(m.profit,0)*sp/100}
+  var contrib=r.price*(1-(S.ref+S.plat+S.pay+S.ad)/100)-(S.print+S.ship);
+  var fixed=m.edit+m.asst+m.teach;m.be=(r.on&&contrib>0)?Math.ceil(fixed/contrib):0;
+  return m;
+}
+var FIELDS=["spA","feeH","spB","spC","plat","pay","ref","ad","print","ship","edit","asst","qmin","seats","maxh","reviewDays","bookDays","repairDays","qdays","reportDay","payDays","auditDays","trial","gate","cure","stop","conf","pn","tn","pa","ta","pc","tc","place","date","acct","court"];
+function bind(){
+  FIELDS.forEach(function(k){var e=$("c_"+k);if(!e)return;e.value=S[k];e.addEventListener("input",function(){S[k]=(e.type==="number")?(parseFloat(e.value)||0):e.value;save();render()})});
+  document.querySelectorAll("input[name=c_opt]").forEach(function(e){e.checked=e.value===S.opt;e.addEventListener("change",function(){S.opt=e.value;save();render()})});
+  $("c_c16").checked=!!S.c16;$("c_c16").addEventListener("change",function(){S.c16=$("c_c16").checked;save();render()});
+  $("b_reset").addEventListener("click",function(){if(!confirm("ล้างข้อมูลทั้งหมดและกลับไปใช้ค่าตั้งต้น?"))return;S=JSON.parse(JSON.stringify(DEF));save();FIELDS.forEach(function(k){var e=$("c_"+k);if(e)e.value=S[k]});document.querySelectorAll("input[name=c_opt]").forEach(function(e){e.checked=e.value===S.opt});$("c_c16").checked=true;render()});
+  $("b_copy").addEventListener("click",function(){var t=$("paper").innerText;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast("คัดลอกข้อความแล้ว")},function(){toast("คัดลอกไม่ได้ ลองเลือกข้อความเอง")})});
+  $("b_print").addEventListener("click",function(){window.print()});
+  document.querySelectorAll("#vbar button").forEach(function(b){b.addEventListener("click",function(){var v=b.dataset.v;$("cview").dataset.v=v;document.querySelectorAll("#vbar button").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false")})})});
+}
+function toast(m){var t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){t.hidden=true},2200)}
+function mk(v,u){return(v===""||v===undefined||v===null)?"<mark>…………………</mark>":'<span class="fv">'+esc(v)+(u||"")+"</span>"}
+var OPTNAME={A:"แบ่งกำไรสุทธิ",B:"ค่าสอนสดต่อชั่วโมง + แบ่งกำไรสุทธิ",C:"แบ่งรายได้หลังหักค่าธรรมเนียม"};
+function tableRows(){
+  var tb="";
+  CAT.forEach(function(c){var m=calc(c),r=m.r;
+    tb+='<tr class="'+(r.on?"":"off")+'"><td><input type="checkbox" data-r="'+c.id+'" data-f="on" '+(r.on?"checked":"")+' aria-label="เปิดขาย '+esc(c.name)+'"></td>'+
+    '<th scope="row">'+esc(c.name)+'<small>'+esc(c.span)+" · "+c.clips+" คลิป"+(c.id==="A"?" · ซ้ำกับเนื้อหาจำนวนนับ (B)":"")+'</small></th>'+
+    '<td class="n">'+m.h.toFixed(2).replace(/\.?0+$/,"")+'</td><td class="n">'+m.days+'</td>'+
+    '<td><input type="number" min="0" data-r="'+c.id+'" data-f="price" value="'+r.price+'"></td>'+
+    '<td><input type="number" min="0" data-r="'+c.id+'" data-f="n" value="'+r.n+'"></td>'+
+    '<td><input type="number" min="0" data-r="'+c.id+'" data-f="runs" value="'+r.runs+'"></td>'+
+    '<td class="n">'+th(m.gross)+'</td><td class="n">'+th(m.sam)+'</td><td class="n'+(m.par<0?" neg":"")+'">'+th(m.par)+'</td><td class="n">'+(m.be?th(m.be):"–")+'</td></tr>'});
+  return tb;
+}
+function totals(){
+  var T={gross:0,sam:0,par:0,refund:0,fee:0,ads:0,books:0,edit:0,asst:0,teach:0,n:0,h:0,on:0};
+  CAT.forEach(function(c){var m=calc(c);if(!m.r.on)return;T.on++;T.h+=m.h;T.n+=m.r.n*m.r.runs;["gross","sam","par","refund","fee","ads","books","edit","asst","teach"].forEach(function(k){T[k]+=m[k]})});
+  return T;
+}
+function bar(T){
+  var seg=[["ค่าชำระเงินและแพลตฟอร์ม",T.fee,"#868e96"],["คืนเงิน/ส่วนลด",T.refund,"#adb5bd"],["โฆษณา",T.ads,"#e8590c"],["พิมพ์และส่งหนังสือ",T.books,"#f59f00"],["ตัดต่อ/ผู้ช่วย",T.edit+T.asst,"#7048e8"],["ครูแซมได้",T.sam,"#2b8a3e"],["พาร์ตเนอร์ได้",Math.max(T.par,0),"#1971c2"]];
+  var tot=seg.reduce(function(a,s){return a+Math.max(s[1],0)},0)||1;
+  return '<div class="lbar" role="img" aria-label="สัดส่วนรายได้">'+seg.map(function(s){return '<i style="width:'+(Math.max(s[1],0)/tot*100)+'%;background:'+s[2]+'"></i>'}).join("")+"</div>"+
+   '<ul class="lleg">'+seg.map(function(s){return '<li><i style="background:'+s[2]+'"></i>'+s[0]+" <b>"+th(s[1])+"</b> ("+(Math.max(s[1],0)/tot*100).toFixed(0)+"%)</li>"}).join("")+"</ul>";
+}
+function costTable(){
+  var a=S.opt==="C";
+  var rows=[["ค่าชำระเงิน",S.pay+"% ของรายได้","พาร์ตเนอร์ออกก่อน","หักจากรายได้ก่อนแบ่ง"],["ค่าแพลตฟอร์ม",S.plat+"% ของรายได้","พาร์ตเนอร์ออกก่อน","หักจากรายได้ก่อนแบ่ง"],["คืนเงิน/ส่วนลด",S.ref+"% ของรายได้","ตามจริง","หักจากรายได้ก่อนแบ่ง"],
+   ["ค่าโฆษณาและการตลาด",S.ad+"% ของรายได้","พาร์ตเนอร์ออกก่อน",a?"พาร์ตเนอร์รับภาระเอง":"หักก่อนแบ่งกำไร ต้องมีหลักฐาน"],
+   ["ค่าพิมพ์แบบฝึก เฉลย แบบทดสอบ ต่อชุด",th(S.print)+" บาท","พาร์ตเนอร์ออกก่อน",a?"พาร์ตเนอร์รับภาระเอง":"หักก่อนแบ่งกำไร"],["ค่าจัดส่งหนังสือต่อชุด",th(S.ship)+" บาท","พาร์ตเนอร์ออกก่อน",a?"พาร์ตเนอร์รับภาระเอง":"หักก่อนแบ่งกำไร"],
+   ["ค่าตัดต่อวิดีโอทบทวนและทีมงาน",th(S.edit)+" บาทต่อชั่วโมงวิดีโอ (ครั้งเดียวต่อเนื้อหา)","พาร์ตเนอร์ออกก่อน",a?"พาร์ตเนอร์รับภาระเอง":"คืนทุนจากรายได้ของเนื้อหานั้นก่อนแบ่งกำไร"],
+   ["ผู้ช่วยสอนและห้องเรียนออนไลน์",th(S.asst)+" บาทต่อรอบ","พาร์ตเนอร์ออกก่อน",a?"พาร์ตเนอร์รับภาระเอง":"หักก่อนแบ่งกำไร"]];
+  if(S.opt==="B")rows.push(["ค่าสอนสดของครูแซม",th(S.feeH)+" บาทต่อชั่วโมงสอนสด","จ่ายต่อรอบหลังสอนจบ","นับเป็นรายได้ของครูแซม ไม่หักจากส่วนแบ่ง"]);
+  return '<div class="scroll"><table><tr><th>รายการ</th><th>อัตรา</th><th>ใครออกเงินก่อน</th><th>การคืน/การหัก</th></tr>'+rows.map(function(r){return"<tr><td>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td><td>"+esc(r[2])+"</td><td>"+esc(r[3])+"</td></tr>"}).join("")+"</table></div>";
+}
+function paper(T){
+  var sp=S.opt==="A"?S.spA:S.opt==="B"?S.spB:S.spC;
+  var tx=[];
+  var h='<p class="ptitle"><b>บันทึกข้อตกลงความร่วมมือ<br>จัดการเรียนการสอนคณิตศาสตร์แบบเรียนสด พร้อมวิดีโอทบทวน หนังสือส่งบ้าน และแบบทดสอบวัดระดับ</b></p><p class="draft">ร่างสำหรับพิจารณา ยังไม่ใช่สัญญาที่สมบูรณ์ · ควรให้ทนายความและนักบัญชีตรวจก่อนลงนาม</p>';
+  h+='<p>ทำที่ '+mk(S.place)+' วันที่ '+mk(S.date)+'</p>';
+  h+='<p>บันทึกข้อตกลงฉบับนี้ทำขึ้นระหว่าง <b>'+mk(S.pn||"")+'</b> ที่อยู่ '+mk(S.pa)+' (เรียกว่า “<b>ผู้ผลิตและผู้สอน</b>” หรือ “ครูแซม”) กับ <b>'+mk(S.tn)+'</b> ที่อยู่ '+mk(S.ta)+' (เรียกว่า “<b>พาร์ตเนอร์</b>”) โดยมีข้อตกลงดังนี้</p>';
+  var cl=function(n,t,items){h+='<h3 id="cl'+n+'">ข้อ '+n+' '+t+'</h3>';items.forEach(function(it,i){h+='<p class="it"><b>'+n+'.'+(i+1)+'</b> '+it+'</p>'})};
+  cl(1,"ผลิตภัณฑ์ที่ให้บริการ",["ผลิตภัณฑ์ในแต่ละเนื้อหาประกอบด้วย 4 ส่วนเสมอ ได้แก่ (1) <b>เรียนสด</b> ตามจำนวนชั่วโมงเท่ากับความยาวรวมของคลิปในเนื้อหานั้น หรือเป็นรอบเรียน 1–2 วันเท่านั้น (2) <b>วิดีโอทบทวน</b> ให้ดูซ้ำได้ "+mk(S.reviewDays," วัน")+" นับจากวันเรียนสดวันแรก (3) <b>หนังสือส่งบ้าน</b> คือแบบฝึกแบบการ์ดพร้อมเฉลย (4) <b>แบบทดสอบวัดระดับ</b> พร้อมเกณฑ์ผ่านรายส่วนและชุดซ่อมรายทักษะ",
+   "เนื้อหาที่เปิดให้บริการ ชั่วโมงเรียน จำนวนวัน และราคา เป็นไปตามเอกสารแนบ 1 ("+T.on+" เนื้อหา รวมประมาณ "+T.h.toFixed(1)+" ชั่วโมง)"]);
+  cl(2,"หน้าที่ของครูแซม",["จัดทำเนื้อหา วิดีโอทบทวน หนังสือแบบฝึกและเฉลย แบบทดสอบวัดระดับ และชุดซ่อม ตามหลักสูตรแกนกลางการศึกษาขั้นพื้นฐาน พ.ศ. 2551 (ปรับปรุง พ.ศ. 2560)","สอนสดด้วยตนเองตามรอบที่ตกลง วันละไม่เกิน "+mk(S.maxh," ชั่วโมง")+" และตอบคำถามเนื้อหาของผู้เรียนภายใน "+mk(S.qdays," วันทำการ"),"ส่งชุดซ่อมให้ผู้ปกครองที่แจ้งรหัสทักษะที่ไม่ผ่านภายใน "+mk(S.repairDays," วันทำการ")]);
+  cl(3,"หน้าที่ของพาร์ตเนอร์",["วางแผนและดำเนินการตลาด รับสมัคร รับชำระเงิน และดูแลห้องเรียนออนไลน์พร้อมที่เก็บวิดีโอ","ลงทุนค่าใช้จ่ายตามข้อ 6 และเอกสารแนบ 2 พิมพ์และจัดส่งหนังสือภายใน "+mk(S.bookDays," วันทำการ")+" หลังชำระเงิน","ไม่ปรับราคา ลดราคา หรือแจกฟรีนอกเหนือที่ตกลงกัน โดยไม่แจ้งครูแซมล่วงหน้า"]);
+  cl(4,"การเปิดรอบเรียนสด",["เปิดรอบเมื่อมีผู้ลงทะเบียนอย่างน้อย "+mk(S.qmin," คน")+" และรับไม่เกิน "+mk(S.seats," คนต่อรอบ")+" ถ้าไม่ถึงขั้นต่ำให้เลื่อนรอบหรือคืนเงินเต็มจำนวน","บันทึกการเรียนสดและเชื่อมกับวิดีโอทบทวนได้ตามตกลงของทั้งสองฝ่าย"]);
+  var sIt;
+  if(S.opt==="A")sIt=["ค่าชำระเงิน ค่าแพลตฟอร์ม คืนเงิน ค่าโฆษณา ค่าพิมพ์และจัดส่ง ค่าตัดต่อและผู้ช่วย ตามเอกสารแนบ 2 ให้พาร์ตเนอร์ออกก่อน แล้วหักคืนจากรายได้ ส่วนที่เหลือเป็น <b>กำไรสุทธิ</b>","กำไรสุทธิแบ่งให้ครูแซม <b>"+S.spA+"%</b> พาร์ตเนอร์ <b>"+(100-S.spA)+"%</b> ถ้าเดือนใดไม่มีกำไร ครูแซมไม่ต้องร่วมรับขาดทุน"];
+  else if(S.opt==="B")sIt=["ครูแซมได้ค่าสอนสด <b>"+th(S.feeH)+" บาทต่อชั่วโมงสอนสด</b> จ่ายหลังจบแต่ละรอบ นับเป็นต้นทุนของโครงการก่อนคำนวณกำไร","หลังหักค่าใช้จ่ายตามเอกสารแนบ 2 กำไรสุทธิแบ่งให้ครูแซม <b>"+S.spB+"%</b> พาร์ตเนอร์ <b>"+(100-S.spB)+"%</b>"];
+  else sIt=["ครูแซมได้ <b>"+S.spC+"%</b> ของรายได้หลังหักคืนเงิน ค่าชำระเงินและค่าแพลตฟอร์ม","ค่าโฆษณา ค่าพิมพ์และจัดส่ง ค่าตัดต่อและผู้ช่วย พาร์ตเนอร์รับภาระเองทั้งหมด และไม่นำมาหักจากส่วนของครูแซม"];
+  cl(5,"ราคาและการรับเงิน",["ราคาขายตามเอกสารแนบ 1 พาร์ตเนอร์รับเงินผ่านบัญชี "+mk(S.acct)+" และออกใบเสร็จตามกฎหมาย","ส่วนลดหรือโปรโมชันที่ทำให้ราคาจริงต่ำกว่าที่กำหนด ต้องได้รับความเห็นชอบจากครูแซมเป็นลายลักษณ์อักษรล่วงหน้า"]);
+  cl(6,"ค่าใช้จ่ายและการแบ่งเงิน",["โมเดลที่เลือก: <b>"+OPTNAME[S.opt]+"</b>"].concat(sIt).concat(["ตัวอย่างประมาณการปีแรก (ตามราคา จำนวนผู้เรียนและรอบในเอกสารแนบ 1): รายได้รวม "+th(T.gross)+" บาท ครูแซมได้ "+th(T.sam)+" บาท พาร์ตเนอร์ได้สุทธิ "+th(T.par)+" บาท (เป็นตัวอย่าง ไม่ใช่การรับประกันรายได้)"]));
+  cl(7,"รายงานและการตรวจสอบ",["พาร์ตเนอร์ส่งรายงานผู้สมัคร รายได้ ค่าใช้จ่ายพร้อมหลักฐาน ภายในวันที่ "+mk(S.reportDay)+" ของทุกเดือน และโอนส่วนแบ่งของครูแซมภายใน "+mk(S.payDays," วัน")+" นับจากส่งรายงาน","ครูแซมขอดูข้อมูลระบบจริงได้ภายใน "+mk(S.auditDays," วัน")+" นับจากแจ้ง"]);
+  cl(8,"สิทธิ์ในผลงานและแบรนด์",["เนื้อหา วิดีโอ หนังสือ แบบทดสอบ และชุดซ่อม เป็นลิขสิทธิ์ของครูแซม พาร์ตเนอร์ได้สิทธิ์ใช้จำหน่ายตามสัญญานี้เท่านั้น ห้ามทำซ้ำ ดัดแปลง หรือให้บุคคลอื่นใช้","ใช้ชื่อ “สอนโดย ครูแซม TuTor บ้านครู” ในสื่อทุกชิ้น"]);
+  cl(9,"แบบทดสอบวัดระดับและข้อมูลนักเรียน",["แบบทดสอบใช้เกณฑ์ผ่านตั้งแต่ 70% ต่อส่วน เป็นเครื่องมือประเมินเบื้องต้นสำหรับผู้ปกครอง ไม่ใช่การวัดผลอย่างเป็นทางการ","ข้อมูลนักเรียนและผลทดสอบเป็นข้อมูลส่วนบุคคล ใช้เท่าที่จำเป็นตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 ไม่นำไปเปิดเผยหรือใช้การตลาดโดยไม่ได้รับความยินยอม"]);
+  cl(10,"ระยะเวลาและการเลิกสัญญา",["ช่วงทดลอง "+mk(S.trial," เดือน")+" ประเมินที่เดือนที่ "+mk(S.gate)+" ถ้าไม่เป็นไปตามเป้าที่ตกลง ทั้งสองฝ่ายหารือปรับหรือเลิกสัญญาได้","ถ้าฝ่ายใดผิดสัญญาและไม่แก้ไขภายใน "+mk(S.cure," วัน")+" หลังได้รับแจ้ง อีกฝ่ายเลิกสัญญาได้ หลังเลิกสัญญาหยุดขายภายใน "+mk(S.stop," วัน")+" ผู้เรียนเดิมเรียนต่อจนจบ และส่วนแบ่งยังได้รับจนครบ","รักษาความลับทางธุรกิจหลังสิ้นสุดสัญญา "+mk(S.conf," ปี")]);
+  if(S.c16)cl(11,"คำรับรองด้านระเบียบต้นสังกัด",["ครูแซมรับรองว่าการสอนและผลิตสื่อตามบันทึกนี้ทำนอกเวลาราชการ ไม่ใช้ทรัพยากรของทางราชการ และเป็นไปตามระเบียบของต้นสังกัด ตรวจสอบกับต้นสังกัดก่อนลงนาม"]);
+  cl(S.c16?12:11,"ข้อพิพาท",["กฎหมายไทย ศาลที่มีเขตอำนาจ: "+mk(S.court)]);
+  h+='<p style="margin-top:18px">บันทึกข้อตกลงนี้ทำขึ้นเป็นสองฉบับ มีข้อความตรงกัน คู่สัญญาได้อ่านและเข้าใจแล้ว จึงลงนามไว้เป็นหลักฐาน</p>';
+  h+='<div class="sigs">'+[[S.pn||"ครูแซม","ผู้ผลิตและผู้สอน"],[S.tn||"พาร์ตเนอร์","พาร์ตเนอร์"],["…………………","พยาน"],["…………………","พยาน"]].map(function(s){return'<div><span>ลงชื่อ ………………………………</span><span>( '+esc(s[0])+' )</span><span>'+s[1]+"</span></div>"}).join("")+"</div>";
+  h+='<h3 class="pb" id="annex1">เอกสารแนบ 1 เนื้อหา ชั่วโมงเรียนสด และราคา</h3><div class="scroll"><table><tr><th>เนื้อหา</th><th>ชั้น</th><th class="n">คลิป</th><th class="n">ชั่วโมงเรียนสด</th><th class="n">วันเรียน</th><th class="n">ราคา (บาท)</th></tr>'+
+    CAT.filter(function(c){return row(c).on}).map(function(c){var m=calc(c);return"<tr><td>"+esc(c.name)+"</td><td>"+esc(c.span)+'</td><td class="n">'+c.clips+'</td><td class="n">'+m.h.toFixed(2).replace(/\.?0+$/,"")+'</td><td class="n">'+m.days+'</td><td class="n">'+th(m.r.price)+"</td></tr>"}).join("")+"</table></div>";
+  h+='<p class="note">ทุกเนื้อหารวม เรียนสด วิดีโอทบทวน หนังสือส่งบ้าน และแบบทดสอบวัดระดับ ชั่วโมงเรียนสดเท่ากับความยาวรวมของคลิป (คลิปละ 15 นาที) ถ้าเกิน '+S.maxh+' ชั่วโมงให้แบ่งเป็น 2 วัน</p>';
+  h+='<h3 class="pb" id="annex2">เอกสารแนบ 2 ค่าใช้จ่ายและผู้รับผิดชอบ</h3>'+costTable();
+  h+='<h3 class="pb" id="annex3">เอกสารแนบ 3 ตัวอย่างการคำนวณปีแรก</h3><div class="scroll"><table><tr><th>รายการ</th><th class="n">บาท</th></tr>'+
+   [["รายได้รวม ("+th(T.n)+" คน)",T.gross],["หัก คืนเงิน/ส่วนลด",-T.refund],["หัก ค่าชำระเงินและแพลตฟอร์ม",-T.fee],["หัก ค่าโฆษณา",-T.ads],["หัก ค่าพิมพ์และจัดส่งหนังสือ",-T.books],["หัก ค่าตัดต่อวิดีโอและผู้ช่วยสอน",-(T.edit+T.asst)]].concat(S.opt==="B"?[["หัก ค่าสอนสดของครูแซม",-T.teach]]:[]).concat(S.opt==="C"?[["ส่วนของครูแซม ("+S.spC+"% ของรายได้หลังหักค่าธรรมเนียม)",-T.sam]]:[]).concat([["ครูแซมได้รวม",T.sam],["พาร์ตเนอร์ได้สุทธิ",T.par]]).map(function(r){return"<tr><td>"+r[0]+'</td><td class="n'+(r[1]<0?" neg":"")+'">'+th(r[1])+"</td></tr>"}).join("")+"</table></div>";
+  h+='<p class="note">ตัวเลขนี้คำนวณจากราคาและจำนวนผู้เรียนที่กรอกในหน้านี้ เป็นตัวอย่างเพื่อทำความเข้าใจ ไม่ใช่การรับประกันรายได้ ต้องให้นักบัญชีตรวจเรื่องภาษีก่อนใช้จริง</p>';
+  return h;
+}
+function render(){
+  var T=totals();
+  $("tbody").innerHTML=tableRows();
+  document.querySelectorAll("#tbody input").forEach(function(e){var f=e.dataset.f,id=e.dataset.r;var h=function(){var r=S.rows[id]=S.rows[id]||{};r[f]=f==="on"?e.checked:(parseFloat(e.value)||0);save();renderSummary()};e.addEventListener(f==="on"?"change":"change",h);if(f!=="on")e.addEventListener("input",function(){var r=S.rows[id]=S.rows[id]||{};r[f]=parseFloat(e.value)||0;save();renderSummary(true)})});
+  renderSummary();
+}
+function renderSummary(keep){
+  var T=totals();
+  $("s_g").textContent=th(T.gross)+" บาท";$("s_s").textContent=th(T.sam)+" บาท";$("s_p").textContent=(T.par<0?"ขาดทุน ":"")+th(Math.abs(T.par))+" บาท";
+  $("s_n").textContent=T.on+" เนื้อหา · "+th(T.n)+" คน";
+  $("lb").innerHTML=bar(T);
+  if(!keep){
+    var rows=CAT.map(function(c){return calc(c)});
+    CAT.forEach(function(c,i){var m=rows[i],tr=document.querySelector('#tbody input[data-r="'+c.id+'"]');if(!tr)return});
+  }
+  var rowsEl=document.querySelectorAll("#tbody tr");
+  CAT.forEach(function(c,i){var m=calc(c),tds=rowsEl[i].children;tds[7].textContent=th(m.gross);tds[8].textContent=th(m.sam);tds[9].textContent=th(m.par);tds[9].className="n"+(m.par<0?" neg":"");tds[10].textContent=m.be?th(m.be):"–";rowsEl[i].className=m.r.on?"":"off"});
+  $("paper").innerHTML=paper(T);
+  document.querySelectorAll("[data-opt]").forEach(function(e){e.hidden=e.dataset.opt!==S.opt});
+}
+bind();render();
+})();
+
+</script>
+</body></html>

@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>แบบทดสอบวัดระดับ</title>
+<meta name="description" content="ทำแบบทดสอบวัดระดับในโปรแกรม ตรวจเฉลย และดูผลวิเคราะห์ผ่าน/ไม่ผ่านรายทักษะแยกรายคน">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css?v=mvhksz9v">
+<script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>
+#pview .pv{display:none}#pview[data-v="stu"] .pv-stu,#pview[data-v="test"] .pv-test,#pview[data-v="report"] .pv-report{display:block}
+.curbadge{margin:8px 0 12px;font-weight:600}.warnt{color:var(--neg)}
+.err{color:var(--neg);font-size:16px;margin:4px 0}
+input[type=text],select{font:18px var(--body);padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%}
+.srow{display:flex;gap:8px;align-items:center;margin:0 0 8px}.srow .sel{flex:1;text-align:left;border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface);cursor:pointer;font:inherit;color:var(--fg)}
+.srow.on .sel{border-color:var(--ink);background:var(--ink-soft)}.srow .sel b{display:block}.srow .sel small{color:var(--mut)}
+.btn.sm{padding:6px 12px;font-size:15px}
+.bookgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.bk{padding:14px 16px}.bk small{display:block;color:var(--mut);margin:2px 0 8px}
+.secs{display:grid;gap:6px}.secbtn{position:relative;text-align:left;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg);cursor:pointer;font:inherit;color:var(--fg)}
+.secbtn:disabled{opacity:.5;cursor:not-allowed}.secbtn small{display:block;color:var(--mut);font-size:14px;margin:0}.secbtn.rec{border-color:var(--ink)}
+.secbtn em{position:absolute;right:10px;top:8px;font-style:normal;font-size:14px;font-weight:700;border-radius:99px;padding:0 9px}
+em.ok,.pill.ok{background:#d3f9d8;color:#1b5e20}em.no,.pill.no{background:#ffd8d1;color:#8a2312}
+.rhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}.rhead small{display:block;color:var(--mut)}
+.qs{list-style:none;margin:0;padding:0;display:grid;gap:12px}.qi{display:flex;gap:12px;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface)}
+.qn{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--on-ink);display:grid;place-items:center;font-weight:700}
+.qb{flex:1;min-width:0}.qtxt{font-size:19px;line-height:1.6}.qfig{margin:8px 0}.qfig svg{max-width:100%;height:auto;max-height:260px;display:block}
+.qa{display:block;margin-top:8px;font-size:16px;color:var(--mut)}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.1;margin:0 .15em;font-size:.92em}.fr>span:first-child{border-bottom:1.5px solid currentColor;padding:0 .25em .04em}.fr>span:last-child{padding:.04em .25em 0}
+.mx{display:inline-flex;align-items:center;gap:.1em;margin:0 .12em}.mx b{font-weight:400}sup{font-size:.7em;vertical-align:baseline;position:relative;top:-.5em;line-height:0}
+.qi.rv.g{border-color:#69db7c}.qi.rv.b{border-color:#f08c8c}.cmp{display:flex;flex-wrap:wrap;gap:6px 18px;margin:8px 0;font-size:17px}.cmp .key{color:var(--ok)}.cmp .code{color:var(--mut);font-weight:700}
+.tg{display:flex;gap:16px}.tg label{display:flex;align-items:center;gap:6px;font-size:17px;cursor:pointer}.tg input{width:20px;height:20px;accent-color:var(--ink)}
+.bigres{display:flex;align-items:baseline;gap:14px;border-radius:16px;padding:16px 20px;margin:10px 0}.bigres b{font-size:40px}.bigres span{font-size:20px;font-weight:600}.bigres.ok{background:#d3f9d8;color:#1b5e20}.bigres.no{background:#ffd8d1;color:#8a2312}
+.box{border:1.5px solid var(--line);border-radius:14px;padding:12px 16px;margin:12px 0}.box h3{margin:0 0 4px;font-size:19px}.box.pass{border-color:#69db7c;background:#f1fbf3}.box.fail{border-color:#f08c8c;background:#fff4f2}.box.warn{border-color:#e0b34a;background:#fffaf0}
+.box.pass,.box.fail,.box.warn{color:#1f2937}.box small{color:#555}
+.wk{margin:6px 0 10px;padding-left:20px}.wk li{margin:3px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.chips span,.chipbtn{border:1px solid var(--line);border-radius:99px;padding:3px 12px;background:var(--bg);font:inherit;font-size:16px;color:var(--fg)}.chipbtn{cursor:pointer}
+.rephead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end}.rephead h2{margin:0}
+.rtab{width:100%;border-collapse:collapse;min-width:520px}.rtab th,.rtab td{padding:8px 10px;border-top:1px solid var(--line);text-align:left;vertical-align:top}.rtab th small{display:block;font-weight:400;color:var(--mut)}
+.pill{display:inline-block;border-radius:99px;padding:1px 10px;margin:0 6px 6px 0;font-size:15px}.pill.none{background:var(--ink-soft);color:var(--mut)}
+.sec2{margin:18px 0 6px}.hist{margin:0;padding-left:20px}
+.sumbox{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+@media print{.side,.page-head,.crumb,#ptabs,.callout,.actions,.toast,footer,.chipbtn{display:none!important}.app{display:block}.content{padding:0}body{background:#fff}#pview .pv{display:none!important}#pview .pv-report{display:block!important}}
+</style></head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol>
+<symbol id="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.3-5 1.3-5 3.6 0 1.1 1 1.7 2.5 1.7s2.5-.5 2.5-1.5"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="plan" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></symbol>
+<symbol id="calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4zM20 4h-6M20 4v15h-6"/></symbol>
+<symbol id="video" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+<symbol id="sign" viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zM14 2v5h5M9 18c1.5-2 2.5-2 3 0s2 1.5 3-1"/></symbol>
+<symbol id="db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</defs></svg>
+<div class="app">
+<aside class="side">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true">ค</span><span><b>Math-Online</b><small>คณิตตรงจุด · แผนงานคอร์สออนไลน์</small></span></a>
+  <nav class="nav" aria-label="เมนูหลัก"><h3>เริ่มต้น</h3><a href="index.html"><svg class="i"><use href="#home"/></svg>ภาพรวมโครงการ</a><h3>แผนงาน</h3><a href="plan/start.html"><svg class="i"><use href="#plan"/></svg>แผนเริ่มต้น 30 วัน</a><a href="plan/roadmap.html"><svg class="i"><use href="#map"/></svg>แผน 1-3-6-12 เดือน</a><a href="plan/revenue-and-video-p4-m3.html"><svg class="i"><use href="#video"/></svg>ขยาย ป.4–ม.3</a><a href="production.html"><svg class="i"><use href="#plan"/></svg>แผนผลิตคอร์ส</a><a href="market.html"><svg class="i"><use href="#bars"/></svg>วิจัยตลาดคอร์ส ป.1–ม.3</a><a href="content.html"><svg class="i"><use href="#plan"/></svg>ผังเนื้อหา ป.1–ม.3</a><a href="recording.html"><svg class="i"><use href="#video"/></svg>แผนคลิปทุกเนื้อหา</a><a href="contract.html"><svg class="i"><use href="#sign"/></svg>ร่างสัญญากับติวเตอร์</a><a href="contract-live.html"><svg class="i"><use href="#sign"/></svg>สัญญาโมเดลสอนสด</a><a href="placement.html" aria-current="page"><svg class="i"><use href="#target"/></svg>แบบทดสอบวัดระดับ</a><h3>สินค้าและตัวเลข</h3><a href="exam-course.html"><svg class="i"><use href="#target"/></svg>คอร์สตะลุยข้อสอบ</a><a href="model-2.html"><svg class="i"><use href="#calc"/></svg>โมเดลข้อเสนอ 2</a><a href="catalog.html"><svg class="i"><use href="#book"/></svg>แคตตาล็อกคอร์ส</a><a href="pricing.html"><svg class="i"><use href="#calc"/></svg>ราคาและเครื่องคิดเลข</a><a href="income.html"><svg class="i"><use href="#bars"/></svg>แผนรายได้ 12 เดือน</a><h3>เครื่องมือออนไลน์</h3><a href="https://sarawut2206.github.io/krusamm-quiz/" target="_blank" rel="noopener"><svg class="i"><use href="#game"/></svg>ควิซสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a><a href="https://sarawut2206.github.io/krusamm-Test-multiplication-58-/" target="_blank" rel="noopener"><svg class="i"><use href="#timer"/></svg>วัดผลสูตรคูณ<svg class="i ext"><use href="#ext"/></svg></a></nav>
+  <div class="side-foot"><a class="tbtn dbbtn" id="dbbtn" href="database.html" data-s="nopin"><svg class="i"><use href="#db"/></svg><span>ฐานข้อมูล · ยังไม่เชื่อม</span><i class="dot"></i></a><button class="tbtn" id="theme" type="button" aria-label="สลับโหมดมืด/สว่าง"><svg class="i"><use href="#moon"/></svg><span>โหมดมืด</span></button><div class="note-side">ฉบับร่างสำหรับวางแผน ตัวเลขเป็นสมมติฐาน</div></div>
+</aside>
+<main class="content" id="main"><div class="inner">
+<nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> แผนงาน <span aria-hidden="true">›</span> แบบทดสอบวัดระดับ</nav>
+<header class="page-head"><h1>แบบทดสอบวัดระดับ</h1><p>ให้นักเรียนทำข้อสอบในหน้านี้ ตรวจเฉลย แล้วดูผ่าน/ไม่ผ่านรายส่วนและรายทักษะ แยกเป็นรายคน พร้อมรหัสชุดซ่อมที่ต้องขอจากครู</p></header>
+<div class="callout"><svg class="i"><use href="#info"/></svg><div>ชื่อและผลสอบของนักเรียนเก็บในเบราว์เซอร์เครื่องนี้ (และฐานข้อมูล Google ของคุณถ้าเชื่อมไว้) ไม่ได้อยู่ในโค้ดสาธารณะ แนะนำใช้ชื่อเล่นหรือรหัส ข้อสอบนี้เป็นเครื่องมือประเมินเบื้องต้น ไม่ใช่การวัดผลอย่างเป็นทางการ</div></div>
+<div class="seg" id="ptabs" role="group" aria-label="เลือกหน้า"><button type="button" data-v="stu" aria-pressed="true">นักเรียน</button><button type="button" data-v="test" aria-pressed="false">ทำแบบทดสอบ</button><button type="button" data-v="report" aria-pressed="false">รายงานผลรายคน</button></div>
+<div id="pview" data-v="stu">
+  <section class="pv pv-stu">
+    <div class="card"><h2 class="mh">เพิ่มนักเรียน</h2>
+      <div class="row2"><label class="f" for="s_nick">ชื่อเล่น / รหัส<input id="s_nick" type="text" placeholder="เช่น น้องบี หรือ A01" autocomplete="off"></label><label class="f" for="s_grade">ชั้น<select id="s_grade"></select></label></div>
+      <p class="err" id="s_err" hidden></p><div class="actions"><button type="button" class="btn" id="s_add">เพิ่มนักเรียน</button></div>
+    </div>
+    <p class="curbadge" id="curbadge"></p>
+    <div id="slist"></div>
+    <div class="actions"><button type="button" class="btn alt" id="b_export">ดาวน์โหลดผลทั้งหมด (JSON)</button></div>
+  </section>
+  <section class="pv pv-test">
+    <div id="tpick"><p id="tpick_stu" class="curbadge"></p><div class="bookgrid" id="bookgrid"></div></div>
+    <div id="trun" hidden></div>
+  </section>
+  <section class="pv pv-report"><div id="rep"></div></section>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+</div></main>
+</div>
+<script src="assets/db.js?v=mvhksz9v"></script>
+<script src="assets/site.js?v=mvhksz9v"></script>
+<script>
+window.PT_INDEX=[{"id":"factors","series":"ห.ร.ม. ค.ร.น.","grades":"ป.6","next":["เศษส่วน","อัตราส่วน ร้อยละ"],"secs":[{"letter":"A","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]},{"id":"fractions","series":"เศษส่วน","grades":"ป.3 – ป.6","next":["ทศนิยม","อัตราส่วน ร้อยละ"],"secs":[{"letter":"A","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"B","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"C","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"D","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]},{"id":"decimals","series":"ทศนิยม","grades":"ป.4 – ป.6","next":["อัตราส่วน ร้อยละ","การวัด"],"secs":[{"letter":"A","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"B","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"C","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]},{"id":"ratio","series":"อัตราส่วน ร้อยละ","grades":"ป.5 – ม.1","next":["สมการ พหุนาม ฟังก์ชัน","สถิติ"],"secs":[{"letter":"A","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"B","ord":6,"label":"ป.6","n":10,"need":7,"min":30},{"letter":"C","ord":7,"label":"ม.1","n":10,"need":7,"min":40}]},{"id":"geometry","series":"เรขาคณิต","grades":"ป.4 – ป.6","next":["ปริมาตร พื้นที่ผิว","เรขาคณิต รอบ 3"],"secs":[{"letter":"A","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"B","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"C","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]},{"id":"numbers","series":"จำนวนนับ","grades":"ป.1 – ป.5","next":["เศษส่วน","ห.ร.ม. ค.ร.น."],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":2,"label":"ป.2","n":10,"need":7,"min":25},{"letter":"C","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"D","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"E","ord":5,"label":"ป.5","n":10,"need":7,"min":30}]},{"id":"solids","series":"ปริมาตร พื้นที่ผิว","grades":"ป.5 – ม.3","next":["เรขาคณิต รอบ 3","สมการ พหุนาม ฟังก์ชัน"],"secs":[{"letter":"A","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"B","ord":6,"label":"ป.6","n":10,"need":7,"min":30},{"letter":"C","ord":8,"label":"ม.2","n":10,"need":7,"min":40},{"letter":"D","ord":9,"label":"ม.3","n":10,"need":7,"min":40}]},{"id":"intexp","series":"จำนวนเต็ม เลขยกกำลัง","grades":"ม.1 – ม.2","next":["สมการ พหุนาม ฟังก์ชัน","อัตราส่วน ร้อยละ"],"secs":[{"letter":"A","ord":7,"label":"ม.1 ตอน 1/2","n":11,"need":8,"min":45},{"letter":"B","ord":7,"label":"ม.1 ตอน 2/2","n":10,"need":7,"min":40},{"letter":"C","ord":8,"label":"ม.2","n":10,"need":7,"min":40}]},{"id":"algebra","series":"สมการ พหุนาม ฟังก์ชัน","grades":"ม.1 – ม.3","next":["ความน่าจะเป็น","เรขาคณิต รอบ 3"],"secs":[{"letter":"A","ord":7,"label":"ม.1","n":10,"need":7,"min":40},{"letter":"B","ord":8,"label":"ม.2","n":11,"need":8,"min":45},{"letter":"C","ord":9,"label":"ม.3","n":14,"need":10,"min":55}]},{"id":"k1","series":"เรขาคณิต รอบ 3","grades":"ป.1 – ม.3","next":["ปริมาตร พื้นที่ผิว","สมการ พหุนาม ฟังก์ชัน"],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":2,"label":"ป.2","n":10,"need":7,"min":25},{"letter":"C","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"D","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"E","ord":6,"label":"ป.6","n":10,"need":7,"min":30},{"letter":"F","ord":7,"label":"ม.1","n":10,"need":7,"min":40},{"letter":"G","ord":8,"label":"ม.2","n":10,"need":7,"min":40},{"letter":"H","ord":9,"label":"ม.3","n":10,"need":7,"min":40}]},{"id":"stat","series":"สถิติ","grades":"ป.1 – ม.3","next":["ความน่าจะเป็น","อัตราส่วน ร้อยละ"],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"C","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"D","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"E","ord":6,"label":"ป.6","n":10,"need":7,"min":30},{"letter":"F","ord":7,"label":"ม.1","n":10,"need":7,"min":40},{"letter":"G","ord":8,"label":"ม.2","n":10,"need":7,"min":40},{"letter":"H","ord":9,"label":"ม.3","n":10,"need":7,"min":40}]},{"id":"prob","series":"ความน่าจะเป็น","grades":"ม.3","next":["สถิติ","สมการ พหุนาม ฟังก์ชัน"],"secs":[{"letter":"A","ord":9,"label":"ม.3","n":10,"need":7,"min":40}]},{"id":"measure","series":"การวัด","grades":"ป.1 – ป.5","next":["เวลาและเงิน","สถิติ"],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":2,"label":"ป.2","n":10,"need":7,"min":25},{"letter":"C","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"D","ord":5,"label":"ป.5","n":10,"need":7,"min":30}]},{"id":"timemoney","series":"เวลาและเงิน","grades":"ป.2 – ป.4","next":["การวัด","สถิติ"],"secs":[{"letter":"A","ord":2,"label":"ป.2","n":10,"need":7,"min":25},{"letter":"B","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"C","ord":4,"label":"ป.4","n":10,"need":7,"min":30}]},{"id":"pattern","series":"แบบรูป","grades":"ป.1 – ป.6","next":["จำนวนนับ","สมการ พหุนาม ฟังก์ชัน"],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"C","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]}];
+(function(){
+var KEY="mo-placement-v1";
+var $=function(id){return document.getElementById(id)};
+var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")};
+var GR=["ป.1","ป.2","ป.3","ป.4","ป.5","ป.6","ม.1","ม.2","ม.3"];
+var gname=function(o){return o<=6?"ป."+o:"ม."+(o-6)};
+var IDX=window.PT_INDEX||[];
+var S;
+try{S=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){S=null}
+S=S||{students:[],cur:null,res:{},hist:[]};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(window.MoDB)MoDB.push(KEY,S)}
+function uid(){return"s"+Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
+function cur(){return S.students.filter(function(s){return s.id===S.cur})[0]||null}
+function toast(m){var t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){t.hidden=true},2400)}
+function fmtDate(ts){var d=new Date(ts);return d.toLocaleDateString("th-TH",{day:"numeric",month:"short",year:"2-digit"})}
+
+/* ---------- ตรวจคำตอบเบื้องต้น ---------- */
+var SUP={"⁰":"0","¹":"1","²":"2","³":"3","⁴":"4","⁵":"5","⁶":"6","⁷":"7","⁸":"8","⁹":"9"};
+function normExpr(s){return String(s).replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,function(c){return"^"+SUP[c]}).replace(/[−–—]/g,"-").replace(/[×·]/g,"*").replace(/÷/g,"/").replace(/[\s​]/g,"").toLowerCase()}
+function nums(s){return String(s).replace(/,/g,"").match(/\d+(?:\.\d+)?(?:\/\d+)?/g)||[]}
+function val(n){if(n.indexOf("/")>0){var p=n.split("/");return +p[0]/+p[1]}return +n}
+function strip(s){return String(s).toLowerCase().replace(/[\s​.,;:()\[\]"'“”]/g,"")}
+function syms(s){return(String(s).match(/[<>=≠]/g)||[]).join("")}
+function autoCheck(user,key){
+  user=String(user||"").trim();if(!user)return false;
+  if(/[a-zA-Z]/.test(key))return normExpr(user)===normExpr(key);
+  var kn=nums(key);
+  if(kn.length){
+    var un=nums(user);if(kn.length!==un.length)return false;
+    for(var i=0;i<kn.length;i++){if(Math.abs(val(kn[i])-val(un[i]))>1e-9)return false}
+    return syms(key)===syms(user);
+  }
+  if(syms(key))return syms(key)===syms(user);
+  var km=String(key).replace(/\([^)]*\)/g,"");return strip(user)===strip(key)||strip(user)===strip(km);
+}
+
+window.__ptCheck=autoCheck;
+/* ---------- โหลดข้อมูลเล่ม ---------- */
+var LOADED={};
+function loadBook(id){
+  if(window.PT&&window.PT[id])return Promise.resolve(window.PT[id]);
+  if(LOADED[id])return LOADED[id];
+  LOADED[id]=new Promise(function(ok,bad){var s=document.createElement("script");s.src="assets/pt/"+id+".js";s.onload=function(){ok(window.PT[id])};s.onerror=function(){bad(new Error("โหลดข้อสอบไม่ได้"))};document.head.appendChild(s)});
+  return LOADED[id];
+}
+function R(sid,book,letter){return(S.res[sid]&&S.res[sid][book]&&S.res[sid][book][letter])||null}
+
+/* ---------- แท็บ ---------- */
+function setView(v){$("pview").dataset.v=v;document.querySelectorAll("#ptabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v===v?"true":"false")});if(v==="report")renderReport();if(v==="test")renderPick();if(v==="stu")renderStudents()}
+document.querySelectorAll("#ptabs button").forEach(function(b){b.addEventListener("click",function(){setView(b.dataset.v)})});
+
+/* ---------- นักเรียน ---------- */
+function renderStudents(){
+  var gsel=$("s_grade");if(!gsel.options.length)GR.forEach(function(g,i){var o=document.createElement("option");o.value=i+1;o.textContent=g;gsel.appendChild(o)});
+  $("slist").innerHTML=S.students.length?S.students.map(function(s){
+    var taken=0,pass=0;Object.keys(S.res[s.id]||{}).forEach(function(b){Object.keys(S.res[s.id][b]).forEach(function(l){taken++;if(S.res[s.id][b][l].passed)pass++})});
+    return'<div class="srow'+(s.id===S.cur?" on":"")+'"><button type="button" class="sel" data-sel="'+s.id+'"><b>'+esc(s.nick)+'</b><small>'+gname(s.grade)+" · ทำแล้ว "+taken+" ส่วน · ผ่าน "+pass+'</small></button><button type="button" class="btn alt sm" data-rep="'+s.id+'">ดูรายงาน</button><button type="button" class="btn alt sm" data-del="'+s.id+'" aria-label="ลบ '+esc(s.nick)+'">ลบ</button></div>'}).join("")
+   :'<p class="note">ยังไม่มีนักเรียน เพิ่มชื่อเล่นหรือรหัสด้านบน</p>';
+  document.querySelectorAll("[data-sel]").forEach(function(b){b.addEventListener("click",function(){S.cur=b.dataset.sel;save();renderStudents();toast("เลือก "+cur().nick+" แล้ว")})});
+  document.querySelectorAll("[data-rep]").forEach(function(b){b.addEventListener("click",function(){S.cur=b.dataset.rep;save();setView("report")})});
+  document.querySelectorAll("[data-del]").forEach(function(b){b.addEventListener("click",function(){var s=S.students.filter(function(x){return x.id===b.dataset.del})[0];if(!confirm("ลบ "+s.nick+" และผลสอบทั้งหมดของคนนี้? (ลบในเบราว์เซอร์เครื่องนี้ ย้อนกลับไม่ได้)"))return;S.students=S.students.filter(function(x){return x.id!==s.id});delete S.res[s.id];S.hist=S.hist.filter(function(h){return h.sid!==s.id});if(S.cur===s.id)S.cur=null;save();renderStudents()})});
+  $("curbadge").textContent=cur()?"นักเรียนที่เลือก: "+cur().nick+" ("+gname(cur().grade)+")":"ยังไม่ได้เลือกนักเรียน";
+}
+$("s_add").addEventListener("click",function(){
+  var nick=$("s_nick").value.trim(),err=$("s_err");
+  if(!nick){err.textContent="ใส่ชื่อเล่นหรือรหัสนักเรียนก่อน";err.hidden=false;return}
+  err.hidden=true;var s={id:uid(),nick:nick,grade:+$("s_grade").value};S.students.push(s);S.cur=s.id;$("s_nick").value="";save();renderStudents();toast("เพิ่ม "+nick+" แล้ว")});
+$("s_nick").addEventListener("input",function(){$("s_err").hidden=true});
+
+/* ---------- เลือกเล่ม/ส่วน ---------- */
+function statusOf(sid,b,l){var r=R(sid,b,l);return r?(r.passed?"ผ่าน":"ยังไม่ผ่าน"):""}
+function renderPick(){
+  var st=cur();$("tpick_stu").innerHTML=st?"ทำในนามของ <b>"+esc(st.nick)+"</b> ("+gname(st.grade)+")":'<span class="warnt">เลือกนักเรียนที่แท็บ “นักเรียน” ก่อน</span>';
+  $("trun").hidden=true;$("tpick").hidden=false;
+  $("bookgrid").innerHTML=IDX.map(function(b){
+    var secs=b.secs.map(function(s){var stt=st?statusOf(st.id,b.id,s.letter):"";var rec=st&&s.ord===st.grade;
+      return'<button type="button" class="secbtn'+(rec?" rec":"")+'" data-b="'+b.id+'" data-l="'+s.letter+'" '+(st?"":"disabled")+'><span>ส่วน '+s.letter+" · "+esc(s.label)+'</span><small>'+s.n+" ข้อ · "+s.min+" นาที"+(rec?" · ตรงชั้น":"")+'</small>'+(stt?'<em class="'+(stt==="ผ่าน"?"ok":"no")+'">'+stt+"</em>":"")+"</button>"}).join("");
+    return'<div class="card bk"><b>'+esc(b.series)+'</b><small>'+esc(b.grades)+" · "+b.secs.length+" ส่วน</small><div class=\"secs\">"+secs+"</div></div>"}).join("");
+  document.querySelectorAll(".secbtn").forEach(function(btn){btn.addEventListener("click",function(){startTest(btn.dataset.b,btn.dataset.l)})});
+}
+
+/* ---------- ทำข้อสอบ ---------- */
+var RUN=null;
+function startTest(book,letter){
+  loadBook(book).then(function(D){
+    var sec=D.sections.filter(function(s){return s.letter===letter})[0];
+    RUN={D:D,sec:sec,ans:{},phase:"do",t0:Date.now()};
+    $("tpick").hidden=true;$("trun").hidden=false;renderRun();window.scrollTo(0,0);
+  },function(e){toast(e.message)});
+}
+function qHtml(it){return'<div class="qtxt">'+it.q+"</div>"+(it.f?'<div class="qfig">'+it.f+"</div>":"")}
+function renderRun(){
+  var D=RUN.D,sec=RUN.sec,st=cur();
+  var head='<div class="rhead"><div><b>'+esc(D.series)+'</b> · ส่วน '+sec.letter+" · "+esc(sec.label)+"<small>"+sec.items.length+" ข้อ · เวลาแนะนำ "+sec.min+" นาที · ผ่านเมื่อถูกอย่างน้อย "+sec.need+" ข้อ (70%) · "+esc(st?st.nick:"")+'</small></div><button type="button" class="btn alt sm" id="r_back">กลับ</button></div>';
+  var body="";
+  if(RUN.phase==="do"){
+    body='<p class="note">ทำในกระดาษทดก่อน แล้วพิมพ์คำตอบ (ไม่ใช้เครื่องคิดเลข) ข้อที่ตอบไม่ได้ปล่อยว่างได้</p><ol class="qs">'+sec.items.map(function(it){
+      return'<li class="qi"><div class="qn">'+it.no+"</div><div class=\"qb\">"+qHtml(it)+'<label class="qa">คำตอบ<input type="text" data-no="'+it.no+'" value="'+esc(RUN.ans[it.no]||"")+'" autocomplete="off" inputmode="text"></label></div></li>'}).join("")+'</ol><p class="err" id="r_err" hidden></p><div class="actions"><button type="button" class="btn" id="r_submit">ส่งคำตอบและตรวจ</button></div>';
+  }else{
+    var ok=RUN.ok;body='<p class="note">โปรแกรมตรวจเบื้องต้นให้แล้ว ตรวจเฉลยเทียบกับคำตอบของนักเรียน ถ้ารูปคำตอบต่างแต่ค่าเท่ากัน ให้เปลี่ยนเป็น “ถูก” แล้วกดบันทึก</p><ol class="qs">'+sec.items.map(function(it){
+      var u=RUN.ans[it.no]||"";var good=!!ok[it.no];
+      return'<li class="qi rv '+(good?"g":"b")+'"><div class="qn">'+it.no+"</div><div class=\"qb\">"+qHtml(it)+'<div class="cmp"><span>คำตอบนักเรียน: <b>'+(u?esc(u):"(ว่าง)")+'</b></span><span>เฉลย: <b class="key">'+it.a+'</b></span><span class="code">'+it.c+'</span></div><div class="tg" role="group" aria-label="ข้อ '+it.no+'"><label><input type="radio" name="ok'+it.no+'" value="1" '+(good?"checked":"")+'>ถูก</label><label><input type="radio" name="ok'+it.no+'" value="0" '+(good?"":"checked")+'>ผิด</label></div></div></li>'}).join("")+'</ol><div class="actions"><button type="button" class="btn" id="r_save">บันทึกผลและดูผลวิเคราะห์</button></div>';
+  }
+  $("trun").innerHTML=head+body;
+  $("r_back").addEventListener("click",function(){if(RUN.phase==="do"&&Object.keys(RUN.ans).some(function(k){return RUN.ans[k]})&&!confirm("ออกจากแบบทดสอบ? คำตอบที่พิมพ์ไว้จะหาย"))return;RUN=null;renderPick()});
+  if(RUN.phase==="do"){
+    document.querySelectorAll(".qa input").forEach(function(i){i.addEventListener("input",function(){RUN.ans[i.dataset.no]=i.value;$("r_err").hidden=true})});
+    $("r_submit").addEventListener("click",function(){
+      var blank=sec.items.filter(function(it){return!(RUN.ans[it.no]||"").trim()}).length;
+      if(blank===sec.items.length){var e=$("r_err");e.textContent="ยังไม่ได้ตอบข้อใดเลย";e.hidden=false;return}
+      if(blank&&!RUN.confirmBlank){var e2=$("r_err");e2.textContent="ยังว่างอยู่ "+blank+" ข้อ กดส่งอีกครั้งถ้าต้องการส่งเลย";e2.hidden=false;RUN.confirmBlank=true;return}
+      RUN.ok={};sec.items.forEach(function(it){RUN.ok[it.no]=autoCheck(RUN.ans[it.no],it.p)});RUN.phase="rv";renderRun();window.scrollTo(0,0)});
+  }else{
+    $("r_save").addEventListener("click",function(){
+      var items=sec.items,wrong=[],score=0;
+      items.forEach(function(it){var r=document.querySelector('input[name="ok'+it.no+'"]:checked');var g=r&&r.value==="1";if(g)score++;else wrong.push({c:it.c,no:it.no})});
+      var titles={};D.skills.forEach(function(k){titles[k.code]=k.title});
+      var seen={},wk=[];wrong.forEach(function(w){if(!seen[w.c]){seen[w.c]=1;wk.push({c:w.c,t:titles[w.c]||"",n:wrong.filter(function(x){return x.c===w.c}).map(function(x){return x.no})})}});
+      var rec={ts:Date.now(),score:score,n:items.length,need:sec.need,passed:score>=sec.need,wrong:wk,min:Math.round((Date.now()-RUN.t0)/60000)};
+      var sid=cur().id;S.res[sid]=S.res[sid]||{};S.res[sid][D.id]=S.res[sid][D.id]||{};S.res[sid][D.id][sec.letter]=rec;
+      S.hist.push({sid:sid,book:D.id,letter:sec.letter,ts:rec.ts,score:score,n:items.length,passed:rec.passed});save();
+      RUN=null;showResult(sid,D,sec,rec);
+    });
+  }
+}
+function showResult(sid,D,sec,rec){
+  var meta=IDX.filter(function(b){return b.id===D.id})[0];
+  var h='<div class="rhead"><div><b>ผลส่วน '+sec.letter+" · "+esc(sec.label)+"</b><small>"+esc(D.series)+"</small></div></div>";
+  h+='<div class="bigres '+(rec.passed?"ok":"no")+'"><b>'+rec.score+" / "+rec.n+"</b><span>"+(rec.passed?"ผ่านมาตรฐานส่วนนี้":"ยังไม่ผ่าน (ต้องถูกอย่างน้อย "+rec.need+" ข้อ)")+"</span></div>";
+  if(rec.passed){h+='<div class="box pass"><h3>แนะนำต่อ</h3>ผ่านส่วนนี้แล้ว เข้าใจในระดับที่พร้อมเรียนต่อในห้องเรียน '+(rec.wrong.length?"ข้อที่พลาดยังควรทบทวนทักษะ: "+rec.wrong.map(function(w){return"<b>"+w.c+"</b>"}).join(", ")+". ":"")+"เนื้อหาที่ต่อเนื่อง: <b>"+esc((D.next||[]).join(" · ")||"ตามลำดับในผังหลักสูตร")+"</b></div>"}
+  else{h+='<div class="box fail"><h3>ทักษะที่ควรซ่อมก่อนเรียนต่อ</h3><ul class="wk">'+rec.wrong.map(function(w){return"<li><b>"+w.c+"</b> "+esc(w.t)+" <small>(ข้อ "+w.n.join(", ")+")</small></li>"}).join("")+"</ul>"+'<p>ส่งรหัสทักษะข้างบนให้ครูแซม TuTor บ้านครู เพื่อรับชุดซ่อมและขอคำปรึกษา แล้วกลับมาทำส่วนนี้ซ้ำ</p><div class="actions"><button type="button" class="btn alt" id="r_copy">คัดลอกข้อความส่งครู</button></div></div>'}
+  h+='<div class="actions"><button type="button" class="btn" id="r_more">ทำส่วนอื่นต่อ</button><button type="button" class="btn alt" id="r_rep">ดูรายงานรวมของ '+esc(cur().nick)+"</button></div>";
+  $("trun").innerHTML=h;window.scrollTo(0,0);
+  $("r_more").addEventListener("click",function(){renderPick()});$("r_rep").addEventListener("click",function(){setView("report")});
+  var c=$("r_copy");if(c)c.addEventListener("click",function(){copyMsg(sid,D.id)});
+}
+function msgFor(sid,onlyBook){
+  var s=S.students.filter(function(x){return x.id===sid})[0];var lines=[];
+  Object.keys(S.res[sid]||{}).forEach(function(b){if(onlyBook&&b!==onlyBook)return;var meta=IDX.filter(function(x){return x.id===b})[0];
+    var cs=[];Object.keys(S.res[sid][b]).forEach(function(l){var r=S.res[sid][b][l];if(!r.passed)r.wrong.forEach(function(w){if(cs.indexOf(w.c)<0)cs.push(w.c)})});
+    if(cs.length)lines.push((meta?meta.series:b)+": "+cs.join(", "))});
+  return"ขอชุดซ่อมจากแบบทดสอบวัดระดับ\nนักเรียน: "+s.nick+" ("+gname(s.grade)+")\nรหัสทักษะที่ต้องซ่อม:\n"+(lines.join("\n")||"-");
+}
+function copyMsg(sid,b){var t=msgFor(sid,b);(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast("คัดลอกข้อความแล้ว ส่งให้ครูแซมทาง LINE")},function(){prompt("คัดลอกข้อความนี้",t)})}
+
+/* ---------- รายงานรายคน ---------- */
+function renderReport(){
+  var st=cur(),box=$("rep");
+  if(!st){box.innerHTML='<p class="note">เลือกนักเรียนที่แท็บ “นักเรียน” ก่อน</p>';return}
+  var res=S.res[st.id]||{};var books=IDX.filter(function(b){return res[b.id]});
+  var taken=0,pass=0,fails=[],review=[],targetTaken=0,targetPass=0;
+  var rows=books.map(function(b){
+    return'<tr><th scope="row">'+esc(b.series)+"<small>"+esc(b.grades)+"</small></th><td>"+b.secs.map(function(s){var r=res[b.id][s.letter];
+      if(!r)return'<span class="pill none" title="ยังไม่ได้ทำ">'+s.letter+" · "+esc(s.label)+" · –</span>";
+      taken++;if(r.passed){pass++;r.wrong.forEach(function(w){review.push({book:b.series,code:w.c,t:w.t,sec:s.letter})})}else r.wrong.forEach(function(w){fails.push({book:b.series,code:w.c,t:w.t,sec:s.letter})});
+      if(s.ord===st.grade){targetTaken++;if(r.passed)targetPass++}
+      return'<span class="pill '+(r.passed?"ok":"no")+'">'+s.letter+" · "+esc(s.label)+" · "+r.score+"/"+r.n+" "+(r.passed?"ผ่าน":"ไม่ผ่าน")+"</span>"}).join("")+"</td></tr>"}).join("");
+  var notTaken=[];IDX.forEach(function(b){b.secs.forEach(function(s){if(s.ord===st.grade&&!(res[b.id]&&res[b.id][s.letter]))notTaken.push({b:b,s:s})})});
+  var nextSet={};books.forEach(function(b){var all=b.secs.every(function(s){return res[b.id][s.letter]&&res[b.id][s.letter].passed});if(all)(b.next||[]).forEach(function(n){nextSet[n]=1})});
+  var h='<div class="rephead"><div><h2>'+esc(st.nick)+" · "+gname(st.grade)+'</h2><small>รายงานผลวัดระดับ · '+fmtDate(Date.now())+'</small></div><div class="actions"><button type="button" class="btn alt" id="p_print">พิมพ์ / บันทึก PDF</button></div></div>';
+  h+='<div class="sumbox"><div class="tile"><span>ทำแล้ว</span><b>'+taken+' ส่วน</b></div><div class="tile"><span>ผ่าน</span><b>'+pass+'</b></div><div class="tile"><span>ตรงชั้น '+gname(st.grade)+'</span><b>'+(targetTaken?targetPass+"/"+targetTaken+" ผ่าน":"–")+"</b></div></div>";
+  if(!taken){h+='<p class="note">ยังไม่มีผลสอบ ไปที่แท็บ “ทำแบบทดสอบ”</p><div class="actions"><button type="button" class="btn" id="go_test">ไปทำแบบทดสอบ</button></div>';box.innerHTML=h;$("go_test").addEventListener("click",function(){setView("test")});return}
+  h+='<h3 class="sec2">ผลรายเนื้อหาและส่วน</h3><div class="scroll"><table class="rtab"><tr><th>เนื้อหา</th><th>ส่วน (ชั้น) · คะแนน · ผล</th></tr>'+rows+"</table></div>";
+  if(fails.length){var seen={};h+='<div class="box fail"><h3>ทักษะที่ควรซ่อม ('+fails.filter(function(f){var k=f.code;if(seen[k])return false;seen[k]=1;return true}).length+")</h3><ul class=\"wk\">"+fails.filter(function(f,i){return fails.findIndex(function(x){return x.code===f.code})===i}).map(function(f){return"<li><b>"+f.code+"</b> "+esc(f.t)+" <small>("+esc(f.book)+" ส่วน "+f.sec+")</small></li>"}).join("")+'</ul><p>ส่งรหัสให้ครูแซม TuTor บ้านครูเพื่อรับชุดซ่อมรายทักษะและขอคำปรึกษา ไม่ควรข้ามไปเรียนเรื่องที่ต่อกันจนกว่าจะผ่าน</p><div class="actions"><button type="button" class="btn alt" id="p_copy">คัดลอกข้อความส่งครู</button></div></div>'}
+  else h+='<div class="box pass"><h3>ผ่านทุกส่วนที่ทำ</h3>เข้าใจในระดับมาตรฐานชั้นแล้วในส่วนที่ทดสอบ เริ่มเนื้อหาที่ลูกสนใจได้เลย</div>';
+  if(review.length)h+='<div class="box warn"><h3>ทักษะที่พลาดในส่วนที่ผ่านแล้ว (ควรทบทวน)</h3><ul class="wk">'+review.map(function(f){return"<li><b>"+f.code+"</b> "+esc(f.t)+" <small>("+esc(f.book)+" ส่วน "+f.sec+")</small></li>"}).join("")+"</ul></div>";
+  if(Object.keys(nextSet).length)h+='<div class="box pass"><h3>แนะนำเนื้อหาถัดไป (ผ่านครบทุกส่วนของเล่มนั้น)</h3><div class="chips">'+Object.keys(nextSet).map(function(n){return"<span>"+esc(n)+"</span>"}).join("")+"</div></div>";
+  if(notTaken.length)h+='<div class="box warn"><h3>ส่วนตรงชั้น '+gname(st.grade)+' ที่ยังไม่ได้ทำ</h3><div class="chips">'+notTaken.slice(0,24).map(function(x){return'<button type="button" class="chipbtn" data-b="'+x.b.id+'" data-l="'+x.s.letter+'">'+esc(x.b.series)+" · ส่วน "+x.s.letter+"</button>"}).join("")+"</div></div>";
+  var hs=S.hist.filter(function(x){return x.sid===st.id}).slice(-12).reverse();
+  if(hs.length)h+='<h3 class="sec2">ประวัติการทำล่าสุด</h3><ul class="hist">'+hs.map(function(x){var m=IDX.filter(function(b){return b.id===x.book})[0];return"<li>"+fmtDate(x.ts)+" · "+esc(m?m.series:x.book)+" ส่วน "+x.letter+" · "+x.score+"/"+x.n+" · "+(x.passed?"ผ่าน":"ไม่ผ่าน")+"</li>"}).join("")+"</ul>";
+  box.innerHTML=h;
+  $("p_print").addEventListener("click",function(){window.print()});
+  var pc=$("p_copy");if(pc)pc.addEventListener("click",function(){copyMsg(st.id)});
+  document.querySelectorAll(".chipbtn").forEach(function(b){b.addEventListener("click",function(){setView("test");startTest(b.dataset.b,b.dataset.l)})});
+}
+
+/* ---------- เริ่ม ---------- */
+$("b_export").addEventListener("click",function(){var blob=new Blob([JSON.stringify(S)],{type:"application/json"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="placement-results.json";a.click()});
+if(window.MoDB)MoDB.pull(KEY,KEY,function(d){if(d&&d.students){S=d;renderStudents();var v=$("pview").dataset.v;if(v==="report")renderReport();if(v==="test")renderPick()}});
+renderStudents();setView(S.students.length?"test":"stu");
+})();
+
+</script>
+</body></html>

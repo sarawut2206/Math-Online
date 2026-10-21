@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="assets/site.css?v=mvi7zhyc">
 <script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <style>
-.cs-tabs{flex-wrap:wrap;margin-bottom:16px}.cs-v{display:none}#csv[data-v="ov"] .cs-ov,#csv[data-v="clips"] .cs-clips,#csv[data-v="qc"] .cs-qc,#csv[data-v="cmd"] .cs-cmd,#csv[data-v="how"] .cs-how{display:block}
+.cs-tabs{flex-wrap:wrap;margin-bottom:16px}.cs-v{display:none}#csv[data-v="ov"] .cs-ov,#csv[data-v="clips"] .cs-clips,#csv[data-v="qc"] .cs-qc,#csv[data-v="cmd"] .cs-cmd,#csv[data-v="rec"] .cs-rec,#csv[data-v="how"] .cs-how{display:block}
 .sumbox4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 14px}.sumbox4 .tile b{font-size:22px}
 @media(max-width:760px){.sumbox4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .pbar{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin:8px 0 4px}.pbar i{display:block;height:100%;background:var(--ink)}
@@ -33,6 +33,14 @@ pre.cmd{background:#101828;color:#e8edf7;border-radius:12px;padding:12px 14px;ov
 .out{position:relative}.out pre.cmd{white-space:pre-wrap;word-break:break-all;margin:6px 0 10px}.cp{margin:0 8px 8px 0}
 .rc{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line)}.rc:first-child{border-top:0}
 .nxn{background:#fff3d6;color:#6b4500;border-radius:10px;padding:8px 12px;font-size:15px;margin:8px 0}
+.md{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:8px 0}
+.md label{display:block;border:2px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;background:var(--bg)}.md label:has(input:checked){border-color:var(--ink);background:var(--ink-soft)}.md input{position:absolute;opacity:0}
+.md b{display:flex;gap:8px;align-items:center;font-size:19px}.md small{display:block;color:var(--mut);font-size:15px;margin-top:4px}.md .rq{font-size:14px;color:var(--fg);margin-top:6px}
+.stp{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}.stp button{display:inline-flex;gap:8px;align-items:center;font:inherit;font-size:15px;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);border-radius:99px;padding:4px 14px 4px 5px;cursor:pointer;min-height:40px}
+.stp button i{font-style:normal;font-weight:700;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--line);font-size:14px}.stp button[aria-current=step]{border-color:var(--ink);background:var(--ink-soft)}.stp button[aria-current=step] i,.stp button.ok i{background:var(--ink);color:var(--on-ink)}
+.tpl{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.tpl button{font:inherit;font-size:16px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:99px;padding:6px 16px;min-height:44px;cursor:pointer}
+.cmpt{width:100%;border-collapse:collapse;font-size:15px}.cmpt th,.cmpt td{padding:8px 10px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
+.pv{white-space:pre-wrap;word-break:break-word;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:16px/1.7 var(--body)}
 </style></head><body></head><body>
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -65,19 +73,28 @@ pre.cmd{background:#101828;color:#e8edf7;border-radius:12px;padding:12px 14px;ov
 <main class="content" id="main"><div class="inner">
 <nav class="crumb" aria-label="เส้นทาง"><a href="index.html">ภาพรวม</a> <span aria-hidden="true">›</span> เครื่องมือ <span aria-hidden="true">›</span> ชุดตัดต่ออัตโนมัติ</nav>
 <header class="page-head"><h1>ชุดตัดต่อคลิปอัตโนมัติ</h1><p>ติดตามสถานะ 287 คลิป ตรวจก่อนโพสต์ 20 ด่าน และวิธีใช้ชุดตัดต่อที่ทำงานในเครื่อง (ffmpeg + Whisper) ข้อมูลสถานะเก็บในเบราว์เซอร์เครื่องนี้ ส่งออกเก็บไว้ได้</p></header>
-<div class="seg cs-tabs" id="cstabs" role="group" aria-label="เลือกหน้า"><button type="button" data-v="ov" aria-pressed="true">ภาพรวม</button><button type="button" data-v="clips" aria-pressed="false">ติดตามคลิป</button><button type="button" data-v="cmd" aria-pressed="false">ออกแบบคำสั่ง</button><button type="button" data-v="qc" aria-pressed="false">ตรวจ 20 ด่าน</button><button type="button" data-v="how" aria-pressed="false">วิธีใช้</button></div>
+<div class="seg cs-tabs" id="cstabs" role="group" aria-label="เลือกหน้า"><button type="button" data-v="ov" aria-pressed="true">ภาพรวม</button><button type="button" data-v="clips" aria-pressed="false">ติดตามคลิป</button><button type="button" data-v="cmd" aria-pressed="false">สร้าง Prompt</button><button type="button" data-v="rec" aria-pressed="false">สูตรของฉัน</button><button type="button" data-v="qc" aria-pressed="false">ตรวจ 20 ด่าน</button><button type="button" data-v="how" aria-pressed="false">วิธีใช้</button></div>
 <div id="csv" data-v="ov">
 <section class="cs-v cs-ov"><div id="o_sum"></div><div class="card"><h2 style="margin-top:0">ความคืบหน้ารายเนื้อหา</h2><div class="lg"><span class="l1">อัดแล้ว</span><span class="l2">ตัดต่อแล้ว</span><span class="l3">ผ่านตรวจ 20 ด่าน</span><span class="l4">อัปขึ้น Stream แล้ว</span></div><div id="o_rows"></div></div></section>
 <section class="cs-v cs-clips"><div class="cs-tools"><label class="sr" for="f_course">เนื้อหา</label><select id="f_course"></select><label class="sr" for="f_stage">สถานะ</label><select id="f_stage"><option value="-1">ทุกสถานะ</option><option value="0">ยังไม่อัด</option><option value="1">อัดแล้ว</option><option value="2">ตัดต่อแล้ว</option><option value="3">ผ่านตรวจ</option><option value="4">อัปขึ้น Stream แล้ว</option></select><button class="btn alt sm" id="b_exp" type="button">ส่งออก JSON</button><button class="btn alt sm" id="b_imp" type="button">นำเข้า clips_status.json</button><input type="file" id="imp" accept="application/json" hidden></div>
 <div class="card" style="overflow-x:auto"><table class="cl"><thead><tr><th>ไฟล์</th><th>ชื่อคลิป</th><th>สถานะ</th></tr></thead><tbody id="c_rows"></tbody></table></div><p class="note" id="c_note"></p></section>
-<section class="cs-v cs-cmd"><div class="card"><h2 style="margin-top:0">ออกแบบคำสั่ง</h2><p class="note">เลือกว่าจะทำอะไร ใส่ตัวเลือก ได้ <b>คำสั่งสำหรับเครื่องมือ</b> และ <b>ข้อความสั่ง Claude</b> พร้อมคัดลอก บันทึกเป็นสูตรของตัวเองไว้ใช้ซ้ำได้ (เก็บในเบราว์เซอร์เครื่องนี้)</p>
-<div class="sc" id="k_sc" role="radiogroup" aria-label="เลือกงาน"></div>
-<div class="nxn" id="k_nx" hidden></div>
-<div class="fg" id="k_fg"></div></div>
-<div class="card out"><h3 style="margin-top:0">คำสั่งสำหรับเครื่องมือ (รันในโฟลเดอร์ clip-studio)</h3><pre class="cmd" id="k_cmd"></pre><button class="btn alt sm cp" id="k_c1" type="button">คัดลอกคำสั่ง</button>
-<h3>ข้อความสั่ง Claude</h3><pre class="cmd" id="k_prompt" style="white-space:pre-wrap"></pre><button class="btn alt sm cp" id="k_c2" type="button">คัดลอกข้อความ</button>
-<div class="cs-tools" style="margin-top:8px"><input type="text" id="k_name" placeholder="ตั้งชื่อสูตร เช่น คลิปสั้นเศษส่วน" aria-label="ชื่อสูตร" style="flex:1;min-width:200px"><button class="btn sm" id="k_save" type="button">บันทึกเป็นสูตร</button></div></div>
-<div class="card"><div class="cs-tools" style="justify-content:space-between"><h3 style="margin:0">สูตรของฉัน</h3><div><button class="btn alt sm" id="k_exp" type="button">ส่งออก</button> <button class="btn alt sm" id="k_imp" type="button">นำเข้า</button><input type="file" id="k_file" accept="application/json" hidden></div></div><div id="k_list"></div></div></section>
+<section class="cs-v cs-cmd"><div class="card"><h2 style="margin-top:0">สร้าง Master Prompt</h2>
+<p class="note"><b>เร็ว:</b> เลือกสูตรด้านล่าง แล้วกด “คัดลอกไปวางใน Claude” ได้เลย</p>
+<p class="note"><b>ละเอียด:</b> ตั้งค่าทีละขั้น <span id="k_rng">01–03</span> แล้วดูสรุปก่อนคัดลอก</p>
+<div class="tpl" id="k_tpl"></div>
+<h3>ทำในไหน</h3><p class="note">เลือกตรงนี้ก่อน Prompt จะเขียนให้ตรงกับเครื่องมือที่คุณใช้ สลับทีหลังได้ตลอด และสูตรทุกอันใช้ได้ทั้งสองหมวด</p>
+<div class="md" id="k_mode" role="radiogroup" aria-label="ทำในไหน"></div>
+<div class="cs-tools"><button class="btn alt sm" id="k_chk" type="button">เช็กเครื่องก่อนเริ่ม</button><span class="note" id="k_need"></span></div>
+<div id="k_chkbox" hidden class="card" style="background:var(--bg)"><p class="note" style="margin-top:0">หน้าเว็บตรวจเครื่องคุณเองไม่ได้ ให้รันคำสั่งนี้ในเทอร์มินัล ถ้าไม่ขึ้นข้อผิดพลาดแปลว่าพร้อม</p><pre class="cmd" id="k_chkcmd">python --version
+ffmpeg -version
+python -c "import whisper, pythainlp; print('ok')"</pre><button class="btn alt sm" id="k_chkc" type="button">คัดลอกคำสั่ง</button></div>
+<details><summary>เทียบ 2 หมวดแบบละเอียด</summary><div style="overflow-x:auto"><table class="cmpt"><thead><tr><th></th><th>Claude อย่างเดียว</th><th>Claude Code + เครื่องมือตัดต่อ</th></tr></thead><tbody>
+<tr><td>ได้อะไร</td><td>แผนคลิป Hook บทพูด คำที่ควรเน้น รายการภาพ B-roll ข้อความซับ</td><td>ไฟล์ MP4 ที่ตัดแล้ว ซับ Hook B-roll แบ่งจอ ผลตรวจ 20 ด่าน</td></tr>
+<tr><td>ต้องมี</td><td>บัญชี Claude ในแชทก็พอ ไม่ต้องติดตั้ง</td><td>Claude Code, Python, ffmpeg, Whisper, PyThaiNLP ในเครื่อง</td></tr>
+<tr><td>ไฟล์วิดีโอ</td><td>ไม่ได้ประมวลผลไฟล์ ใช้วางแผนและเขียนข้อความ</td><td>ประมวลผลในเครื่อง วิดีโอไม่ถูกส่งออก</td></tr>
+<tr><td>เหมาะกับ</td><td>ก่อนอัดคลิป วางแผนและเตรียมภาพ</td><td>หลังอัดคลิป ตัดต่อและส่งออก</td></tr></tbody></table></div></details></div>
+<div class="card"><div class="stp" id="k_steps" role="group" aria-label="ขั้นตอน"></div><div id="k_body"></div><div class="cs-tools" style="margin-top:12px"><button class="btn alt sm" id="k_back" type="button">ย้อนกลับ</button><button class="btn sm" id="k_next" type="button">ถัดไป</button></div></div></section>
+<section class="cs-v cs-rec"><div class="card"><div class="cs-tools" style="justify-content:space-between"><h2 style="margin:0">สูตรของฉัน</h2><div><button class="btn alt sm" id="k_exp" type="button">ส่งออก</button> <button class="btn alt sm" id="k_imp" type="button">นำเข้า</button><input type="file" id="k_file" accept="application/json" hidden></div></div><p class="note">สูตรที่บันทึกจากหน้า “สร้าง Prompt” เก็บในเบราว์เซอร์เครื่องนี้ ส่งออกเก็บไว้หรือย้ายไปอีกเครื่องได้</p><div id="k_list"></div></div></section>
 <section class="cs-v cs-qc"><div class="card"><h2 style="margin-top:0">ตรวจก่อนโพสต์ 20 ด่าน</h2><p class="note">ชุดตัดต่อรันให้อัตโนมัติหลังเรนเดอร์ <span class="tag2 f">ไม่ผ่าน</span> = ต้องแก้ก่อนโพสต์ <span class="tag2 w">เตือน</span> = ดูแล้วตัดสินใจเอง</p><ol class="qg" id="q_list"></ol></div></section>
 <section class="cs-v cs-how"><div class="two"><div class="card"><h2 style="margin-top:0">ทำอะไรให้เองบ้าง</h2><ul class="feat"><li>ตัดช่วงเงียบ ตัด “เอ่อ / อ่า / อืม” และคำที่พูดซ้ำติดกัน</li><li>ซับไทยขึ้นทีละคำตามเสียง ตัดบรรทัดตามคำ ไม่เกิน 2 บรรทัด ไม่ฉีกคำกลางคำ</li><li>คำสำคัญ (ตัวเศษ ตัวส่วน ตัวเลข ฯลฯ) เด้งและเปลี่ยนสี</li><li>Hook 3 วินาทีแรก จากประโยคเปิดของคลิป (หรือพิมพ์เอง)</li><li>B-roll ตามคำที่พูด: ภาพในโฟลเดอร์ตั้งชื่อตามคำ และสร้างภาพวงกลมเศษส่วนให้เองเมื่อพูดถึง 1/2 หรือ “หนึ่งส่วนสอง”</li><li>แบ่งจอ ภาพประกอบบน คนพูดล่าง สลับกับคนพูดเต็มจอในคลิปเดียว</li><li>แบ่งไฟล์ยาว/ไลฟ์เป็นคลิปสั้นตามช่วงเงียบ ไม่ตัดกลางประโยค</li><li>ปรับความดังเสียง (-16 คลิปสอน / -14 คลิปสั้น) และตรวจ 20 ด่าน</li></ul></div>
 <div class="card"><h2 style="margin-top:0">ข้อจำกัดที่ควรรู้</h2><ul class="feat" style="--x:0"><li>ถอดเสียงภาษาไทยด้วย Whisper ในเครื่อง ยังพลาดได้ ควรเปิดซับดูก่อนโพสต์</li><li>Whisper บางครั้งไม่ถอด “เอ่อ” จึงอาศัยการตัดช่วงเงียบเป็นหลัก</li><li>เครื่องไม่มีการ์ดจอ ถอดเสียงจะช้า (คลิป 15 นาที ราว 10-20 นาที)</li><li>B-roll จับคู่ตามชื่อไฟล์กับคำที่พูดเท่านั้น ไม่ได้เข้าใจภาพรวมของเรื่อง</li><li>ยังไม่มีเสียงพากย์ AI และไม่สร้างคลิป motion จากหัวข้อล้วน ๆ</li></ul></div></div>
@@ -128,70 +145,108 @@ $("imp").addEventListener("change",function(e){var f=e.target.files[0];if(!f)ret
 
 var K="mo-clip-recipes-v1",RC;try{RC=JSON.parse(localStorage.getItem(K)||"[]")}catch(e){RC=[]}
 var SCN=[
-{id:"short",t:"คลิปพูด → คลิปสั้นแนวตั้ง",d:"ตัดเอ่อ/เงียบ ซับทีละคำ Hook B-roll แบ่งจอ",f:["in","code","motion","style","pos","hook","emph","broll","facex","model"]},
+{id:"short",t:"คลิปพูด → คลิปสั้นแนวตั้ง",d:"ตัดเอ่อ/เงียบ ซับทีละคำ Hook B-roll แบ่งจอ",f:["in","code","motion","style","pos","emph","hook","broll","facex","model"]},
 {id:"lesson",t:"คลิปสอนยาว → ตัดต่อพร้อมซับ",d:"แนวนอน 16:9 ตัดเงียบ/เอ่อ ซับไทย ตรวจ 20 ด่าน",f:["in","code","motion","style","emph","model"]},
 {id:"shorts",t:"ไลฟ์/ไฟล์ยาว → คลิปสั้นหลายคลิป",d:"แบ่งตามช่วงเงียบ ไม่ขาดกลางประโยค แล้วทำต่อให้ทุกคลิป",f:["in","code","min","max","broll","facex","model"]},
 {id:"split",t:"สไลด์ + กล้องหน้าครู → แบ่งจอบน-ล่าง",d:"รวมสองไฟล์เป็นแนวตั้ง 9:16",f:["in","in2","code","ratio"]},
-{id:"qc",t:"ตรวจคลิปที่ตัดแล้ว 20 ด่าน",d:"ความดังเสียง เงียบนาน ซับ ขนาดไฟล์ ฯลฯ",f:["in","qcp"]},
-{id:"x_voice",t:"มีแต่บท → เสียงพากย์ไทย",d:"ยังไม่มีในเครื่องมือ",nx:"ยังไม่มีในเครื่องมือ ต้องใช้บริการเสียงภายนอกและคีย์ของครูเอง ข้อความด้านล่างใช้สั่ง Claude ให้ช่วยทำเป็นงานเฉพาะ",f:["topic"]},
-{id:"x_motion",t:"มีแต่หัวข้อ → คลิป motion",d:"ยังไม่มีในเครื่องมือ",nx:"ยังไม่มีในเครื่องมือ Claude เขียนโค้ดสร้างภาพเคลื่อนไหวเป็นงานเฉพาะได้ ข้อความด้านล่างใช้สั่งงานนั้น",f:["topic"]},
+{id:"qc",t:"ตรวจคลิปที่ตัดแล้ว 20 ด่าน",d:"ความดังเสียง เงียบนาน ซับ ขนาดไฟล์ ฯลฯ",f:["in","qcp"],needCode:true},
+{id:"x_voice",t:"มีแต่บท → เสียงพากย์ไทย",d:"ยังไม่มีในเครื่องมือ",nx:"ยังไม่มีในเครื่องมือ ต้องใช้บริการเสียงภายนอกและคีย์ของครูเอง Prompt ด้านล่างใช้สั่ง Claude ให้ช่วยเป็นงานเฉพาะ",f:["topic"]},
+{id:"x_motion",t:"มีแต่หัวข้อ → คลิป motion",d:"ยังไม่มีในเครื่องมือ",nx:"ยังไม่มีในเครื่องมือ Claude เขียนโค้ดสร้างภาพเคลื่อนไหวเป็นงานเฉพาะได้ Prompt ด้านล่างใช้สั่งงานนั้น",f:["topic"]},
 {id:"x_story",t:"ฟุตเทจกองโต → คลิปเดียวเล่าเรื่อง",d:"ยังไม่มีในเครื่องมือ",nx:"ยังไม่มีในเครื่องมือ ให้ Claude ช่วยวางสตอรีบอร์ดจากไฟล์ แล้วใช้ ffmpeg ตัดต่อเป็นงานเฉพาะ",f:["in","topic"]}];
-var FLD={in:["ไฟล์วิดีโอ (พาธ)","text","D:/raw/D-01.mp4"],in2:["ไฟล์กล้องหน้าครู (พาธ)","text","D:/raw/face.mp4"],code:["รหัสคลิป","text","D-01"],
+var FLD={in:["ไฟล์วิดีโอ (พาธ)","text","D:/raw/D-01.mp4"],in2:["ไฟล์กล้องหน้าครู (พาธ)","text","D:/raw/face.mp4"],code:["รหัสคลิป (ตั้งชื่อไฟล์)","text","D-01"],
 motion:["ลายซับ","select",[["","ตามพรีเซ็ต"],["reveal","ขึ้นทีละคำ"],["pop","เด้ง"],["fade","เฟด"],["slideup","เลื่อนขึ้น"],["karaoke","ไฮไลต์ทีละคำ"],["none","ไม่มีลาย"]]],
 style:["สไตล์ซับ","select",[["","ตามพรีเซ็ต"],["classic","คลาสสิก ขาว"],["bold_yellow","เหลืองหนา"],["clean_box","ฟ้านุ่ม"]]],
 pos:["ตำแหน่งซับ","select",[["","ตามพรีเซ็ต"],["bottom","ล่าง"],["seam","รอยต่อกลางจอ"],["center","กลาง"]]],
 hook:["ข้อความ Hook 3 วินาทีแรก (ว่าง = ดึงจากประโยคแรก)","text",""],emph:["คำที่ต้องการเน้นเพิ่ม (คั่นด้วย ,)","text","เศษเกิน,จำนวนคละ"],
 broll:["โฟลเดอร์ภาพ B-roll (ภาพตั้งชื่อตามคำที่พูด)","text","D:/broll"],facex:["ตำแหน่งหน้าครูซ้าย-ขวา (0-1)","range",""],
-model:["การถอดเสียง","select",[["","แม่นกว่า (ช้า)"],["base","เร็ว"],["tiny","เร็วมาก"]]],min:["ความยาวคลิปต่ำสุด (วินาที)","number","25"],max:["ความยาวสูงสุด (วินาที)","number","55"],
-ratio:["สัดส่วนจอบน (0.3-0.7)","number","0.5"],qcp:["พรีเซ็ตที่ใช้ตรวจ","select",[["short","คลิปสั้น"],["lesson","คลิปสอน"]]],topic:["รายละเอียดงาน (หัวข้อ/บท/ฟุตเทจ)","text","เช่น อธิบายเศษส่วนเท่ากัน 30 วินาที"]};
-var cur={sc:"short",v:{}};
-function qt(s){return /[\s]/.test(s)?'"'+s+'"':s}
-function build(){
-  var s=SCN.filter(function(x){return x.id===cur.sc})[0],v=cur.v,g=function(k){return(v[k]||"").trim()},o=[];
-  var code=g("code")||"clip",inp=g("in")||"RAW.mp4";
-  var optf=function(){var a=[];if(g("motion"))a.push("--motion "+g("motion"));if(g("style"))a.push("--style "+g("style"));if(g("pos"))a.push("--pos "+g("pos"));if(g("hook"))a.push("--hook "+qt(g("hook")));if(g("emph"))a.push("--emph "+qt(g("emph")));if(g("broll"))a.push("--broll-dir "+qt(g("broll")));if(v.facex&&+v.facex!==0.5)a.push("--face-x "+v.facex);if(g("model"))a.push("--model "+g("model"));return a};
-  var cmd="",pr="";
+model:["ความแม่นยำการถอดเสียง","select",[["","แม่นกว่า (ช้า)"],["base","เร็ว"],["tiny","เร็วมาก"]]],min:["ความยาวคลิปต่ำสุด (วินาที)","number","25"],max:["ความยาวสูงสุด (วินาที)","number","55"],
+ratio:["สัดส่วนจอบน (0.3-0.7)","number","0.5"],qcp:["พรีเซ็ตที่ใช้ตรวจ","select",[["short","คลิปสั้น"],["lesson","คลิปสอน"]]],topic:["หัวข้อ / บท / รายละเอียดงาน","text","เช่น อธิบายเศษส่วนที่เท่ากัน 30 วินาที"]};
+var STEPDEF=[[2,"ไฟล์และชื่อ",["in","in2","code","min","max","ratio","qcp","topic"]],[3,"ซับ",["motion","style","pos","emph"]],[4,"Hook",["hook"]],[5,"ภาพประกอบ",["broll"]],[6,"หน้าครู",["facex"]],[7,"ความแม่นยำ",["model"]]];
+var TPL=[
+{n:"คลิปสั้นเศษส่วน (ซับเด้ง + Hook)",sc:"short",v:{motion:"reveal",style:"bold_yellow",emph:"ตัวเศษ,ตัวส่วน,เศษเกิน"}},
+{n:"คลิปสอน 1 คลิป (ซับเฟด)",sc:"lesson",v:{motion:"fade"}},
+{n:"ไลฟ์ยาว → คลิปสั้น 25-55 วินาที",sc:"shorts",v:{min:"25",max:"55"}},
+{n:"สไลด์ + หน้าครู แบ่งจอ",sc:"split",v:{ratio:"0.5"}}];
+var cur={sc:"short",v:{},i:0,mode:"code"};
+function scn(){return SCN.filter(function(x){return x.id===cur.sc})[0]}
+function steps(){var s=scn(),o=[{k:"sc",t:"เลือกงาน"}];STEPDEF.forEach(function(d){var fs=d[2].filter(function(k){return s.f.indexOf(k)>=0||(k==="topic"&&cur.mode==="chat")});if(fs.length)o.push({k:"f"+d[0],t:d[1],f:fs})});o.push({k:"end",t:"สรุป Prompt"});return o}
+function pad(n){return(n<10?"0":"")+n}
+function qt(s){return /[ ]/.test(s)?'"'+s+'"':s}
+function g(k){return(cur.v[k]||"").trim()}
+function cmdOf(s){
+  var inp=g("in")||"RAW.mp4",code=g("code")||"clip",a=[];
   if(s.id==="short"||s.id==="lesson"){
-    cmd=["python clipstudio.py run",qt(inp),"-o","out/"+code+".mp4","--preset",s.id].concat(optf()).join(" ");
-    pr="ใช้สกิล clip-studio ทำ"+(s.id==="short"?"คลิปสั้นแนวตั้ง 9:16":"คลิปสอนแนวนอน")+" จากไฟล์ "+inp+" ตั้งชื่อ "+code+(g("motion")?" ลายซับ "+g("motion"):"")+(g("style")?" สไตล์ "+g("style"):"")+(g("hook")?" Hook “"+g("hook")+"”":"")+(g("emph")?" เน้นคำ "+g("emph"):"")+(g("broll")?" ภาพประกอบอยู่ที่ "+g("broll"):"")+" เสร็จแล้วรายงานผลตรวจ 20 ด่านตามจริง";
-  }else if(s.id==="shorts"){
-    cmd=["python clipstudio.py shorts",qt(inp),"-o out","--prefix",(g("code")||"S"),"--min",g("min")||25,"--max",g("max")||55,"--process"].concat(g("broll")?["--broll-dir "+qt(g("broll"))]:[],g("model")?["--model "+g("model")]:[]).join(" ");
-    pr="ใช้สกิล clip-studio แบ่งไฟล์ยาว "+inp+" เป็นคลิปสั้น "+(g("min")||25)+"-"+(g("max")||55)+" วินาที ตัดตามช่วงเงียบ แล้วทำซับ/Hook ให้ทุกคลิป สรุปผลตรวจ 20 ด่านของแต่ละคลิป";
-  }else if(s.id==="split"){
-    cmd="python clipstudio.py split "+qt(inp)+" "+qt(g("in2")||"face.mp4")+" -o out/"+code+"-split.mp4"+(g("ratio")?" --top-ratio "+g("ratio"):"");
-    pr="ใช้สกิล clip-studio รวมสไลด์ "+inp+" (บน) กับกล้องหน้าครู "+(g("in2")||"face.mp4")+" (ล่าง) เป็นคลิปแนวตั้ง แล้วทำซับคลิปสั้นต่อ";
-  }else if(s.id==="qc"){
-    cmd="python clipstudio.py qc "+qt(inp)+" --preset "+(g("qcp")||"short");pr="ใช้สกิล clip-studio ตรวจ "+inp+" ทั้ง 20 ด่าน บอกข้อที่ไม่ผ่านและวิธีแก้";
+    if(g("motion"))a.push("--motion "+g("motion"));if(g("style"))a.push("--style "+g("style"));if(g("pos"))a.push("--pos "+g("pos"));if(g("hook"))a.push("--hook "+qt(g("hook")));if(g("emph"))a.push("--emph "+qt(g("emph")));if(g("broll"))a.push("--broll-dir "+qt(g("broll")));if(cur.v.facex&&+cur.v.facex!==0.5)a.push("--face-x "+cur.v.facex);if(g("model"))a.push("--model "+g("model"));
+    return ["python clipstudio.py run",qt(inp),"-o","out/"+code+".mp4","--preset",s.id].concat(a).join(" ")}
+  if(s.id==="shorts")return ["python clipstudio.py shorts",qt(inp),"-o out","--prefix",(g("code")||"S"),"--min",g("min")||25,"--max",g("max")||55,"--process"].concat(g("broll")?["--broll-dir "+qt(g("broll"))]:[],g("model")?["--model "+g("model")]:[]).join(" ");
+  if(s.id==="split")return "python clipstudio.py split "+qt(inp)+" "+qt(g("in2")||"face.mp4")+" -o out/"+code+"-split.mp4"+(g("ratio")?" --top-ratio "+g("ratio"):"");
+  if(s.id==="qc")return "python clipstudio.py qc "+qt(inp)+" --preset "+(g("qcp")||"short");
+  return "";
+}
+function codePrompt(s){
+  var inp=g("in")||"RAW.mp4";
+  if(s.id==="short"||s.id==="lesson")return "ใช้สกิล clip-studio ทำ"+(s.id==="short"?"คลิปสั้นแนวตั้ง 9:16":"คลิปสอนแนวนอน")+" จากไฟล์ "+inp+" ตั้งชื่อ "+(g("code")||"clip")+(g("motion")?" ลายซับ "+g("motion"):"")+(g("style")?" สไตล์ "+g("style"):"")+(g("hook")?" Hook “"+g("hook")+"”":"")+(g("emph")?" เน้นคำ "+g("emph"):"")+(g("broll")?" ภาพประกอบอยู่ที่ "+g("broll"):"")+" เสร็จแล้วรายงานผลตรวจ 20 ด่านตามจริง และบอกข้อที่ไม่ผ่านพร้อมวิธีแก้";
+  if(s.id==="shorts")return "ใช้สกิล clip-studio แบ่งไฟล์ยาว "+inp+" เป็นคลิปสั้น "+(g("min")||25)+"-"+(g("max")||55)+" วินาที ตัดตามช่วงเงียบ แล้วทำซับ/Hook ให้ทุกคลิป สรุปผลตรวจ 20 ด่านของแต่ละคลิป";
+  if(s.id==="split")return "ใช้สกิล clip-studio รวมสไลด์ "+inp+" (บน) กับกล้องหน้าครู "+(g("in2")||"face.mp4")+" (ล่าง) เป็นคลิปแนวตั้ง แล้วทำซับคลิปสั้นต่อ";
+  if(s.id==="qc")return "ใช้สกิล clip-studio ตรวจ "+inp+" ทั้ง 20 ด่าน บอกข้อที่ไม่ผ่านและวิธีแก้";
+  return "ขอให้ช่วยทำเป็นงานเฉพาะ: "+s.t+(g("in")?" ไฟล์ "+g("in"):"")+(g("topic")?" รายละเอียด: "+g("topic"):"")+" ถ้าเครื่องมือ clip-studio ทำไม่ได้ ให้บอกข้อจำกัดตรง ๆ แล้วเสนอวิธีที่ทำได้จริง";
+}
+function chatPrompt(s){
+  var t=g("topic")||"(ใส่หัวข้อหรือบทพูดของคลิปตรงนี้)";
+  return ["คุณคือผู้ช่วยวางแผนคลิปสอนคณิตศาสตร์ภาษาไทยของ ครูแซม TuTor บ้านครู","งาน: "+s.t+(g("code")?" (รหัสคลิป "+g("code")+")":""),"หัวข้อ/บทพูด: "+t,"","ตอบเป็นหัวข้อดังนี้","1. Hook 5 แบบ ไม่เกิน 14 พยางค์ ใช้เปิด 3 วินาทีแรก"+(g("hook")?" (แนวที่ต้องการ: "+g("hook")+")":""),"2. โครงบทพูด ประโยคสั้น ไม่เกิน 20 ตัวอักษรต่อประโยค ไม่มีคำเอ่อ/อ่า","3. คำสำคัญที่ควรเน้นบนจอ"+(g("emph")?" (มีแล้ว: "+g("emph")+")":""),"4. รายการภาพประกอบ ตั้งชื่อไฟล์เป็นคำที่พูด เช่น พิซซ่า.png พร้อมบอกว่าควรเป็นภาพอะไร","5. ข้อความซับตัดบรรทัดตามคำ ไม่เกิน 2 บรรทัด บรรทัดละไม่เกิน 16 ตัวอักษร"+(g("motion")?" ลายซับที่ต้องการ: "+g("motion"):""),"6. จุดที่ต้องระวังเรื่องความถูกต้องของคณิตศาสตร์ (ตัวเลข สูตร หน่วย)","","ถ้าข้อมูลไม่พอให้ถามกลับก่อน ห้ามเดาตัวเลขหรือสูตร"].join(String.fromCharCode(10));
+}
+function drawMode(){
+  var M=[["chat","💬","Claude อย่างเดียว","วางในแชท claude.ai ได้ทันที ใช้วางแผนคลิป เขียน Hook บทพูด และรายการภาพ","ต้องมี: บัญชี Claude ไม่ต้องติดตั้งอะไร"],["code","🎬","Claude Code + เครื่องมือตัดต่อ","Claude Code สั่งเครื่องมือในเครื่องตัดต่อ แล้วได้ไฟล์ MP4 พร้อมตรวจ 20 ด่าน","ต้องมี: Claude Code · Python · ffmpeg · Whisper · PyThaiNLP"]];
+  $("k_mode").innerHTML=M.map(function(m){return '<label><input type="radio" name="k_m" value="'+m[0]+'"'+(cur.mode===m[0]?' checked':'')+'><b><span aria-hidden="true">'+m[1]+'</span>'+m[2]+'</b><small>'+m[3]+'</small><div class="rq">'+m[4]+'</div></label>'}).join("");
+  Array.prototype.forEach.call(document.querySelectorAll("#k_mode input"),function(r){r.addEventListener("change",function(){cur.mode=r.value;drawMode();draw()})});
+  $("k_need").textContent=cur.mode==="chat"?"หมวดนี้ต้องมีแค่บัญชี Claude":"หมวดนี้ต้องมี Python, ffmpeg, Whisper, PyThaiNLP และ Claude Code ในเครื่อง";
+}
+function drawTpl(){
+  $("k_tpl").innerHTML=TPL.map(function(t,i){return '<button type="button" data-i="'+i+'">'+esc(t.n)+'</button>'}).join("");
+  Array.prototype.forEach.call(document.querySelectorAll("#k_tpl button"),function(b){b.addEventListener("click",function(){var t=TPL[+b.dataset.i];cur.sc=t.sc;cur.v=JSON.parse(JSON.stringify(t.v));cur.i=steps().length-1;draw();$("k_body").scrollIntoView({behavior:"smooth",block:"nearest"})})});
+}
+function draw(){
+  var st=steps();if(cur.i>=st.length)cur.i=st.length-1;var p=st[cur.i];
+  $("k_rng").textContent="01–"+pad(st.length);
+  $("k_steps").innerHTML=st.map(function(x,i){return '<button type="button" data-i="'+i+'"'+(i===cur.i?' aria-current="step"':'')+(i<cur.i?' class="ok"':'')+'><i>'+pad(i+1)+'</i>'+esc(x.t)+'</button>'}).join("");
+  Array.prototype.forEach.call(document.querySelectorAll("#k_steps button"),function(b){b.addEventListener("click",function(){cur.i=+b.dataset.i;draw()})});
+  var h="",s=scn();
+  if(p.k==="sc"){
+    h='<h3 style="margin-top:0">เลือกงานที่ต้องการ</h3><div class="sc" id="k_sc" role="radiogroup" aria-label="เลือกงาน">'+SCN.map(function(x){return '<label><input type="radio" name="k_s" value="'+x.id+'"'+(x.id===cur.sc?' checked':'')+'><b>'+esc(x.t)+'</b><small>'+esc(x.d)+'</small></label>'}).join("")+'</div>'+(s.nx?'<div class="nxn">'+esc(s.nx)+'</div>':'');
+  }else if(p.k==="end"){
+    var chat=cur.mode==="chat"||!cmdOf(s);
+    var txt=chat?chatPrompt(s):codePrompt(s);
+    h='<h3 style="margin-top:0">Master Prompt ของคุณ</h3>'+(cur.mode==="chat"&&s.needCode?'<div class="nxn">งานตรวจไฟล์ต้องใช้หมวด Claude Code เพราะต้องอ่านไฟล์ในเครื่อง เปลี่ยนที่ “ทำในไหน” ด้านบน</div>':'')+(cur.mode==="code"&&!cmdOf(s)?'<div class="nxn">งานนี้ไม่มีคำสั่งสำเร็จรูป จึงใช้ Prompt แบบวางแผนแทน</div>':'')+'<div class="pv" id="k_pv">'+esc(txt)+'</div><div class="cs-tools" style="margin-top:10px"><button class="btn" id="k_c2" type="button">คัดลอกไปวางใน Claude</button></div>';
+    if(!chat)h+='<h3>คำสั่งสำหรับเครื่องมือ (ถ้าอยากรันเอง ในโฟลเดอร์ clip-studio)</h3><pre class="cmd" id="k_cmd" style="white-space:pre-wrap;word-break:break-all">'+esc(cmdOf(s))+'</pre><button class="btn alt sm" id="k_c1" type="button">คัดลอกคำสั่ง</button>';
+    h+='<div class="cs-tools" style="margin-top:12px"><input type="text" id="k_name" placeholder="ตั้งชื่อสูตร เช่น คลิปสั้นเศษส่วน" aria-label="ชื่อสูตร" style="flex:1;min-width:200px"><button class="btn sm" id="k_save" type="button">บันทึกเป็นสูตร</button></div>';
   }else{
-    cmd="(ไม่มีคำสั่งสำเร็จรูป)";pr="ขอให้ช่วยทำเป็นงานเฉพาะ: "+(s.t)+(g("in")?" ไฟล์ "+g("in"):"")+(g("topic")?" รายละเอียด: "+g("topic"):"")+" ถ้าเครื่องมือ clip-studio ทำไม่ได้ ให้บอกข้อจำกัดตรง ๆ แล้วเสนอวิธีที่ทำได้จริง";
+    h='<h3 style="margin-top:0">'+esc(p.t)+'</h3><div class="fg">'+p.f.map(function(k){var f=FLD[k],val=cur.v[k]||"",o='<div><label for="kf_'+k+'">'+f[0]+'</label>';
+      if(f[1]==="select")o+='<select id="kf_'+k+'">'+f[2].map(function(x){return '<option value="'+x[0]+'"'+(x[0]===val?' selected':'')+'>'+x[1]+'</option>'}).join("")+'</select>';
+      else if(f[1]==="range")o+='<input id="kf_'+k+'" type="range" min="0" max="1" step="0.05" value="'+(val||0.5)+'">';
+      else o+='<input id="kf_'+k+'" type="'+(f[1]==="number"?"number":"text")+'" value="'+esc(val)+'" placeholder="'+esc(f[2])+'">';
+      return o+'</div>'}).join("")+'</div>';
   }
-  $("k_cmd").textContent=cmd;$("k_prompt").textContent=pr;
+  $("k_body").innerHTML=h;$("k_back").disabled=cur.i===0;$("k_next").hidden=cur.i===st.length-1;
+  Array.prototype.forEach.call(document.querySelectorAll('#k_sc input'),function(r){r.addEventListener("change",function(){cur.sc=r.value;draw2()})});
+  Array.prototype.forEach.call(document.querySelectorAll('#k_body .fg input,#k_body .fg select'),function(el){el.addEventListener("input",function(){cur.v[el.id.slice(3)]=el.value})});
+  if($("k_c1"))$("k_c1").addEventListener("click",function(){copy("k_cmd","คัดลอกคำสั่งแล้ว")});
+  if($("k_c2"))$("k_c2").addEventListener("click",function(){copy("k_pv","คัดลอก Prompt แล้ว วางในแชท Claude ได้เลย")});
+  if($("k_save"))$("k_save").addEventListener("click",function(){var n=$("k_name").value.trim();if(!n){toast("ตั้งชื่อสูตรก่อน");return}RC.push({name:n,sc:cur.sc,v:JSON.parse(JSON.stringify(cur.v)),mode:cur.mode});try{localStorage.setItem(K,JSON.stringify(RC))}catch(e){}drawRc();toast("บันทึกสูตรแล้ว ดูที่แท็บ สูตรของฉัน")});
 }
-function drawScn(){
-  $("k_sc").innerHTML=SCN.map(function(x){return '<label><input type="radio" name="k_s" value="'+x.id+'"'+(x.id===cur.sc?' checked':'')+'><b>'+esc(x.t)+'</b><small>'+esc(x.d)+'</small></label>'}).join("");
-  Array.prototype.forEach.call(document.querySelectorAll('#k_sc input'),function(r){r.addEventListener("change",function(){cur.sc=r.value;drawFields()})});
-}
-function drawFields(){
-  var s=SCN.filter(function(x){return x.id===cur.sc})[0];$("k_nx").hidden=!s.nx;$("k_nx").textContent=s.nx||"";
-  $("k_fg").innerHTML=s.f.map(function(k){var f=FLD[k],val=cur.v[k]||"",h='<div><label for="kf_'+k+'">'+f[0]+'</label>';
-    if(f[1]==="select")h+='<select id="kf_'+k+'">'+f[2].map(function(o){return '<option value="'+o[0]+'"'+(o[0]===val?' selected':'')+'>'+o[1]+'</option>'}).join("")+'</select>';
-    else if(f[1]==="range")h+='<input id="kf_'+k+'" type="range" min="0" max="1" step="0.05" value="'+(val||0.5)+'">';
-    else h+='<input id="kf_'+k+'" type="'+(f[1]==="number"?"number":"text")+'" value="'+esc(val)+'" placeholder="'+esc(f[2])+'">';
-    return h+'</div>'}).join("");
-  Array.prototype.forEach.call(document.querySelectorAll('#k_fg input,#k_fg select'),function(el){el.addEventListener("input",function(){cur.v[el.id.slice(3)]=el.value;build()})});
-  build();
-}
+function draw2(){var keep=cur.i;draw();cur.i=keep}
 function drawRc(){
-  $("k_list").innerHTML=RC.length?RC.map(function(r,i){return '<div class="rc"><div><b>'+esc(r.name)+'</b><div class="note">'+esc((SCN.filter(function(x){return x.id===r.sc})[0]||{t:r.sc}).t)+'</div></div><div><button class="btn alt sm" data-a="load" data-i="'+i+'">ใช้</button> <button class="btn alt sm" data-a="del" data-i="'+i+'">ลบ</button></div></div>'}).join(""):'<p class="note">ยังไม่มีสูตรที่บันทึก</p>';
-  Array.prototype.forEach.call(document.querySelectorAll('#k_list button'),function(b){b.addEventListener("click",function(){var i=+b.dataset.i;if(b.dataset.a==="del"){RC.splice(i,1)}else{cur={sc:RC[i].sc,v:JSON.parse(JSON.stringify(RC[i].v))};drawScn();drawFields();toast("โหลดสูตรแล้ว")}try{localStorage.setItem(K,JSON.stringify(RC))}catch(e){}drawRc()})});
+  $("k_list").innerHTML=RC.length?RC.map(function(r,i){var s=SCN.filter(function(x){return x.id===r.sc})[0]||{t:r.sc};return '<div class="rc"><div><b>'+esc(r.name)+'</b><div class="note">'+esc(s.t)+' · '+(r.mode==="chat"?"Claude อย่างเดียว":"Claude Code")+'</div></div><div><button class="btn alt sm" data-a="load" data-i="'+i+'">ใช้สูตรนี้</button> <button class="btn alt sm" data-a="del" data-i="'+i+'">ลบ</button></div></div>'}).join(""):'<p class="note">ยังไม่มีสูตรที่บันทึก</p>';
+  Array.prototype.forEach.call(document.querySelectorAll('#k_list button'),function(b){b.addEventListener("click",function(){var i=+b.dataset.i;if(b.dataset.a==="del"){RC.splice(i,1);try{localStorage.setItem(K,JSON.stringify(RC))}catch(e){}drawRc()}else{cur={sc:RC[i].sc,v:JSON.parse(JSON.stringify(RC[i].v)),i:0,mode:RC[i].mode||"code"};cur.i=steps().length-1;drawMode();draw();Array.prototype.forEach.call(document.querySelectorAll("#cstabs button"),function(x){x.setAttribute("aria-pressed",x.dataset.v==="cmd"?"true":"false")});$("csv").setAttribute("data-v","cmd");toast("โหลดสูตรแล้ว")}})});
 }
 function copy(id,m){var t=$(id).textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast(m)},function(){var r=document.createRange();r.selectNodeContents($(id));var s=getSelection();s.removeAllRanges();s.addRange(r);toast("เลือกข้อความแล้ว กด Ctrl+C")})}
-$("k_c1").addEventListener("click",function(){copy("k_cmd","คัดลอกคำสั่งแล้ว")});$("k_c2").addEventListener("click",function(){copy("k_prompt","คัดลอกข้อความแล้ว")});
-$("k_save").addEventListener("click",function(){var n=$("k_name").value.trim();if(!n){toast("ตั้งชื่อสูตรก่อน");return}RC.push({name:n,sc:cur.sc,v:JSON.parse(JSON.stringify(cur.v))});try{localStorage.setItem(K,JSON.stringify(RC))}catch(e){}$("k_name").value="";drawRc();toast("บันทึกสูตรแล้ว")});
+$("k_next").addEventListener("click",function(){cur.i=Math.min(cur.i+1,steps().length-1);draw()});
+$("k_back").addEventListener("click",function(){cur.i=Math.max(cur.i-1,0);draw()});
+$("k_chk").addEventListener("click",function(){$("k_chkbox").hidden=!$("k_chkbox").hidden});
+$("k_chkc").addEventListener("click",function(){copy("k_chkcmd","คัดลอกคำสั่งตรวจแล้ว")});
 $("k_exp").addEventListener("click",function(){var b=new Blob([JSON.stringify(RC,null,1)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="clip-recipes.json";a.click()});
 $("k_imp").addEventListener("click",function(){$("k_file").click()});
-$("k_file").addEventListener("change",function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var j=JSON.parse(r.result);if(!Array.isArray(j))throw 0;j.forEach(function(x){if(x&&x.name&&x.sc&&x.v)RC.push({name:String(x.name),sc:String(x.sc),v:x.v})});localStorage.setItem(K,JSON.stringify(RC));drawRc();toast("นำเข้าแล้ว")}catch(x){toast("ไฟล์ไม่ถูกต้อง")}};r.readAsText(f);e.target.value=""});
-drawScn();drawFields();drawRc();
+$("k_file").addEventListener("change",function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var j=JSON.parse(r.result);if(!Array.isArray(j))throw 0;j.forEach(function(x){if(x&&x.name&&x.sc&&x.v)RC.push({name:String(x.name),sc:String(x.sc),v:x.v,mode:x.mode||"code"})});localStorage.setItem(K,JSON.stringify(RC));drawRc();toast("นำเข้าแล้ว")}catch(x){toast("ไฟล์ไม่ถูกต้อง")}};r.readAsText(f);e.target.value=""});
+drawMode();drawTpl();draw();drawRc();
 Array.prototype.forEach.call(document.querySelectorAll("#cstabs button"),function(b){b.addEventListener("click",function(){Array.prototype.forEach.call(document.querySelectorAll("#cstabs button"),function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});$("csv").setAttribute("data-v",b.dataset.v)})});
 ov();clips();
 })();

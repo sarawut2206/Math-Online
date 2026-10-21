@@ -4,9 +4,16 @@
 <meta name="description" content="ทำแบบทดสอบวัดระดับในโปรแกรม ตรวจเฉลย และดูผลวิเคราะห์ผ่าน/ไม่ผ่านรายทักษะแยกรายคน">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=mvhksz9v">
+<link rel="stylesheet" href="assets/site.css?v=mvhl1xrx">
 <script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <style>
+.opts{display:grid;gap:8px;margin-top:10px}
+.opt{position:relative;display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg);cursor:pointer;min-height:48px}
+.opt:hover{border-color:var(--ink)}.opt:has(input:checked){border-color:var(--ink);background:var(--ink-soft);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}.opt .ol{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700}
+.opt:has(input:checked) .ol{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}.opt:has(input:focus-visible){outline:3px solid var(--ink);outline-offset:2px}.opt .ot{font-size:19px;line-height:1.5}
+.prog{display:flex;align-items:center;gap:12px;margin:8px 0 14px;position:sticky;top:0;background:var(--bg);padding:6px 0;z-index:2}.progbar{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}.progbar i{display:block;height:100%;width:0;background:var(--ink);transition:width .2s}
+.fold>summary{cursor:pointer;font-weight:700}
 #pview .pv{display:none}#pview[data-v="stu"] .pv-stu,#pview[data-v="test"] .pv-test,#pview[data-v="report"] .pv-report{display:block}
 .curbadge{margin:8px 0 12px;font-weight:600}.warnt{color:var(--neg)}
 .err{color:var(--neg);font-size:16px;margin:4px 0}
@@ -93,8 +100,8 @@ em.ok,.pill.ok{background:#d3f9d8;color:#1b5e20}em.no,.pill.no{background:#ffd8d
 <div class="toast" id="toast" role="status" hidden></div>
 </div></main>
 </div>
-<script src="assets/db.js?v=mvhksz9v"></script>
-<script src="assets/site.js?v=mvhksz9v"></script>
+<script src="assets/db.js?v=mvhl1xrx"></script>
+<script src="assets/site.js?v=mvhl1xrx"></script>
 <script>
 window.PT_INDEX=[{"id":"factors","series":"ห.ร.ม. ค.ร.น.","grades":"ป.6","next":["เศษส่วน","อัตราส่วน ร้อยละ"],"secs":[{"letter":"A","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]},{"id":"fractions","series":"เศษส่วน","grades":"ป.3 – ป.6","next":["ทศนิยม","อัตราส่วน ร้อยละ"],"secs":[{"letter":"A","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"B","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"C","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"D","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]},{"id":"decimals","series":"ทศนิยม","grades":"ป.4 – ป.6","next":["อัตราส่วน ร้อยละ","การวัด"],"secs":[{"letter":"A","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"B","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"C","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]},{"id":"ratio","series":"อัตราส่วน ร้อยละ","grades":"ป.5 – ม.1","next":["สมการ พหุนาม ฟังก์ชัน","สถิติ"],"secs":[{"letter":"A","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"B","ord":6,"label":"ป.6","n":10,"need":7,"min":30},{"letter":"C","ord":7,"label":"ม.1","n":10,"need":7,"min":40}]},{"id":"geometry","series":"เรขาคณิต","grades":"ป.4 – ป.6","next":["ปริมาตร พื้นที่ผิว","เรขาคณิต รอบ 3"],"secs":[{"letter":"A","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"B","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"C","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]},{"id":"numbers","series":"จำนวนนับ","grades":"ป.1 – ป.5","next":["เศษส่วน","ห.ร.ม. ค.ร.น."],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":2,"label":"ป.2","n":10,"need":7,"min":25},{"letter":"C","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"D","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"E","ord":5,"label":"ป.5","n":10,"need":7,"min":30}]},{"id":"solids","series":"ปริมาตร พื้นที่ผิว","grades":"ป.5 – ม.3","next":["เรขาคณิต รอบ 3","สมการ พหุนาม ฟังก์ชัน"],"secs":[{"letter":"A","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"B","ord":6,"label":"ป.6","n":10,"need":7,"min":30},{"letter":"C","ord":8,"label":"ม.2","n":10,"need":7,"min":40},{"letter":"D","ord":9,"label":"ม.3","n":10,"need":7,"min":40}]},{"id":"intexp","series":"จำนวนเต็ม เลขยกกำลัง","grades":"ม.1 – ม.2","next":["สมการ พหุนาม ฟังก์ชัน","อัตราส่วน ร้อยละ"],"secs":[{"letter":"A","ord":7,"label":"ม.1 ตอน 1/2","n":11,"need":8,"min":45},{"letter":"B","ord":7,"label":"ม.1 ตอน 2/2","n":10,"need":7,"min":40},{"letter":"C","ord":8,"label":"ม.2","n":10,"need":7,"min":40}]},{"id":"algebra","series":"สมการ พหุนาม ฟังก์ชัน","grades":"ม.1 – ม.3","next":["ความน่าจะเป็น","เรขาคณิต รอบ 3"],"secs":[{"letter":"A","ord":7,"label":"ม.1","n":10,"need":7,"min":40},{"letter":"B","ord":8,"label":"ม.2","n":11,"need":8,"min":45},{"letter":"C","ord":9,"label":"ม.3","n":14,"need":10,"min":55}]},{"id":"k1","series":"เรขาคณิต รอบ 3","grades":"ป.1 – ม.3","next":["ปริมาตร พื้นที่ผิว","สมการ พหุนาม ฟังก์ชัน"],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":2,"label":"ป.2","n":10,"need":7,"min":25},{"letter":"C","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"D","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"E","ord":6,"label":"ป.6","n":10,"need":7,"min":30},{"letter":"F","ord":7,"label":"ม.1","n":10,"need":7,"min":40},{"letter":"G","ord":8,"label":"ม.2","n":10,"need":7,"min":40},{"letter":"H","ord":9,"label":"ม.3","n":10,"need":7,"min":40}]},{"id":"stat","series":"สถิติ","grades":"ป.1 – ม.3","next":["ความน่าจะเป็น","อัตราส่วน ร้อยละ"],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"C","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"D","ord":5,"label":"ป.5","n":10,"need":7,"min":30},{"letter":"E","ord":6,"label":"ป.6","n":10,"need":7,"min":30},{"letter":"F","ord":7,"label":"ม.1","n":10,"need":7,"min":40},{"letter":"G","ord":8,"label":"ม.2","n":10,"need":7,"min":40},{"letter":"H","ord":9,"label":"ม.3","n":10,"need":7,"min":40}]},{"id":"prob","series":"ความน่าจะเป็น","grades":"ม.3","next":["สถิติ","สมการ พหุนาม ฟังก์ชัน"],"secs":[{"letter":"A","ord":9,"label":"ม.3","n":10,"need":7,"min":40}]},{"id":"measure","series":"การวัด","grades":"ป.1 – ป.5","next":["เวลาและเงิน","สถิติ"],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":2,"label":"ป.2","n":10,"need":7,"min":25},{"letter":"C","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"D","ord":5,"label":"ป.5","n":10,"need":7,"min":30}]},{"id":"timemoney","series":"เวลาและเงิน","grades":"ป.2 – ป.4","next":["การวัด","สถิติ"],"secs":[{"letter":"A","ord":2,"label":"ป.2","n":10,"need":7,"min":25},{"letter":"B","ord":3,"label":"ป.3","n":10,"need":7,"min":25},{"letter":"C","ord":4,"label":"ป.4","n":10,"need":7,"min":30}]},{"id":"pattern","series":"แบบรูป","grades":"ป.1 – ป.6","next":["จำนวนนับ","สมการ พหุนาม ฟังก์ชัน"],"secs":[{"letter":"A","ord":1,"label":"ป.1","n":10,"need":7,"min":25},{"letter":"B","ord":4,"label":"ป.4","n":10,"need":7,"min":30},{"letter":"C","ord":6,"label":"ป.6","n":10,"need":7,"min":30}]}];
 (function(){
@@ -113,27 +120,7 @@ function cur(){return S.students.filter(function(s){return s.id===S.cur})[0]||nu
 function toast(m){var t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){t.hidden=true},2400)}
 function fmtDate(ts){var d=new Date(ts);return d.toLocaleDateString("th-TH",{day:"numeric",month:"short",year:"2-digit"})}
 
-/* ---------- ตรวจคำตอบเบื้องต้น ---------- */
 var SUP={"⁰":"0","¹":"1","²":"2","³":"3","⁴":"4","⁵":"5","⁶":"6","⁷":"7","⁸":"8","⁹":"9"};
-function normExpr(s){return String(s).replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,function(c){return"^"+SUP[c]}).replace(/[−–—]/g,"-").replace(/[×·]/g,"*").replace(/÷/g,"/").replace(/[\s​]/g,"").toLowerCase()}
-function nums(s){return String(s).replace(/,/g,"").match(/\d+(?:\.\d+)?(?:\/\d+)?/g)||[]}
-function val(n){if(n.indexOf("/")>0){var p=n.split("/");return +p[0]/+p[1]}return +n}
-function strip(s){return String(s).toLowerCase().replace(/[\s​.,;:()\[\]"'“”]/g,"")}
-function syms(s){return(String(s).match(/[<>=≠]/g)||[]).join("")}
-function autoCheck(user,key){
-  user=String(user||"").trim();if(!user)return false;
-  if(/[a-zA-Z]/.test(key))return normExpr(user)===normExpr(key);
-  var kn=nums(key);
-  if(kn.length){
-    var un=nums(user);if(kn.length!==un.length)return false;
-    for(var i=0;i<kn.length;i++){if(Math.abs(val(kn[i])-val(un[i]))>1e-9)return false}
-    return syms(key)===syms(user);
-  }
-  if(syms(key))return syms(key)===syms(user);
-  var km=String(key).replace(/\([^)]*\)/g,"");return strip(user)===strip(key)||strip(user)===strip(km);
-}
-
-window.__ptCheck=autoCheck;
 /* ---------- โหลดข้อมูลเล่ม ---------- */
 var LOADED={};
 function loadBook(id){
@@ -178,12 +165,18 @@ function renderPick(){
   document.querySelectorAll(".secbtn").forEach(function(btn){btn.addEventListener("click",function(){startTest(btn.dataset.b,btn.dataset.l)})});
 }
 
-/* ---------- ทำข้อสอบ ---------- */
-var RUN=null;
+/* ---------- ทำข้อสอบ (ปรนัย กดเลือก ตรวจอัตโนมัติ) ---------- */
+var RUN=null,LET=["ก","ข","ค","ง"];
+function fmtOpt(t){
+  var s=esc(t).replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺ⁿˣ]+/g,function(m){return"<sup>"+m.split("").map(function(c){return SUP[c]||({"⁻":"−","⁺":"+","ⁿ":"n","ˣ":"x"})[c]||c}).join("")+"</sup>"});
+  s=s.replace(/(\d+) (\d+)\/(\d+)/g,'<span class="mx"><b>$1</b><span class="fr"><span>$2</span><span>$3</span></span></span>');
+  s=s.replace(/(\d+)\/(\d+)/g,'<span class="fr"><span>$1</span><span>$2</span></span>');
+  return s;
+}
 function startTest(book,letter){
   loadBook(book).then(function(D){
     var sec=D.sections.filter(function(s){return s.letter===letter})[0];
-    RUN={D:D,sec:sec,ans:{},phase:"do",t0:Date.now()};
+    RUN={D:D,sec:sec,ans:{},t0:Date.now(),confirmBlank:false};
     $("tpick").hidden=true;$("trun").hidden=false;renderRun();window.scrollTo(0,0);
   },function(e){toast(e.message)});
 }
@@ -191,43 +184,37 @@ function qHtml(it){return'<div class="qtxt">'+it.q+"</div>"+(it.f?'<div class="q
 function renderRun(){
   var D=RUN.D,sec=RUN.sec,st=cur();
   var head='<div class="rhead"><div><b>'+esc(D.series)+'</b> · ส่วน '+sec.letter+" · "+esc(sec.label)+"<small>"+sec.items.length+" ข้อ · เวลาแนะนำ "+sec.min+" นาที · ผ่านเมื่อถูกอย่างน้อย "+sec.need+" ข้อ (70%) · "+esc(st?st.nick:"")+'</small></div><button type="button" class="btn alt sm" id="r_back">กลับ</button></div>';
-  var body="";
-  if(RUN.phase==="do"){
-    body='<p class="note">ทำในกระดาษทดก่อน แล้วพิมพ์คำตอบ (ไม่ใช้เครื่องคิดเลข) ข้อที่ตอบไม่ได้ปล่อยว่างได้</p><ol class="qs">'+sec.items.map(function(it){
-      return'<li class="qi"><div class="qn">'+it.no+"</div><div class=\"qb\">"+qHtml(it)+'<label class="qa">คำตอบ<input type="text" data-no="'+it.no+'" value="'+esc(RUN.ans[it.no]||"")+'" autocomplete="off" inputmode="text"></label></div></li>'}).join("")+'</ol><p class="err" id="r_err" hidden></p><div class="actions"><button type="button" class="btn" id="r_submit">ส่งคำตอบและตรวจ</button></div>';
-  }else{
-    var ok=RUN.ok;body='<p class="note">โปรแกรมตรวจเบื้องต้นให้แล้ว ตรวจเฉลยเทียบกับคำตอบของนักเรียน ถ้ารูปคำตอบต่างแต่ค่าเท่ากัน ให้เปลี่ยนเป็น “ถูก” แล้วกดบันทึก</p><ol class="qs">'+sec.items.map(function(it){
-      var u=RUN.ans[it.no]||"";var good=!!ok[it.no];
-      return'<li class="qi rv '+(good?"g":"b")+'"><div class="qn">'+it.no+"</div><div class=\"qb\">"+qHtml(it)+'<div class="cmp"><span>คำตอบนักเรียน: <b>'+(u?esc(u):"(ว่าง)")+'</b></span><span>เฉลย: <b class="key">'+it.a+'</b></span><span class="code">'+it.c+'</span></div><div class="tg" role="group" aria-label="ข้อ '+it.no+'"><label><input type="radio" name="ok'+it.no+'" value="1" '+(good?"checked":"")+'>ถูก</label><label><input type="radio" name="ok'+it.no+'" value="0" '+(good?"":"checked")+'>ผิด</label></div></div></li>'}).join("")+'</ol><div class="actions"><button type="button" class="btn" id="r_save">บันทึกผลและดูผลวิเคราะห์</button></div>';
-  }
+  var body='<p class="note">ทำในกระดาษทดก่อน แล้วกดเลือกคำตอบที่ถูกที่สุด ข้อที่ไม่แน่ใจข้ามได้ (ไม่ใช้เครื่องคิดเลข)</p><div class="prog" aria-live="polite"><div class="progbar"><i id="r_bar"></i></div><span id="r_cnt"></span></div><ol class="qs">'+sec.items.map(function(it){
+    return'<li class="qi" id="qi'+it.no+'"><div class="qn">'+it.no+"</div><div class=\"qb\">"+qHtml(it)+'<div class="opts" role="radiogroup" aria-label="ข้อ '+it.no+'">'+it.o.map(function(o,i){return'<label class="opt"><input type="radio" name="q'+it.no+'" value="'+i+'"'+(RUN.ans[it.no]===i?" checked":"")+'><span class="ol">'+LET[i]+'</span><span class="ot">'+fmtOpt(o)+"</span></label>"}).join("")+"</div></div></li>"}).join("")+'</ol><p class="err" id="r_err" hidden></p><div class="actions"><button type="button" class="btn" id="r_submit">ส่งคำตอบและดูผล</button></div>';
   $("trun").innerHTML=head+body;
-  $("r_back").addEventListener("click",function(){if(RUN.phase==="do"&&Object.keys(RUN.ans).some(function(k){return RUN.ans[k]})&&!confirm("ออกจากแบบทดสอบ? คำตอบที่พิมพ์ไว้จะหาย"))return;RUN=null;renderPick()});
-  if(RUN.phase==="do"){
-    document.querySelectorAll(".qa input").forEach(function(i){i.addEventListener("input",function(){RUN.ans[i.dataset.no]=i.value;$("r_err").hidden=true})});
-    $("r_submit").addEventListener("click",function(){
-      var blank=sec.items.filter(function(it){return!(RUN.ans[it.no]||"").trim()}).length;
-      if(blank===sec.items.length){var e=$("r_err");e.textContent="ยังไม่ได้ตอบข้อใดเลย";e.hidden=false;return}
-      if(blank&&!RUN.confirmBlank){var e2=$("r_err");e2.textContent="ยังว่างอยู่ "+blank+" ข้อ กดส่งอีกครั้งถ้าต้องการส่งเลย";e2.hidden=false;RUN.confirmBlank=true;return}
-      RUN.ok={};sec.items.forEach(function(it){RUN.ok[it.no]=autoCheck(RUN.ans[it.no],it.p)});RUN.phase="rv";renderRun();window.scrollTo(0,0)});
-  }else{
-    $("r_save").addEventListener("click",function(){
-      var items=sec.items,wrong=[],score=0;
-      items.forEach(function(it){var r=document.querySelector('input[name="ok'+it.no+'"]:checked');var g=r&&r.value==="1";if(g)score++;else wrong.push({c:it.c,no:it.no})});
-      var titles={};D.skills.forEach(function(k){titles[k.code]=k.title});
-      var seen={},wk=[];wrong.forEach(function(w){if(!seen[w.c]){seen[w.c]=1;wk.push({c:w.c,t:titles[w.c]||"",n:wrong.filter(function(x){return x.c===w.c}).map(function(x){return x.no})})}});
-      var rec={ts:Date.now(),score:score,n:items.length,need:sec.need,passed:score>=sec.need,wrong:wk,min:Math.round((Date.now()-RUN.t0)/60000)};
-      var sid=cur().id;S.res[sid]=S.res[sid]||{};S.res[sid][D.id]=S.res[sid][D.id]||{};S.res[sid][D.id][sec.letter]=rec;
-      S.hist.push({sid:sid,book:D.id,letter:sec.letter,ts:rec.ts,score:score,n:items.length,passed:rec.passed});save();
-      RUN=null;showResult(sid,D,sec,rec);
-    });
-  }
+  function prog(){var n=Object.keys(RUN.ans).length;$("r_cnt").textContent="ตอบแล้ว "+n+" / "+sec.items.length+" ข้อ";$("r_bar").style.width=(n/sec.items.length*100)+"%"}
+  prog();
+  $("r_back").addEventListener("click",function(){if(Object.keys(RUN.ans).length&&!confirm("ออกจากแบบทดสอบ? คำตอบที่เลือกไว้จะหาย"))return;RUN=null;renderPick()});
+  document.querySelectorAll(".opt input").forEach(function(i){i.addEventListener("change",function(){var no=i.name.slice(1);RUN.ans[no]=+i.value;prog();$("r_err").hidden=true;RUN.confirmBlank=false})});
+  $("r_submit").addEventListener("click",function(){
+    var blank=sec.items.filter(function(it){return RUN.ans[it.no]===undefined});
+    if(blank.length===sec.items.length){var e=$("r_err");e.textContent="ยังไม่ได้เลือกคำตอบข้อใดเลย";e.hidden=false;return}
+    if(blank.length&&!RUN.confirmBlank){var e2=$("r_err");e2.textContent="ยังไม่ได้ตอบข้อ "+blank.map(function(b){return b.no}).join(", ")+" กดส่งอีกครั้งถ้าต้องการส่งเลย (ข้อที่ว่างนับว่าผิด)";e2.hidden=false;RUN.confirmBlank=true;document.getElementById("qi"+blank[0].no).scrollIntoView({block:"center"});return}
+    finishRun();
+  });
 }
-function showResult(sid,D,sec,rec){
-  var meta=IDX.filter(function(b){return b.id===D.id})[0];
-  var h='<div class="rhead"><div><b>ผลส่วน '+sec.letter+" · "+esc(sec.label)+"</b><small>"+esc(D.series)+"</small></div></div>";
+function finishRun(){
+  var D=RUN.D,sec=RUN.sec,sid=cur().id,wrong=[],score=0,det=[];
+  sec.items.forEach(function(it){var a=RUN.ans[it.no];var ok=a===it.k;if(ok)score++;else wrong.push({c:it.c,no:it.no});det.push({it:it,a:a,ok:ok})});
+  var titles={};D.skills.forEach(function(k){titles[k.code]=k.title});
+  var seen={},wk=[];wrong.forEach(function(w){if(!seen[w.c]){seen[w.c]=1;wk.push({c:w.c,t:titles[w.c]||"",n:wrong.filter(function(x){return x.c===w.c}).map(function(x){return x.no})})}});
+  var rec={ts:Date.now(),score:score,n:sec.items.length,need:sec.need,passed:score>=sec.need,wrong:wk,min:Math.round((Date.now()-RUN.t0)/60000)};
+  S.res[sid]=S.res[sid]||{};S.res[sid][D.id]=S.res[sid][D.id]||{};S.res[sid][D.id][sec.letter]=rec;
+  S.hist.push({sid:sid,book:D.id,letter:sec.letter,ts:rec.ts,score:score,n:sec.items.length,passed:rec.passed});save();
+  RUN=null;showResult(sid,D,sec,rec,det);
+}
+function showResult(sid,D,sec,rec,det){
+  var h='<div class="rhead"><div><b>ผลส่วน '+sec.letter+" · "+esc(sec.label)+"</b><small>"+esc(D.series)+" · "+esc(cur().nick)+"</small></div></div>";
   h+='<div class="bigres '+(rec.passed?"ok":"no")+'"><b>'+rec.score+" / "+rec.n+"</b><span>"+(rec.passed?"ผ่านมาตรฐานส่วนนี้":"ยังไม่ผ่าน (ต้องถูกอย่างน้อย "+rec.need+" ข้อ)")+"</span></div>";
   if(rec.passed){h+='<div class="box pass"><h3>แนะนำต่อ</h3>ผ่านส่วนนี้แล้ว เข้าใจในระดับที่พร้อมเรียนต่อในห้องเรียน '+(rec.wrong.length?"ข้อที่พลาดยังควรทบทวนทักษะ: "+rec.wrong.map(function(w){return"<b>"+w.c+"</b>"}).join(", ")+". ":"")+"เนื้อหาที่ต่อเนื่อง: <b>"+esc((D.next||[]).join(" · ")||"ตามลำดับในผังหลักสูตร")+"</b></div>"}
   else{h+='<div class="box fail"><h3>ทักษะที่ควรซ่อมก่อนเรียนต่อ</h3><ul class="wk">'+rec.wrong.map(function(w){return"<li><b>"+w.c+"</b> "+esc(w.t)+" <small>(ข้อ "+w.n.join(", ")+")</small></li>"}).join("")+"</ul>"+'<p>ส่งรหัสทักษะข้างบนให้ครูแซม TuTor บ้านครู เพื่อรับชุดซ่อมและขอคำปรึกษา แล้วกลับมาทำส่วนนี้ซ้ำ</p><div class="actions"><button type="button" class="btn alt" id="r_copy">คัดลอกข้อความส่งครู</button></div></div>'}
+  h+='<details class="card fold"><summary>ดูเฉลยรายข้อ</summary><ol class="qs" style="margin-top:10px">'+det.map(function(d){var it=d.it;
+    return'<li class="qi rv '+(d.ok?"g":"b")+'"><div class="qn">'+it.no+'</div><div class="qb">'+qHtml(it)+'<div class="cmp"><span>'+(d.ok?"ตอบถูก":"ตอบ: <b>"+(d.a===undefined?"(ว่าง)":LET[d.a]+". "+fmtOpt(it.o[d.a]))+"</b>")+'</span><span>เฉลย: <b class="key">'+LET[it.k]+". "+fmtOpt(it.o[it.k])+'</b></span><span class="code">'+it.c+"</span></div></div></li>"}).join("")+"</ol></details>";
   h+='<div class="actions"><button type="button" class="btn" id="r_more">ทำส่วนอื่นต่อ</button><button type="button" class="btn alt" id="r_rep">ดูรายงานรวมของ '+esc(cur().nick)+"</button></div>";
   $("trun").innerHTML=h;window.scrollTo(0,0);
   $("r_more").addEventListener("click",function(){renderPick()});$("r_rep").addEventListener("click",function(){setView("report")});

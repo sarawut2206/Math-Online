@@ -4,7 +4,7 @@
 <meta name="description" content="กลยุทธ์ ขั้นตอน และแผนดำเนินงานคุยกับติวเตอร์ พร้อมติดตามความคืบหน้ารายคน">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=mvhlczd6">
+<link rel="stylesheet" href="assets/site.css?v=mvhlo6fb">
 <script>try{var t=localStorage.getItem("mo-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <style>
 #tview .tv{display:none}#tview[data-v="ov"] .tv-ov,#tview[data-v="plan"] .tv-plan,#tview[data-v="prep"] .tv-prep,#tview[data-v="crm"] .tv-crm,#tview[data-v="kit"] .tv-kit{display:block}
@@ -75,8 +75,8 @@ textarea{resize:vertical}
 <div class="toast" id="toast" role="status" hidden></div>
 </div></main>
 </div>
-<script src="assets/db.js?v=mvhlczd6"></script>
-<script src="assets/site.js?v=mvhlczd6"></script>
+<script src="assets/db.js?v=mvhlo6fb"></script>
+<script src="assets/site.js?v=mvhlo6fb"></script>
 <script>
 (function(){
 var KEY="mo-tutor-deal-v1";
@@ -183,8 +183,8 @@ function renderCrm(){
 }
 function renderKit(){
   var items=[["เครื่องมือในโปรแกรม","<ul><li><a href=\"contract-live.html\">สัญญาโมเดลสอนสด</a> กรอกตัวเลขจริงและดูร่างสัญญาพร้อมเอกสารแนบ</li><li><a href=\"placement.html\">แบบทดสอบวัดระดับ</a> สาธิตให้ติวเตอร์ลองทำและดูรายงานผลรายคน</li><li><a href=\"contract.html\">ร่างสัญญากับติวเตอร์</a> (โมเดลคอร์สตะลุยข้อสอบ ใช้เป็นข้อมูลเปรียบเทียบ)</li><li><a href=\"recording.html\">แผนคลิปทุกเนื้อหา</a> และ <a href=\"production.html\">แผนผลิตคอร์ส</a></li></ul>"],
-   ["ไฟล์ในเครื่องที่ใช้นำเสนอ (ไม่ได้อยู่ใน repo)","<ul><li>เล่มแบบฝึกและเฉลย (PDF/Word) ของเศษส่วน ในโฟลเดอร์สอนออนไลน์</li><li>เล่มแบบทดสอบวัดระดับและชุดซ่อมของเศษส่วน ในโฟลเดอร์ แบบทดสอบวัดระดับ</li><li>สรุปเอกสารแบบฝึกและประมาณการผลตอบแทน (ไฟล์ข้อความ)</li></ul>"],
-   ["ของที่ยังไม่ได้ทำ (ขอให้ผู้ช่วยทำให้ได้)","<ul><li>ใบเสนอ 1 หน้าสำหรับติวเตอร์</li><li>สไลด์สั้น 6 หน้า</li><li>บันทึกข้อตกลงทดลอง 8 สัปดาห์ (ไม่ใช่สัญญาเต็ม ต้องให้ทนายตรวจ)</li><li>สคริปต์คลิปสั้น 30 ชิ้น และข้อความอัตโนมัติ LINE OA</li></ul>"]];
+   ["ไฟล์ในเครื่องที่ใช้นำเสนอ (ไม่ได้อยู่ใน repo)","<ul><li>เล่มแบบฝึกและเฉลย (PDF/Word) ของเศษส่วน ในโฟลเดอร์สอนออนไลน์</li><li>เล่มแบบทดสอบวัดระดับและชุดซ่อมของเศษส่วน ในโฟลเดอร์ แบบทดสอบวัดระดับ</li><li>ใบเสนอร่วมงานติวเตอร์ 1 หน้า (PDF และ Word) ในโฟลเดอร์ ใบเสนอติวเตอร์</li><li>สรุปเอกสารแบบฝึกและประมาณการผลตอบแทน (ไฟล์ข้อความ)</li></ul>"],
+   ["ของที่ยังไม่ได้ทำ (ขอให้ผู้ช่วยทำให้ได้)","<ul><li>สไลด์สั้น 6 หน้า</li><li>บันทึกข้อตกลงทดลอง 8 สัปดาห์ (ไม่ใช่สัญญาเต็ม ต้องให้ทนายตรวจ)</li><li>สคริปต์คลิปสั้น 30 ชิ้น และข้อความอัตโนมัติ LINE OA</li></ul>"]];
   $("td_kit").innerHTML=items.map(function(p,i){return'<details class="card ph" open><summary><b>'+p[0]+'</b></summary><div class="prose">'+p[1]+"</div></details>"}).join("");
 }
 if(window.MoDB)MoDB.pull(KEY,KEY,function(d){if(d&&d.tutors){S=Object.assign(S,d);setView($("tview").dataset.v)}});
